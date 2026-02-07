@@ -24,7 +24,7 @@ export interface Service {
   id: string;
   name: string;
   description: string;
-  category: 'blouse' | 'kurti' | 'bridal';
+  category: 'blouse' | 'kurti' | 'bridal' | 'salwar' | 'alterations' | 'other';
   pricing: PricingTier[];
   estimatedDays: number;
   requiresMeasurements: boolean;
@@ -48,6 +48,7 @@ export interface Order {
   id: string;
   customerId: string;
   serviceId: string;
+  pricingTier?: string; // e.g., "Basic", "Premium"
   status: 'pending' | 'confirmed' | 'measuring' | 'stitching' | 'ready' | 'delivered';
   appointmentDate: Date;
   measurements?: CustomerMeasurements;
@@ -68,6 +69,7 @@ export interface Booking {
 
 export interface BookingData {
   serviceId: string;
+  pricingTier?: string;
   appointmentDate: Date;
   measurementType: 'shop' | 'custom';
   measurements?: CustomerMeasurements;

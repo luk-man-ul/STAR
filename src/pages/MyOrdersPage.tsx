@@ -1,32 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { mockOrders, getOrdersForRole, getServiceById } from '../utils';
 import { useAuth } from '../contexts/AuthContext';
 import { LoadingSpinner, ErrorMessage } from '../components';
 import { Order } from '../types';
+import { getOrdersByCustomer, getServiceById } from '../services/firestoreService';
 
 const MyOrdersPage: React.FC = () => {
-  const { userRole, user } = useAuth();
+  const { user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
+  const [services, setServices] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // Use the authenticated user's ID, or fallback to mock for development
-  const customerId = user?.id || 'user-1';
 
   useEffect(() => {
     const loadOrders = async () => {
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         setError(null);
         
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Get orders for the current customer
-        const customerOrders = getOrdersForRole(mockOrders, userRole, customerId);
+        // Fetch orders from Firebase
+        const customerOrders = await getOrdersByCustomer(user.id);
         setOrders(customerOrders);
-      } catch (err) {
-        setError('Failed to load your orders. Please try again.');
+
+        // Fetch services for each order
+        const serviceMap: Record<string, any> = {};
+        for (const order of customerOrders) {
+          if (!serviceMap[order.serviceId]) {
+            const service = await getServiceById(order.serviceId);
+            if (service) {
+              serviceMap[order.serviceId] = service;
+            }
+          }
+        }
+        setServices(serviceMap);
+      } catch (err: any) {
+        setError(err.message || 'Failed to load your orders. Please try again.');
         console.error('Error loading orders:', err);
       } finally {
         setLoading(false);
@@ -34,17 +46,18 @@ const MyOrdersPage: React.FC = () => {
     };
 
     loadOrders();
-  }, [userRole, customerId]);
+  }, [user]);
 
   const handleRetry = () => {
     setError(null);
     setLoading(true);
-    // Trigger reload
-    setTimeout(() => {
-      const customerOrders = getOrdersForRole(mockOrders, userRole, customerId);
-      setOrders(customerOrders);
-      setLoading(false);
-    }, 1000);
+    // Trigger reload by changing a dependency
+    if (user) {
+      getOrdersByCustomer(user.id)
+        .then(setOrders)
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false));
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -121,7 +134,7 @@ const MyOrdersPage: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {orders.map((order) => {
-            const service = getServiceById(order.serviceId);
+            const service = services[order.serviceId];
             return (
               <div
                 key={order.id}
@@ -130,10 +143,15 @@ const MyOrdersPage: React.FC = () => {
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="font-semibold text-slate-800">
-                      Order #{order.id.split('-')[1].toUpperCase()}
+                      Order #{order.id.substring(0, 8).toUpperCase()}
                     </h3>
                     <p className="text-slate-600 text-sm">
-                      {service?.name || 'Unknown Service'}
+                      {service?.name || 'Loading...'}
+                      {order.pricingTier && (
+                        <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                          {order.pricingTier}
+                        </span>
+                      )}
                     </p>
                   </div>
                   <span

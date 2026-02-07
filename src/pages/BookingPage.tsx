@@ -1,39 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { BookingData, Service } from '../types';
-
-// Mock services data - in real app this would come from API
-const mockServices: Service[] = [
-  {
-    id: '1',
-    name: 'Blouse Stitching',
-    description: 'Custom blouse tailoring',
-    category: 'blouse',
-    pricing: [{ type: 'Basic', price: 500, description: 'Simple design' }],
-    estimatedDays: 7,
-    requiresMeasurements: true
-  },
-  {
-    id: '2',
-    name: 'Kurti Stitching',
-    description: 'Custom kurti tailoring',
-    category: 'kurti',
-    pricing: [{ type: 'Basic', price: 800, description: 'Simple design' }],
-    estimatedDays: 10,
-    requiresMeasurements: true
-  },
-  {
-    id: '3',
-    name: 'Bridal Stitching',
-    description: 'Custom bridal wear',
-    category: 'bridal',
-    pricing: [{ type: 'Premium', price: 5000, description: 'Elaborate design' }],
-    estimatedDays: 21,
-    requiresMeasurements: true
-  }
-];
+import { useAuth } from '../contexts/AuthContext';
+import { createOrder, getAllServices } from '../services/firestoreService';
+import { LoadingSpinner } from '../components';
 
 const BookingPage: React.FC = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [services, setServices] = useState<Service[]>([]);
+  const [loadingServices, setLoadingServices] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<Partial<BookingData>>({
     measurementType: 'shop'
@@ -43,11 +20,33 @@ const BookingPage: React.FC = () => {
 
   const totalSteps = 2;
 
+  // Fetch services from Firebase
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoadingServices(true);
+        const fetchedServices = await getAllServices();
+        setServices(fetchedServices);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        setErrors({ services: 'Failed to load services. Please refresh the page.' });
+      } finally {
+        setLoadingServices(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
   const validateStep1 = (): boolean => {
     const newErrors: Record<string, string> = {};
     
     if (!formData.serviceId) {
       newErrors.serviceId = 'Please select a service';
+    }
+    
+    if (!formData.pricingTier) {
+      newErrors.pricingTier = 'Please select a pricing tier';
     }
     
     if (!formData.appointmentDate) {
@@ -126,25 +125,55 @@ const BookingPage: React.FC = () => {
     if (!validateStep2()) {
       return;
     }
+
+    if (!user) {
+      setErrors({ submit: 'You must be logged in to create a booking' });
+      return;
+    }
+
+    if (!formData.serviceId || !formData.appointmentDate) {
+      setErrors({ submit: 'Please complete all required fields' });
+      return;
+    }
     
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Create order in Firebase
+      const orderData: any = {
+        customerId: user.id,
+        serviceId: formData.serviceId,
+        pricingTier: formData.pricingTier,
+        status: 'pending',
+        appointmentDate: formData.appointmentDate,
+        specialInstructions: formData.measurementType === 'shop' 
+          ? 'Customer will visit shop for measurements' 
+          : 'Customer provided measurements'
+      };
       
-      // Handle successful submission
-      console.log('Booking submitted:', formData);
-      alert('Booking submitted successfully! We will contact you soon.');
+      // Only add measurements if they exist (custom measurements)
+      if (formData.measurements) {
+        orderData.measurements = formData.measurements;
+      }
+      
+      const orderId = await createOrder(orderData);
+      
+      console.log('Order created successfully:', orderId);
+      alert('Booking submitted successfully! Order ID: ' + orderId + '\n\nWe will contact you soon.');
       
       // Reset form
       setFormData({ measurementType: 'shop' });
       setCurrentStep(1);
       setErrors({});
       
-    } catch (error) {
+      // Redirect to home page after 1 second
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+      
+    } catch (error: any) {
       console.error('Submission error:', error);
-      setErrors({ submit: 'Failed to submit booking. Please try again.' });
+      setErrors({ submit: error.message || 'Failed to submit booking. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -159,8 +188,27 @@ const BookingPage: React.FC = () => {
           <p className="text-slate-600 mt-1">Schedule your dress stitching appointment</p>
         </div>
 
-        {/* Progress Indicator */}
-        <div className="mb-8">
+        {/* Loading Services */}
+        {loadingServices ? (
+          <LoadingSpinner text="Loading services..." className="py-12" />
+        ) : errors.services ? (
+          <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-6">
+            <p className="text-red-600">{errors.services}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-2 text-red-700 underline"
+            >
+              Refresh Page
+            </button>
+          </div>
+        ) : services.length === 0 ? (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-6">
+            <p className="text-yellow-800">No services available. Please contact the administrator.</p>
+          </div>
+        ) : (
+          <>
+            {/* Progress Indicator */}
+            <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-slate-600">
               Step {currentStep} of {totalSteps}
@@ -191,7 +239,7 @@ const BookingPage: React.FC = () => {
                   id="service"
                   value={formData.serviceId || ''}
                   onChange={(e) => {
-                    setFormData({ ...formData, serviceId: e.target.value });
+                    setFormData({ ...formData, serviceId: e.target.value, pricingTier: undefined });
                     if (errors.serviceId) {
                       setErrors({ ...errors, serviceId: '' });
                     }
@@ -202,9 +250,11 @@ const BookingPage: React.FC = () => {
                   required
                 >
                   <option value="">Choose a service...</option>
-                  {mockServices.map((service) => (
+                  {services.map((service) => (
                     <option key={service.id} value={service.id}>
-                      {service.name} - ₹{service.pricing[0].price} ({service.estimatedDays} days)
+                      {service.name} - ₹{service.pricing[0].price}
+                      {service.pricing.length > 1 && ` - ₹${service.pricing[service.pricing.length - 1].price}`}
+                      {' '}({service.estimatedDays} days)
                     </option>
                   ))}
                 </select>
@@ -212,6 +262,60 @@ const BookingPage: React.FC = () => {
                   <p className="text-red-500 text-sm mt-1">{errors.serviceId}</p>
                 )}
               </div>
+
+              {/* Pricing Tier Selection - Only show if service is selected and has multiple tiers */}
+              {formData.serviceId && (() => {
+                const selectedService = services.find(s => s.id === formData.serviceId);
+                return selectedService && selectedService.pricing.length > 0 ? (
+                  <div>
+                    <label htmlFor="pricingTier" className="block text-sm font-medium text-slate-700 mb-2">
+                      Select Pricing Tier *
+                    </label>
+                    <div className="space-y-2">
+                      {selectedService.pricing.map((tier, index) => (
+                        <label
+                          key={index}
+                          className={`flex items-center justify-between p-4 border-2 rounded-2xl cursor-pointer transition-all ${
+                            formData.pricingTier === tier.type
+                              ? 'border-rose-500 bg-rose-50'
+                              : 'border-slate-300 bg-white hover:border-slate-400'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="radio"
+                              id={`tier-${index}`}
+                              name="pricingTier"
+                              value={tier.type}
+                              checked={formData.pricingTier === tier.type}
+                              onChange={(e) => {
+                                setFormData({ ...formData, pricingTier: e.target.value });
+                                if (errors.pricingTier) {
+                                  setErrors({ ...errors, pricingTier: '' });
+                                }
+                              }}
+                              className="w-4 h-4 text-rose-600 border-slate-300 focus:ring-rose-500"
+                              required
+                            />
+                            <div>
+                              <div className="font-medium text-slate-800">{tier.type}</div>
+                              {tier.description && (
+                                <div className="text-sm text-slate-600">{tier.description}</div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="text-lg font-bold text-rose-600">
+                            ₹{tier.price}
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                    {errors.pricingTier && (
+                      <p className="text-red-500 text-sm mt-1">{errors.pricingTier}</p>
+                    )}
+                  </div>
+                ) : null;
+              })()}
 
               {/* Date Selection */}
               <div>
@@ -250,15 +354,22 @@ const BookingPage: React.FC = () => {
               {formData.serviceId && (
                 <div className="bg-rose-50 p-4 rounded-2xl">
                   {(() => {
-                    const selectedService = mockServices.find(s => s.id === formData.serviceId);
+                    const selectedService = services.find(s => s.id === formData.serviceId);
                     return selectedService ? (
                       <div>
                         <h3 className="font-medium text-slate-800 mb-2">{selectedService.name}</h3>
                         <p className="text-sm text-slate-600 mb-2">{selectedService.description}</p>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-slate-600">Price:</span>
-                          <span className="font-medium text-rose-600">₹{selectedService.pricing[0].price}</span>
+                        
+                        {/* Show all pricing tiers */}
+                        <div className="space-y-1 mb-2">
+                          {selectedService.pricing.map((tier, index) => (
+                            <div key={index} className="flex justify-between text-sm">
+                              <span className="text-slate-600">{tier.type}:</span>
+                              <span className="font-medium text-rose-600">₹{tier.price}</span>
+                            </div>
+                          ))}
                         </div>
+                        
                         <div className="flex justify-between text-sm mt-1">
                           <span className="text-slate-600">Estimated Days:</span>
                           <span className="font-medium">{selectedService.estimatedDays} days</span>
@@ -545,6 +656,8 @@ const BookingPage: React.FC = () => {
             )}
           </div>
         </form>
+        </>
+        )}
       </div>
     </div>
   );

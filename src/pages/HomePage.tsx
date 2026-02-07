@@ -1,94 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Scissors, Ruler, Truck } from 'lucide-react';
-import { ServiceCard } from '../components';
+import { ServiceCard, LoadingSpinner } from '../components';
 import { Service } from '../types';
+import { getAllServices } from '../services/firestoreService';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch services from Firebase
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const fetchedServices = await getAllServices();
+        setServices(fetchedServices);
+      } catch (err: any) {
+        console.error('Error fetching services:', err);
+        setError('Failed to load services. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   const handleBookAppointment = () => {
     navigate('/book');
   };
-
-  // Mock service data
-  const services: Service[] = [
-    {
-      id: 'blouse',
-      name: 'Blouse Stitching',
-      description: 'Custom blouse stitching with perfect fit and elegant designs',
-      category: 'blouse',
-      estimatedDays: 3,
-      requiresMeasurements: true,
-      pricing: [
-        {
-          type: 'Simple Blouse',
-          price: 500,
-          description: 'Basic blouse with standard design'
-        },
-        {
-          type: 'Designer Blouse',
-          price: 800,
-          description: 'Intricate designs with embellishments'
-        },
-        {
-          type: 'Heavy Work Blouse',
-          price: 1200,
-          description: 'Premium blouse with heavy embroidery'
-        }
-      ]
-    },
-    {
-      id: 'kurti',
-      name: 'Kurti Stitching',
-      description: 'Comfortable and stylish kurti designs for everyday wear',
-      category: 'kurti',
-      estimatedDays: 4,
-      requiresMeasurements: true,
-      pricing: [
-        {
-          type: 'Cotton Kurti',
-          price: 600,
-          description: 'Comfortable cotton kurti for daily wear'
-        },
-        {
-          type: 'Silk Kurti',
-          price: 900,
-          description: 'Elegant silk kurti for special occasions'
-        },
-        {
-          type: 'Embroidered Kurti',
-          price: 1100,
-          description: 'Beautiful embroidered kurti with detailed work'
-        }
-      ]
-    },
-    {
-      id: 'bridal',
-      name: 'Bridal Wear',
-      description: 'Exquisite bridal outfits for your special day',
-      category: 'bridal',
-      estimatedDays: 14,
-      requiresMeasurements: true,
-      pricing: [
-        {
-          type: 'Lehenga Set',
-          price: 5000,
-          description: 'Complete bridal lehenga with blouse and dupatta'
-        },
-        {
-          type: 'Saree Blouse',
-          price: 2000,
-          description: 'Designer blouse for bridal saree'
-        },
-        {
-          type: 'Custom Bridal Outfit',
-          price: 8000,
-          description: 'Fully customized bridal wear with premium fabrics'
-        }
-      ]
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-primary-50">
@@ -161,22 +105,47 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Services Section */}
-      <section className="px-4 py-12 bg-primary-50 md:py-20">
+      <section id="services-section" className="px-4 py-12 bg-primary-50 md:py-20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-text-primary text-center mb-8 md:mb-12">
             Our Services
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-md mx-auto md:max-w-none">
-            {services.map((service) => (
-              <ServiceCard
-                key={service.id}
-                id={service.id}
-                name={service.name}
-                description={service.description}
-                pricing={service.pricing}
-              />
-            ))}
-          </div>
+          
+          {loading ? (
+            <LoadingSpinner text="Loading services..." className="py-12" />
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="bg-red-50 border border-red-200 rounded-2xl p-6 max-w-md mx-auto">
+                <p className="text-red-600 mb-4">{error}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 transition-colors"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          ) : services.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">✂️</span>
+              </div>
+              <p className="text-slate-600 text-lg">No services available at the moment.</p>
+              <p className="text-slate-500 mt-2">Please check back later.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-md mx-auto md:max-w-none">
+              {services.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  id={service.id}
+                  name={service.name}
+                  description={service.description}
+                  pricing={service.pricing}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

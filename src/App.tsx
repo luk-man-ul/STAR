@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { ErrorBoundary, AppLayout, ProtectedRoute } from './components';
+import { ErrorBoundary, AppLayout, ProtectedRoute, LoadingSpinner } from './components';
 import {
   HomePage,
   MyOrdersPage,
@@ -11,11 +11,24 @@ import {
   CustomersPage,
   ServicesPage,
   CallUsPage,
-  ChatPage,
+  LocateShopPage,
   NotFoundPage
 } from './pages';
+import RegisterPage from './pages/RegisterPage';
+import { useAuth } from './contexts/AuthContext';
 
 function App() {
+  const { loading } = useAuth();
+
+  // Show loading spinner while checking authentication state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-rose-50 flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
   return (
     <ErrorBoundary>
       <AppLayout>
@@ -23,6 +36,7 @@ function App() {
           {/* Public routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/call-us" element={<CallUsPage />} />
           
           {/* Customer routes - require authentication */}
@@ -36,9 +50,9 @@ function App() {
               <BookingPage />
             </ProtectedRoute>
           } />
-          <Route path="/chat" element={
+          <Route path="/locate" element={
             <ProtectedRoute requiredRole="customer">
-              <ChatPage />
+              <LocateShopPage />
             </ProtectedRoute>
           } />
           <Route path="/account" element={

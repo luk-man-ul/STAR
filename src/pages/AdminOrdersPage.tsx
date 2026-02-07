@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { mockOrders, getOrdersForRole, getServiceById, getUserById } from '../utils';
 import { useAuth } from '../contexts/AuthContext';
 import { LoadingSpinner, ErrorMessage } from '../components';
 import { Order } from '../types';
+import { getAllOrders, getServiceById, getUserById, updateOrderStatus } from '../services/firestoreService';
 
 const AdminOrdersPage: React.FC = () => {
   const { userRole } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
+  const [services, setServices] = useState<Record<string, any>>({});
+  const [customers, setCustomers] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
@@ -17,14 +19,36 @@ const AdminOrdersPage: React.FC = () => {
         setLoading(true);
         setError(null);
         
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1200));
-        
-        // Get all orders for admin view
-        const adminOrders = getOrdersForRole(mockOrders, userRole);
+        // Fetch all orders from Firebase
+        const adminOrders = await getAllOrders();
         setOrders(adminOrders);
-      } catch (err) {
-        setError('Failed to load orders. Please try again.');
+
+        // Fetch services and customers for each order
+        const serviceMap: Record<string, any> = {};
+        const customerMap: Record<string, any> = {};
+        
+        for (const order of adminOrders) {
+          // Fetch service if not already fetched
+          if (!serviceMap[order.serviceId]) {
+            const service = await getServiceById(order.serviceId);
+            if (service) {
+              serviceMap[order.serviceId] = service;
+            }
+          }
+          
+          // Fetch customer if not already fetched
+          if (!customerMap[order.customerId]) {
+            const customer = await getUserById(order.customerId);
+            if (customer) {
+              customerMap[order.customerId] = customer;
+            }
+          }
+        }
+        
+        setServices(serviceMap);
+        setCustomers(customerMap);
+      } catch (err: any) {
+        setError(err.message || 'Failed to load orders. Please try again.');
         console.error('Error loading orders:', err);
       } finally {
         setLoading(false);
@@ -37,12 +61,10 @@ const AdminOrdersPage: React.FC = () => {
   const handleRetry = () => {
     setError(null);
     setLoading(true);
-    // Trigger reload
-    setTimeout(() => {
-      const adminOrders = getOrdersForRole(mockOrders, userRole);
-      setOrders(adminOrders);
-      setLoading(false);
-    }, 1200);
+    getAllOrders()
+      .then(setOrders)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   };
 
   const getStatusColor = (status: string) => {
@@ -76,9 +98,10 @@ const AdminOrdersPage: React.FC = () => {
     try {
       setUpdatingOrderId(orderId);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Update order status in Firebase
+      await updateOrderStatus(orderId, newStatus);
       
+      // Update local state
       setOrders(prevOrders =>
         prevOrders.map(order =>
           order.id === orderId
@@ -86,9 +109,9 @@ const AdminOrdersPage: React.FC = () => {
             : order
         )
       );
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error updating order status:', err);
-      // You could show a toast notification here
+      setError(err.message || 'Failed to update order status');
     } finally {
       setUpdatingOrderId(null);
     }
@@ -144,8 +167,8 @@ const AdminOrdersPage: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {orders.map((order) => {
-            const service = getServiceById(order.serviceId);
-            const customer = getUserById(order.customerId);
+            const service = services[order.serviceId];
+            const customer = customers[order.customerId];
             const isUpdating = updatingOrderId === order.id;
             
             return (
@@ -158,10 +181,15 @@ const AdminOrdersPage: React.FC = () => {
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="font-semibold text-slate-800">
-                      Order #{order.id.split('-')[1].toUpperCase()}
+                      Order #{order.id.substring(0, 8).toUpperCase()}
                     </h3>
                     <p className="text-slate-600 text-sm">
                       {service?.name || 'Unknown Service'}
+                      {order.pricingTier && (
+                        <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                          {order.pricingTier}
+                        </span>
+                      )}
                     </p>
                     <p className="text-slate-500 text-xs">
                       Customer: {customer?.name || 'Unknown Customer'}

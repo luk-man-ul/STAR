@@ -6,7 +6,7 @@ import {
   Phone, 
   User, 
   Calendar, 
-  MessageCircle, 
+  MapPin, 
   BarChart3, 
   Users, 
   Settings,
@@ -75,10 +75,10 @@ const navigationConfig: Record<UserRole, NavItem[]> = {
       path: '/book',
     },
     {
-      id: 'chat',
-      label: 'Chat',
-      icon: MessageCircle,
-      path: '/chat',
+      id: 'locate',
+      label: 'Locate',
+      icon: MapPin,
+      path: '/locate',
     },
     {
       id: 'account',

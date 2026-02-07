@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, AuthState, UserRole } from '../types';
+import { loginWithEmail, logout as firebaseLogout, onAuthChange } from '../services/authService';
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   setUser: (user: User | null) => void;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -13,90 +15,76 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-// Mock users for authentication
-const mockUsers: User[] = [
-  {
-    id: 'customer-1',
-    email: 'customer@example.com',
-    name: 'Jane Customer',
-    phone: '+1234567890',
-    role: 'customer',
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01')
-  },
-  {
-    id: 'admin-1',
-    email: 'admin@example.com',
-    name: 'Admin User',
-    phone: '+1234567891',
-    role: 'admin',
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01')
-  }
-];
-
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
     isAuthenticated: false,
     userRole: 'public'
   });
+  const [loading, setLoading] = useState(true);
 
-  // Load authentication state from localStorage on mount
+  // Listen to Firebase auth state changes
   useEffect(() => {
-    const savedUser = localStorage.getItem('auth_user');
-    if (savedUser) {
-      try {
-        const user: User = JSON.parse(savedUser);
+    const unsubscribe = onAuthChange((user) => {
+      if (user) {
         setAuthState({
           user,
           isAuthenticated: true,
-          userRole: user.role
+          userRole: user.role as UserRole
         });
-      } catch (error) {
-        // Clear invalid stored data
-        localStorage.removeItem('auth_user');
+      } else {
+        setAuthState({
+          user: null,
+          isAuthenticated: false,
+          userRole: 'public'
+        });
       }
-    }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Mock authentication - in real app, this would call an API
-    const user = mockUsers.find(u => u.email === email);
-    
-    if (user && password === 'password') { // Simple mock password
-      const newAuthState = {
-        user,
-        isAuthenticated: true,
-        userRole: user.role as UserRole
-      };
+    try {
+      const user = await loginWithEmail(email, password);
       
-      setAuthState(newAuthState);
-      localStorage.setItem('auth_user', JSON.stringify(user));
-      return true;
+      if (user) {
+        setAuthState({
+          user,
+          isAuthenticated: true,
+          userRole: user.role as UserRole
+        });
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      console.error('Login error:', error);
+      return false;
     }
-    
-    return false;
   };
 
-  const logout = () => {
-    setAuthState({
-      user: null,
-      isAuthenticated: false,
-      userRole: 'public'
-    });
-    localStorage.removeItem('auth_user');
+  const logout = async () => {
+    try {
+      await firebaseLogout();
+      setAuthState({
+        user: null,
+        isAuthenticated: false,
+        userRole: 'public'
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const setUser = (user: User | null) => {
     if (user) {
-      const newAuthState = {
+      setAuthState({
         user,
         isAuthenticated: true,
         userRole: user.role as UserRole
-      };
-      setAuthState(newAuthState);
-      localStorage.setItem('auth_user', JSON.stringify(user));
+      });
     } else {
       logout();
     }
@@ -106,7 +94,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     ...authState,
     login,
     logout,
-    setUser
+    setUser,
+    loading
   };
 
   return (

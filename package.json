@@ -9,9 +9,13 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "seed:services": "tsx src/seedServices.ts",
+    "list:services": "tsx src/listServices.ts"
   },
   "dependencies": {
+    "dotenv": "^17.2.4",
+    "firebase": "^12.9.0",
     "lucide-react": "^0.294.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -39,6 +43,7 @@
     "postcss": "^8.4.32",
     "tailwindcss": "^3.3.6",
     "ts-jest": "^29.4.6",
+    "tsx": "^4.21.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   }

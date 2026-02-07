@@ -9,5 +9,5 @@ export { default as AdminOrdersPage } from './AdminOrdersPage';
 export { default as CustomersPage } from './CustomersPage';
 export { default as ServicesPage } from './ServicesPage';
 export { default as CallUsPage } from './CallUsPage';
-export { default as ChatPage } from './ChatPage';
+export { default as LocateShopPage } from './LocateShopPage';
 export { default as NotFoundPage } from './NotFoundPage';
