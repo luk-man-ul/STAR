@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mobile-first base styles */
+@layer base {
+  html {
+    /* Prevent iOS zoom on input focus */
+    -webkit-text-size-adjust: 100%;
+    /* Smooth scrolling for better mobile experience */
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    /* Mobile-optimized font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+    /* Base mobile typography */
+    @apply text-text-primary bg-white;
+  }
+  
+  /* Ensure all inputs are at least 16px to prevent iOS zoom */
+  input, textarea, select {
+    @apply text-base; /* 16px minimum */
+  }
+  
+  /* Touch-friendly interactive elements */
+  button, [role="button"], a {
+    @apply min-h-touch; /* 48px minimum height */
+  }
+}
+
+/* Mobile-first component utilities */
+@layer components {
+  /* Primary button style following design system */
+  .btn-primary {
+    @apply bg-primary-600 text-white px-6 py-3 rounded-button font-medium;
+    @apply hover:bg-primary-700 active:bg-primary-800;
+    @apply transition-colors duration-200;
+    @apply min-h-touch; /* Touch accessibility */
+  }
+  
+  /* Secondary button style */
+  .btn-secondary {
+    @apply bg-white text-primary-600 border border-primary-600 px-6 py-3 rounded-button font-medium;
+    @apply hover:bg-primary-50 active:bg-primary-100;
+    @apply transition-colors duration-200;
+    @apply min-h-touch;
+  }
+  
+  /* Card component style */
+  .card {
+    @apply bg-white rounded-card shadow-sm border border-gray-100;
+    @apply p-4 sm:p-6; /* Responsive padding */
+  }
+  
+  /* Bottom navigation blur effect */
+  .bottom-nav-blur {
+    @apply backdrop-blur-md bg-white/80;
+    /* Fallback for browsers that don't support backdrop-blur */
+    @supports not (backdrop-filter: blur(12px)) {
+      @apply bg-white;
+    }
+  }
+}

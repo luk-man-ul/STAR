@@ -1,0 +1,171 @@
+import React, { useState, useEffect } from 'react';
+import { mockOrders, getOrdersForRole, getServiceById } from '../utils';
+import { useAuth } from '../contexts/AuthContext';
+import { LoadingSpinner, ErrorMessage } from '../components';
+import { Order } from '../types';
+
+const MyOrdersPage: React.FC = () => {
+  const { userRole, user } = useAuth();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Use the authenticated user's ID, or fallback to mock for development
+  const customerId = user?.id || 'user-1';
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Get orders for the current customer
+        const customerOrders = getOrdersForRole(mockOrders, userRole, customerId);
+        setOrders(customerOrders);
+      } catch (err) {
+        setError('Failed to load your orders. Please try again.');
+        console.error('Error loading orders:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadOrders();
+  }, [userRole, customerId]);
+
+  const handleRetry = () => {
+    setError(null);
+    setLoading(true);
+    // Trigger reload
+    setTimeout(() => {
+      const customerOrders = getOrdersForRole(mockOrders, userRole, customerId);
+      setOrders(customerOrders);
+      setLoading(false);
+    }, 1000);
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return 'text-yellow-600 bg-yellow-50';
+      case 'confirmed':
+        return 'text-blue-600 bg-blue-50';
+      case 'measuring':
+        return 'text-purple-600 bg-purple-50';
+      case 'stitching':
+        return 'text-orange-600 bg-orange-50';
+      case 'ready':
+        return 'text-green-600 bg-green-50';
+      case 'delivered':
+        return 'text-gray-600 bg-gray-50';
+      default:
+        return 'text-gray-600 bg-gray-50';
+    }
+  };
+
+  const formatDate = (date: Date) => {
+    return new Intl.DateTimeFormat('en-IN', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    }).format(date);
+  };
+
+  if (loading) {
+    return (
+      <div className="p-4 pb-20">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">My Orders</h1>
+        <p className="text-slate-600 mb-6">View your order history and status</p>
+        <LoadingSpinner text="Loading your orders..." className="py-12" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 pb-20">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">My Orders</h1>
+        <p className="text-slate-600 mb-6">View your order history and status</p>
+        <ErrorMessage
+          title="Unable to Load Orders"
+          message={error}
+          onRetry={handleRetry}
+          variant="card"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 pb-20">
+      <h1 className="text-2xl font-bold text-slate-800 mb-2">My Orders</h1>
+      <p className="text-slate-600 mb-6">View your order history and status</p>
+      
+      {orders.length === 0 ? (
+        <div className="text-center py-12">
+          <div className="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-2xl">📦</span>
+          </div>
+          <div className="text-slate-600 text-lg mb-2">No orders found</div>
+          <p className="text-slate-500 mb-6">You haven't placed any orders yet.</p>
+          <button
+            onClick={() => window.location.href = '/book'}
+            className="bg-rose-600 text-white px-6 py-3 rounded-2xl font-medium hover:bg-rose-700 transition-colors"
+          >
+            Place Your First Order
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {orders.map((order) => {
+            const service = getServiceById(order.serviceId);
+            return (
+              <div
+                key={order.id}
+                className="bg-white rounded-3xl p-4 shadow-sm border border-rose-100"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3 className="font-semibold text-slate-800">
+                      Order #{order.id.split('-')[1].toUpperCase()}
+                    </h3>
+                    <p className="text-slate-600 text-sm">
+                      {service?.name || 'Unknown Service'}
+                    </p>
+                  </div>
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(order.status)}`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+                
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex justify-between">
+                    <span>Appointment Date:</span>
+                    <span>{formatDate(order.appointmentDate)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Order Date:</span>
+                    <span>{formatDate(order.createdAt)}</span>
+                  </div>
+                  {order.specialInstructions && (
+                    <div className="pt-2 border-t border-rose-100">
+                      <span className="text-xs text-slate-500">Special Instructions:</span>
+                      <p className="text-slate-600 mt-1">{order.specialInstructions}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MyOrdersPage;
