@@ -1,0 +1,380 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  BOOKED
+  MEASUREMENT_PENDING
+  MEASURED
+  CUTTING
+  STITCHING
+  QUALITY_CHECK
+  READY_FOR_PICKUP
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum MeasurementSource {
+  SHOP
+  ONLINE
+}
+
+enum DeliveryType {
+  PICKUP
+  DELIVERY
+}
+
+enum PaymentStatus {
+  UNPAID
+  PARTIALLY_PAID
+  PAID
+}
+
+enum PaymentMethod {
+  CASH
+  UPI
+  CARD
+  OTHER
+}
+
+enum FabricSource {
+  CUSTOMER_PROVIDED
+  SHOP_PROVIDED
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  MEASUREMENT_UPDATED
+  STATUS_CHANGED
+  PAYMENT_RECEIVED
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+enum BookingStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+  CONVERTED
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  RESCHEDULED
+  ARRIVED
+  MISSED
+  CANCELLED
+}
+
+enum BusinessStatus {
+  OPEN
+  CLOSED
+}
+
+model User {
+  id               String            @id
+  email            String            @unique
+  name             String
+  phone            String
+  role             Role              @default(CUSTOMER)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  
+  addresses        Address[]
+  measurements     Measurement?
+  orders           Order[]
+  bookings         Booking[]
+  notificationLogs NotificationLog[]
+
+  @@map("users")
+}
+
+model Address {
+  id           String   @id @default(uuid())
+  userId       String
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  state        String
+  postalCode   String
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders       Order[]
+  bookings     Booking[]
+
+  @@map("addresses")
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  designs     Design[]
+
+  @@map("categories")
+}
+
+model Design {
+  id            String   @id @default(uuid())
+  categoryId    String
+  name          String
+  code          String   @unique
+  description   String?
+  imageUrl      String?
+  price         Float
+  estimatedDays Int
+  featured      Boolean  @default(false)
+  displayOrder  Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orders        Order[]
+  bookings      Booking[]
+
+  @@map("designs")
+}
+
+model Measurement {
+  id                String            @id @default(uuid())
+  userId            String            @unique
+  measurementSource MeasurementSource @default(ONLINE)
+  verifiedByShop    Boolean           @default(false)
+  verifiedAt        DateTime?
+  notes             String?
+  version           Int               @default(1)
+  
+  bust              Float?
+  underBust         Float?
+  waist             Float?
+  hip               Float?
+  shoulder          Float?
+  neck              Float?
+  armHole           Float?
+  sleeveLength      Float?
+  sleeveRound       Float?
+  frontNeckDepth    Float?
+  backNeckDepth     Float?
+  totalLength       Float?
+  bottomRound       Float?
+  
+  additionalMeasurements Json?
+  
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("measurements")
+}
+
+model Booking {
+  id                  String            @id @default(uuid())
+  shortId             String            @unique
+  customerId          String
+  designId            String
+  status              BookingStatus     @default(PENDING)
+  measurementMethod   MeasurementSource @default(ONLINE)
+  deliveryMethod      DeliveryType      @default(PICKUP)
+  addressId           String?
+  specialInstructions String?
+  
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  customer            User              @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  design              Design            @relation(fields: [designId], references: [id], onDelete: Restrict)
+  shippingAddress     Address?          @relation(fields: [addressId], references: [id], onDelete: SetNull)
+  appointment         Appointment?
+
+  @@map("bookings")
+}
+
+model Appointment {
+  id              String            @id @default(uuid())
+  bookingId       String            @unique
+  appointmentDate DateTime
+  status          AppointmentStatus @default(SCHEDULED)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  booking         Booking           @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@map("appointments")
+}
+
+model ShopSettings {
+  id                     String         @id @default("default-settings")
+  status                 BusinessStatus @default(OPEN)
+  
+  shopName               String         @default("Star Stitcher")
+  logoUrl                String?
+  aboutShop              String?
+  
+  phone                  String         @default("+91 7306417315")
+  whatsapp               String         @default("+91 7306417315")
+  email                  String         @default("starstitcherladiescentre@gmail.com")
+  address                String         @default("KRP Rao Road, Kasaragod, Kerala")
+  googleMapsLink         String?
+  
+  enableHomeDelivery     Boolean        @default(true)
+  enablePickup           Boolean        @default(true)
+  deliveryCharges        Float          @default(0.0)
+  appointmentDuration    Int            @default(30)
+  maxAppointmentsPerSlot Int            @default(1)
+  
+  heroHeading            String         @default("Exquisite Custom Tailoring")
+  heroSubheading         String         @default("Crafting perfect designs for every occasion")
+  
+  instagramUrl           String?
+  facebookUrl            String?
+  websiteUrl             String?
+  
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+
+  businessHours          BusinessHour[]
+  holidays               Holiday[]
+
+  @@map("shop_settings")
+}
+
+model BusinessHour {
+  id          String       @id @default(uuid())
+  dayOfWeek   Int          // 0 (Sunday) to 6 (Saturday)
+  isOpen      Boolean      @default(true)
+  openTime    String       @default("10:00")
+  closeTime   String       @default("18:30")
+  settingsId  String
+  settings    ShopSettings @relation(fields: [settingsId], references: [id], onDelete: Cascade)
+
+  @@unique([settingsId, dayOfWeek])
+  @@map("business_hours")
+}
+
+model Holiday {
+  id          String       @id @default(uuid())
+  holidayDate DateTime
+  name        String
+  description String?
+  settingsId  String
+  settings    ShopSettings @relation(fields: [settingsId], references: [id], onDelete: Cascade)
+
+  @@unique([settingsId, holidayDate])
+  @@map("holidays")
+}
+
+model Order {
+  id                  String             @id @default(uuid())
+  shortId             String             @unique
+  customerId          String
+  designId            String
+  status              OrderStatus        @default(BOOKED)
+  appointmentDate     DateTime
+  deliveryType        DeliveryType       @default(PICKUP)
+  addressId           String?
+  specialInstructions String?
+  
+  measurementSnapshot Json?
+  
+  isUrgent            Boolean            @default(false)
+  rushFee             Float              @default(0.0)
+  
+  fabricSource        FabricSource       @default(CUSTOMER_PROVIDED)
+  fabricDescription   String?
+  fabricImageUrl      String?
+  fabricReceived      Boolean            @default(false)
+  fabricReceivedAt    DateTime?
+  
+  expectedDeliveryDate DateTime?
+  actualDeliveryDate   DateTime?
+  pickupDate           DateTime?
+  deliveryProvider     String?
+  trackingNumber       String?
+  
+  finalPrice           Float
+  priceOverrideReason  String?
+  paymentStatus        PaymentStatus      @default(UNPAID)
+  paidAmount           Float              @default(0.0)
+  remainingAmount      Float              @default(0.0)
+
+  styleReferences      Json?
+
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  customer            User               @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  design              Design             @relation(fields: [designId], references: [id], onDelete: Restrict)
+  shippingAddress     Address?           @relation(fields: [addressId], references: [id], onDelete: SetNull)
+  transactions        PaymentTransaction[]
+  notificationLogs    NotificationLog[]
+  timelineEvents      TimelineEvent[]
+
+  @@map("orders")
+}
+
+model PaymentTransaction {
+  id                   String        @id @default(uuid())
+  orderId              String
+  amount               Float
+  paymentMethod        PaymentMethod @default(UPI)
+  transactionReference String?
+  notes                String?
+  paidAt               DateTime      @default(now())
+
+  order                Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("payment_transactions")
+}
+
+model NotificationLog {
+  id             String             @id @default(uuid())
+  orderId        String?
+  userId         String
+  type           NotificationType
+  status         NotificationStatus @default(PENDING)
+  recipientPhone String
+  messageBody    String
+  errorMessage   String?
+  sentAt         DateTime           @default(now())
+
+  order          Order?             @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_logs")
+}
+
+model TimelineEvent {
+  id          String      @id @default(uuid())
+  orderId     String
+  status      OrderStatus
+  notes       String?
+  createdAt   DateTime    @default(now())
+
+  order       Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("timeline_events")
+}

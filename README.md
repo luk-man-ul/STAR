@@ -1,82 +1,62 @@
-# Dress Stitching Website
+# Star Stitcher V2: Ladies Tailoring Centre
 
-A mobile-first React website for a ladies' custom dress stitching center. Built with modern web technologies and optimized for mobile devices.
+Bespoke custom tailoring application for **Star Stitcher** ladies boutique in Kasaragod, Kerala.
 
-## Features
+## Technical Architecture Overview
 
-- **Mobile-First Design**: Optimized for mobile devices with 360px baseline width
-- **Role-Based Navigation**: Different navigation for public users, customers, and administrators
-- **Responsive Design**: Tailwind CSS with custom breakpoints and touch-friendly interactions
-- **Modern Tech Stack**: React 18, TypeScript, Vite, and Tailwind CSS
+The system is split into two modular repositories:
+1. **Frontend (`star-stitcher-frontend`):** Next.js 15 App Router interface integrated with Tailwind CSS, Zustand, and React Query.
+2. **Backend (`star-stitcher-backend`):** NestJS REST APIs using Prisma ORM connected to Supabase PostgreSQL and Storage buckets.
 
-## Tech Stack
+---
 
-- **Frontend**: React 18 with TypeScript
-- **Build Tool**: Vite for fast development and optimized builds
-- **Styling**: Tailwind CSS with custom Rose & Cream theme
-- **Routing**: React Router DOM v6+
-- **Icons**: Lucide React for consistent iconography
-- **Testing**: Jest with React Testing Library and Fast-check for property-based testing
+## Workspace Directory
 
-## Getting Started
+* `/star-stitcher-frontend`: Client application code.
+* `/star-stitcher-backend`: Server application code.
+* `/DEPLOYMENT.md`: Continuous integration and hosting configuration guide.
+* `/ENVIRONMENT.md`: Environment keys reference.
+* `/BACKUP.md`: Database snapshots and recovery guidelines.
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
+## Quickstart Instructions
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
+### Prerequisites
+* Node.js v18 or later
+* npm or yarn
+* A running Supabase PostgreSQL project instance
 
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run lint` - Run ESLint
-
-## Project Structure
-
-```
-src/
-├── components/     # Reusable UI components
-├── pages/         # Page components
-├── utils/         # Utility functions
-├── types/         # TypeScript type definitions
-├── App.tsx        # Main application component
-├── main.tsx       # Application entry point
-└── index.css      # Global styles with Tailwind
+### 1. Set Up Database
+Go to the backend repository, duplicate the environment file, and apply schema migrations:
+```bash
+cd star-stitcher-backend
+cp .env.example .env
+# Edit DATABASE_URL in .env to point to your Supabase PostgreSQL instance
+npx prisma db push
+npx prisma db seed
 ```
 
-## Design System
+### 2. Launch Backend Server
+```bash
+npm install
+npm run start:dev
+```
+The server starts at `http://localhost:4000/api/v1` with Swagger docs available at `http://localhost:4000/api/docs`.
 
-### Colors
-- **Primary**: Rose 600 (#e11d48) for CTAs and active states
-- **Background**: Rose 50 (#fff1f2) for subtle backgrounds
-- **Text**: Slate 800 (#1e293b) for primary text content
+### 3. Launch Client App
+```bash
+cd ../star-stitcher-frontend
+cp .env.example .env
+# Verify NEXT_PUBLIC_API_URL is pointing to the active backend address
+npm install
+npm run dev
+```
+The client website starts at `http://localhost:3000`.
 
-### Mobile-First Breakpoints
-- `xs`: 360px (baseline mobile)
-- `sm`: 640px (small tablets)
-- `md`: 768px (tablets)
-- `lg`: 1024px (desktop)
-- `xl`: 1280px (large desktop)
+---
 
-### Touch Accessibility
-- Minimum 48px height for all interactive elements
-- 16px minimum font size for inputs (prevents iOS zoom)
-- Optimized touch targets and spacing
-
-## Development Guidelines
-
-- Follow mobile-first design principles
-- Ensure all interactive elements meet touch accessibility standards
-- Use semantic HTML and proper ARIA labels
-- Test on actual mobile devices when possible
-- Maintain consistent spacing and typography scales
+## Workflow Enforcement & Booking Validation
+* Sunday closures are automatically resolved via dynamic weekly hours checks.
+* Custom holiday logs block scheduling appointments on specific calendar dates.
+* When the business status is changed to `CLOSED` in admin settings, public bookings are disabled and customers are redirected to WhatsApp details.
