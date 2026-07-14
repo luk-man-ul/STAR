@@ -66,23 +66,25 @@ export default function BookPage() {
   const selectedDelivery = watch('deliveryMethod');
   const selectedTime = watch('appointmentTime');
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        setLoading(true);
-        const [designsRes, addressesRes] = await Promise.all([
-          apiClient.get('/designs'),
-          apiClient.get('/addresses').catch(() => ({ data: [] })),
-          fetchSettings(),
-        ]);
-        setDesigns(designsRes.data.data || []);
-        setAddresses(addressesRes.data || []);
-      } catch (err) {
-        setError('Failed to load catalog resources.');
-      } finally {
-        setLoading(false);
-      }
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const [designsRes, addressesRes] = await Promise.all([
+        apiClient.get('/designs'),
+        apiClient.get('/addresses').catch(() => ({ data: [] })),
+        fetchSettings(),
+      ]);
+      setDesigns(designsRes.data.data || []);
+      setAddresses(addressesRes.data || []);
+    } catch (err) {
+      setError('Failed to load catalog resources.');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
     loadData();
   }, [fetchSettings]);
 
@@ -148,7 +150,40 @@ export default function BookPage() {
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-sm text-stone-600">Loading lookbook and addresses details...</div>;
+    return (
+      <div className="max-w-2xl mx-auto space-y-8 py-4 animate-pulse">
+        <div className="space-y-2">
+          <div className="h-7 bg-stone-200 rounded w-1/3"></div>
+          <div className="h-4 bg-stone-200 rounded w-2/3"></div>
+        </div>
+        <div className="bg-white p-6 rounded-3xl border border-stone-200 space-y-6 h-[400px]">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="space-y-2">
+              <div className="h-4 bg-stone-200 rounded w-1/4"></div>
+              <div className="h-12 bg-stone-200 rounded-2xl w-full"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error && designs.length === 0 && !loading) {
+    return (
+      <div className="max-w-md mx-auto py-16 text-center flex flex-col items-center justify-center space-y-4">
+        <span className="text-5xl">📶</span>
+        <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Catalog</h2>
+        <p className="text-sm text-stone-650 max-w-sm">
+          We encountered an issue loading tailoring styles and catalog resources. Please check your connection.
+        </p>
+        <button
+          onClick={loadData}
+          className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          Retry Connection
+        </button>
+      </div>
+    );
   }
 
   return (

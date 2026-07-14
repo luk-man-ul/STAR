@@ -48,40 +48,42 @@ export default function MeasurementsPage() {
 
   const errors = formErrors as Record<string, any>;
 
-  useEffect(() => {
-    async function loadMeasurements() {
-      try {
-        setLoading(true);
-        const response = await apiClient.get('/measurements');
-        const data = response.data;
-        if (data) {
-          setValue('bust', data.bust ?? '');
-          setValue('underBust', data.underBust ?? '');
-          setValue('waist', data.waist ?? '');
-          setValue('hip', data.hip ?? '');
-          setValue('shoulder', data.shoulder ?? '');
-          setValue('armHole', data.armHole ?? '');
-          setValue('sleeveLength', data.sleeveLength ?? '');
-          setValue('sleeveRound', data.sleeveRound ?? '');
-          setValue('frontNeckDepth', data.frontNeckDepth ?? '');
-          setValue('backNeckDepth', data.backNeckDepth ?? '');
-          setValue('totalLength', data.totalLength ?? '');
-          setValue('bottomRound', data.bottomRound ?? '');
-          setValue('notes', data.notes ?? '');
+  const loadMeasurements = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiClient.get('/measurements');
+      const data = response.data;
+      if (data) {
+        setValue('bust', data.bust ?? '');
+        setValue('underBust', data.underBust ?? '');
+        setValue('waist', data.waist ?? '');
+        setValue('hip', data.hip ?? '');
+        setValue('shoulder', data.shoulder ?? '');
+        setValue('armHole', data.armHole ?? '');
+        setValue('sleeveLength', data.sleeveLength ?? '');
+        setValue('sleeveRound', data.sleeveRound ?? '');
+        setValue('frontNeckDepth', data.frontNeckDepth ?? '');
+        setValue('backNeckDepth', data.backNeckDepth ?? '');
+        setValue('totalLength', data.totalLength ?? '');
+        setValue('bottomRound', data.bottomRound ?? '');
+        setValue('notes', data.notes ?? '');
 
-          setMetadata({
-            version: data.version,
-            measurementSource: data.measurementSource,
-            verifiedByShop: data.verifiedByShop,
-            verifiedAt: data.verifiedAt,
-          });
-        }
-      } catch (err) {
-        setError('Failed to load sizing measurements.');
-      } finally {
-        setLoading(false);
+        setMetadata({
+          version: data.version,
+          measurementSource: data.measurementSource,
+          verifiedByShop: data.verifiedByShop,
+          verifiedAt: data.verifiedAt,
+        });
       }
+    } catch (err) {
+      setError('Failed to load sizing measurements.');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
     loadMeasurements();
   }, [setValue]);
 
@@ -107,7 +109,62 @@ export default function MeasurementsPage() {
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-sm text-stone-600">Loading sizing sheet...</div>;
+    return (
+      <div className="space-y-8 animate-pulse">
+        <div className="space-y-2">
+          <div className="h-6 bg-stone-200 rounded w-1/3"></div>
+          <div className="h-4 bg-stone-200 rounded w-2/3"></div>
+        </div>
+        <div className="flex gap-4 border-b border-stone-200 pb-2">
+          <div className="h-4 bg-stone-200 rounded w-16"></div>
+          <div className="h-4 bg-stone-200 rounded w-24"></div>
+          <div className="h-4 bg-stone-200 rounded w-20"></div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+            <div key={i} className="space-y-2">
+              <div className="h-4 bg-stone-200 rounded w-1/2"></div>
+              <div className="h-12 bg-stone-200 rounded-2xl w-full"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !loading && !metadata?.version) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-2xl font-bold text-stone-850">My Profile</h1>
+          <p className="text-stone-655 text-sm mt-1">Manage your customer profile and personal info</p>
+        </div>
+        <div className="flex gap-4 border-b border-stone-200 pb-2">
+          <Link href="/profile" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+            General Info
+          </Link>
+          <Link href="/profile/addresses" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+            Saved Addresses
+          </Link>
+          <Link href="/profile/measurements" className="text-sm font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
+            Measurements
+          </Link>
+        </div>
+        <div className="max-w-md py-16 text-center flex flex-col items-center justify-center space-y-4 mx-auto">
+          <span className="text-5xl">📶</span>
+          <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Measurements</h2>
+          <p className="text-sm text-stone-650 max-w-sm">
+            We encountered an issue loading your sizing measurements from our servers. Please check your connection.
+          </p>
+          <button
+            onClick={loadMeasurements}
+            className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+          >
+            Retry Connection
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

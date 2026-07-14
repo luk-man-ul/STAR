@@ -13,20 +13,46 @@ export default function OwnerLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, clearAuth } = useAuthStore();
+  const { user, setAuth, clearAuth } = useAuthStore();
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Basic verification on mount
-    if (!user) {
-      router.push('/login');
-    } else if (user.role !== 'ADMIN') {
-      // Access Denied
-      setChecking(false);
-    } else {
-      setChecking(false);
+    async function verifyAuth() {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+      if (!token) {
+        router.push('/login');
+        return;
+      }
+
+      if (!user) {
+        try {
+          const response = await apiClient.get('/users/me');
+          const fetchedUser = response.data;
+          setAuth(fetchedUser);
+          if (fetchedUser.role !== 'ADMIN') {
+            setChecking(false);
+          } else {
+            setChecking(false);
+          }
+        } catch (err) {
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('refresh_token');
+          }
+          clearAuth();
+          router.push('/login');
+        }
+      } else {
+        if (user.role !== 'ADMIN') {
+          // Access Denied
+          setChecking(false);
+        } else {
+          setChecking(false);
+        }
+      }
     }
-  }, [user, router]);
+    verifyAuth();
+  }, [user, router, setAuth, clearAuth]);
 
   const handleLogout = async () => {
     try {
@@ -44,7 +70,10 @@ export default function OwnerLayout({
   if (checking) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-stone-100 text-sm text-stone-600">
-        Verifying administrator permissions...
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-8 h-8 border-4 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+          <span>Verifying administrator permissions...</span>
+        </div>
       </div>
     );
   }
@@ -54,7 +83,7 @@ export default function OwnerLayout({
       <div className="flex min-h-screen flex-col items-center justify-center bg-stone-100 p-6 text-center space-y-4">
         <span className="text-4xl">🚫</span>
         <h1 className="text-xl font-bold text-stone-850">Access Denied</h1>
-        <p className="text-sm text-stone-600 max-w-sm">
+        <p className="text-sm text-stone-650 max-w-sm">
           You do not have the required permissions to view the Star Stitcher Admin dashboard.
         </p>
         <button
@@ -68,13 +97,14 @@ export default function OwnerLayout({
   }
 
   const sidebarLinks = [
-    { name: 'Overview Summary', href: '/admin/dashboard', icon: '📊' },
-    { name: 'Orders Queue', href: '/admin/orders', icon: '✂️' },
-    { name: 'Customers Lookup', href: '/admin/customers', icon: '👥' },
-    { name: 'Designs Lookbook', href: '/admin/designs', icon: '🎨' },
-    { name: 'Garment Categories', href: '/admin/categories', icon: '🏷️' },
-    { name: 'Bookings Queue', href: '/admin/bookings', icon: '📋' },
-    { name: 'Sizing Calendar', href: '/admin/calendar', icon: '📅' },
+    { name: 'Dashboard', href: '/admin/dashboard', icon: '📊' },
+    { name: 'Orders', href: '/admin/orders', icon: '✂️' },
+    { name: 'Bookings', href: '/admin/bookings', icon: '📋' },
+    { name: 'Calendar', href: '/admin/calendar', icon: '📅' },
+    { name: 'Designs', href: '/admin/designs', icon: '🎨' },
+    { name: 'Categories', href: '/admin/categories', icon: '🏷️' },
+    { name: 'Customers', href: '/admin/customers', icon: '👥' },
+    { name: 'Settings', href: '/admin/settings', icon: '⚙️' },
   ];
 
   return (

@@ -19,7 +19,7 @@ type ProfileInput = z.infer<typeof profileSchema>;
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { setAuth, clearAuth } = useAuthStore();
+  const { user, setAuth, clearAuth } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -34,21 +34,24 @@ export default function ProfilePage() {
     resolver: zodResolver(profileSchema),
   });
 
-  useEffect(() => {
-    async function loadProfile() {
-      try {
-        const response = await apiClient.get('/users/me');
-        const data = response.data;
-        setValue('name', data.name);
-        setValue('phone', data.phone);
-        setValue('avatarUrl', data.avatarUrl || '');
-        setAuth(data);
-      } catch (err: any) {
-        setError('Failed to load profile details. Please log in again.');
-      } finally {
-        setLoading(false);
-      }
+  const loadProfile = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiClient.get('/users/me');
+      const data = response.data;
+      setValue('name', data.name);
+      setValue('phone', data.phone);
+      setValue('avatarUrl', data.avatarUrl || '');
+      setAuth(data);
+    } catch (err: any) {
+      setError('Failed to load profile details.');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
     loadProfile();
   }, [setValue, setAuth]);
 
@@ -81,7 +84,49 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-sm text-stone-600">Loading your profile details...</div>;
+    return (
+      <div className="space-y-8 animate-pulse max-w-md">
+        <div className="space-y-2">
+          <div className="h-6 bg-stone-200 rounded w-1/3"></div>
+          <div className="h-4 bg-stone-200 rounded w-2/3"></div>
+        </div>
+        <div className="flex gap-4 border-b border-stone-200 pb-2">
+          <div className="h-4 bg-stone-200 rounded w-16"></div>
+          <div className="h-4 bg-stone-200 rounded w-24"></div>
+          <div className="h-4 bg-stone-200 rounded w-20"></div>
+        </div>
+        <div className="space-y-4 pt-4">
+          {[1, 2].map((i) => (
+            <div key={i} className="space-y-2">
+              <div className="h-4 bg-stone-200 rounded w-1/4"></div>
+              <div className="h-12 bg-stone-200 rounded-2xl w-full"></div>
+            </div>
+          ))}
+          <div className="flex gap-3 pt-4">
+            <div className="h-12 bg-stone-200 rounded-full w-28"></div>
+            <div className="h-12 bg-stone-200 rounded-full w-24"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !user) {
+    return (
+      <div className="max-w-md py-16 text-center flex flex-col items-center justify-center space-y-4">
+        <span className="text-5xl">📶</span>
+        <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Profile</h2>
+        <p className="text-sm text-stone-650 max-w-sm">
+          We encountered an issue loading your profile details from our servers. Please verify your connection.
+        </p>
+        <button
+          onClick={loadProfile}
+          className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          Retry Connection
+        </button>
+      </div>
+    );
   }
 
   return (

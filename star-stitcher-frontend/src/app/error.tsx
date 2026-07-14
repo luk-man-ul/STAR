@@ -17,7 +17,7 @@ export default function ErrorBoundary({
     <div className="flex min-h-screen flex-col items-center justify-center bg-stone-50 p-6 text-center space-y-6">
       <span className="text-6xl">⚠️</span>
       <h1 className="text-3xl font-extrabold text-stone-850 font-serif">Something Went Wrong</h1>
-      <p className="text-sm text-stone-500 max-w-sm leading-relaxed">
+      <p className="text-sm text-stone-650 max-w-sm leading-relaxed">
         An unexpected error occurred in the application. Please try reloading the page.
       </p>
       <div className="flex gap-4">

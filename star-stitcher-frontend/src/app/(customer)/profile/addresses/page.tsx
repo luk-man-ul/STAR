@@ -49,6 +49,7 @@ export default function AddressesPage() {
   const loadAddresses = async () => {
     try {
       setLoading(true);
+      setError(null);
       const response = await apiClient.get('/addresses');
       setAddresses(response.data);
     } catch (err) {
@@ -120,7 +121,63 @@ export default function AddressesPage() {
   };
 
   if (loading && addresses.length === 0) {
-    return <div className="text-center py-12 text-sm text-stone-600">Loading addresses...</div>;
+    return (
+      <div className="space-y-8 animate-pulse">
+        <div className="space-y-2">
+          <div className="h-6 bg-stone-200 rounded w-1/3"></div>
+          <div className="h-4 bg-stone-200 rounded w-2/3"></div>
+        </div>
+        <div className="flex gap-4 border-b border-stone-200 pb-2">
+          <div className="h-4 bg-stone-200 rounded w-16"></div>
+          <div className="h-4 bg-stone-200 rounded w-24"></div>
+          <div className="h-4 bg-stone-200 rounded w-20"></div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+          {[1, 2].map((i) => (
+            <div key={i} className="bg-white p-5 rounded-3xl border border-stone-200 space-y-4">
+              <div className="h-4 bg-stone-200 rounded w-1/3"></div>
+              <div className="h-4 bg-stone-200 rounded w-3/4"></div>
+              <div className="h-4 bg-stone-200 rounded w-1/2"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error && addresses.length === 0 && !loading) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-2xl font-bold text-stone-850">My Profile</h1>
+          <p className="text-stone-650 text-sm mt-1">Manage your customer profile and personal info</p>
+        </div>
+        <div className="flex gap-4 border-b border-stone-200 pb-2">
+          <Link href="/profile" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+            General Info
+          </Link>
+          <Link href="/profile/addresses" className="text-sm font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
+            Saved Addresses
+          </Link>
+          <Link href="/profile/measurements" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+            Measurements
+          </Link>
+        </div>
+        <div className="max-w-md py-16 text-center flex flex-col items-center justify-center space-y-4 mx-auto">
+          <span className="text-5xl">📶</span>
+          <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Addresses</h2>
+          <p className="text-sm text-stone-650 max-w-sm">
+            We encountered an issue loading your saved addresses from our servers. Please check your connection.
+          </p>
+          <button
+            onClick={loadAddresses}
+            className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+          >
+            Retry Connection
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -31,18 +31,20 @@ export default function CustomerBookingsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function loadBookings() {
-      try {
-        setLoading(true);
-        const response = await apiClient.get('/bookings/customer');
-        setBookings(response.data);
-      } catch (err) {
-        setError('Failed to load your booking history.');
-      } finally {
-        setLoading(false);
-      }
+  const loadBookings = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiClient.get('/bookings/customer');
+      setBookings(response.data);
+    } catch (err) {
+      setError('Failed to load your booking history.');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
     loadBookings();
   }, []);
 
@@ -57,14 +59,60 @@ export default function CustomerBookingsPage() {
       case 'CANCELLED':
         return 'bg-stone-200 text-stone-600 border-stone-300';
       case 'CONVERTED':
-        return 'bg-indigo-105 bg-indigo-100 text-indigo-700 border-indigo-200';
+        return 'bg-indigo-100 text-indigo-700 border-indigo-200';
       default:
         return 'bg-stone-100 text-stone-600 border-stone-250';
     }
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-sm text-stone-600">Loading bookings history...</div>;
+    return (
+      <div className="space-y-6 max-w-4xl mx-auto py-4">
+        <div className="flex justify-between items-center animate-pulse">
+          <div className="space-y-2 w-1/3">
+            <div className="h-6 bg-stone-200 rounded"></div>
+            <div className="h-4 bg-stone-200 rounded w-2/3"></div>
+          </div>
+          <div className="h-11 bg-stone-200 rounded-full w-36"></div>
+        </div>
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-white border border-stone-200 rounded-3xl p-5 space-y-4 animate-pulse">
+              <div className="flex justify-between border-b border-stone-100 pb-3">
+                <div className="h-5 bg-stone-200 rounded w-1/4"></div>
+                <div className="h-5 bg-stone-200 rounded w-16"></div>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {[1, 2, 3, 4].map((j) => (
+                  <div key={j} className="space-y-2">
+                    <div className="h-3 bg-stone-200 rounded w-1/2"></div>
+                    <div className="h-4 bg-stone-200 rounded w-3/4"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error && bookings.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto py-16 text-center flex flex-col items-center justify-center space-y-4">
+        <span className="text-5xl">📶</span>
+        <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Bookings</h2>
+        <p className="text-sm text-stone-650 max-w-sm">
+          We encountered an issue retrieving your booking history from our servers. Please check your internet connection.
+        </p>
+        <button
+          onClick={loadBookings}
+          className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          Retry Connection
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -72,7 +120,7 @@ export default function CustomerBookingsPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-stone-850 font-serif">My Bookings</h1>
-          <p className="text-xs text-stone-500 mt-1">Track request states, approvals, and appointments schedules</p>
+          <p className="text-xs text-stone-650 mt-1">Track request states, approvals, and appointments schedules</p>
         </div>
         <Link
           href="/book"
