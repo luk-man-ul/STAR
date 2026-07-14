@@ -26,6 +26,7 @@ export default function RegisterPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
@@ -37,9 +38,6 @@ export default function RegisterPage() {
     try {
       await apiClient.post('/auth/register', data);
       setSuccess(true);
-      setTimeout(() => {
-        router.push('/login');
-      }, 3000);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
@@ -49,12 +47,59 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="text-center space-y-4 py-8">
-        <div className="text-4xl">🎉</div>
-        <h2 className="text-xl font-bold text-stone-800">Registration Successful!</h2>
-        <p className="text-sm text-stone-600">
-          Your account has been created. Redirecting to login page...
-        </p>
+      <div className="space-y-6 py-4">
+        {/* Success Icon & Title */}
+        <div className="text-center space-y-3">
+          <div className="mx-auto w-12 h-12 bg-green-100 text-green-650 rounded-full flex items-center justify-center text-2xl font-extrabold shadow-sm">
+            ✓
+          </div>
+          <h2 className="text-xl font-bold text-stone-850">
+            ✅ Registration Successful!
+          </h2>
+        </div>
+
+        {/* Body Text */}
+        <div className="text-stone-750 text-sm space-y-3 text-center leading-relaxed">
+          <p>Your Star Stitcher account has been created successfully.</p>
+          <p>A verification email has been sent to your registered email address.</p>
+          <p className="font-semibold text-stone-800">
+            Please open your inbox and click the verification link before attempting to sign in.
+          </p>
+        </div>
+
+        {/* Informational Blue Callout */}
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl text-xs space-y-2 text-stone-800 shadow-sm">
+          <div className="font-bold text-blue-800 flex items-center gap-1.5 text-sm">
+            <span>📧</span> Important
+          </div>
+          <ul className="list-disc pl-4 space-y-1.5 text-stone-700 font-medium">
+            <li>Check your Inbox for the verification email.</li>
+            <li>If you don&apos;t see it within a few minutes, check your Spam or Junk folder.</li>
+            <li>You must verify your email before you can log in.</li>
+          </ul>
+        </div>
+
+        {/* Actions */}
+        <div className="space-y-4 pt-2">
+          <Link
+            href="/login"
+            className="w-full h-12 bg-rose-600 hover:bg-rose-700 text-white rounded-full font-semibold transition-all active:scale-98 flex items-center justify-center text-sm shadow-sm"
+          >
+            Go to Login
+          </Link>
+          
+          <div className="text-center">
+            <button
+              onClick={() => {
+                reset();
+                setSuccess(false);
+              }}
+              className="text-xs text-stone-650 hover:text-rose-600 font-semibold transition-colors"
+            >
+              ← Back to Register
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
