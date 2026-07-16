@@ -189,12 +189,12 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
       <div className="flex flex-wrap justify-between items-center gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-stone-850 font-serif">Order Details: {order.shortId}</h1>
+            <h1 className="text-2xl font-bold text-stone-900 font-serif">Order Details: {order.shortId}</h1>
             <span className="px-3 py-0.5 bg-rose-100 text-rose-700 font-bold text-[10px] rounded-full uppercase tracking-wider">
               {order.status.replace(/_/g, ' ')}
             </span>
           </div>
-          <p className="text-xs text-stone-500 mt-1">Stitching tracker metrics, fabric tracking and manual ledger logs</p>
+          <p className="text-xs text-stone-600 mt-1">Stitching tracker metrics, fabric tracking and manual ledger logs</p>
         </div>
         <div className="flex gap-3 text-xs font-semibold">
           <a
@@ -221,32 +221,32 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
         <div className="lg:col-span-8 space-y-6">
           
           {/* Order Snapshot Cards */}
-          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-6 text-xs text-stone-700">
+          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-6 text-xs text-stone-800">
             <div>
-              <span className="text-[10px] font-bold text-stone-400 uppercase block mb-1">Customer Profile</span>
+              <span className="text-[10px] font-bold text-stone-600 uppercase block mb-1">Customer Profile</span>
               <Link href={`/admin/customers/${order.customer.id}`} className="font-bold text-rose-600 hover:underline">
                 {order.customer.name}
               </Link>
-              <p className="text-stone-500 mt-0.5">{order.customer.phone}</p>
+              <p className="text-stone-600 mt-0.5">{order.customer.phone}</p>
             </div>
 
             <div>
-              <span className="text-[10px] font-bold text-stone-400 uppercase block mb-1">Design Code</span>
-              <p className="font-bold text-stone-850">{order.design.name}</p>
-              <p className="text-stone-500 mt-0.5">{order.design.category.name} ({order.design.code})</p>
+              <span className="text-[10px] font-bold text-stone-600 uppercase block mb-1">Design Code</span>
+              <p className="font-bold text-stone-800">{order.design.name}</p>
+              <p className="text-stone-600 mt-0.5">{order.design.category.name} ({order.design.code})</p>
             </div>
 
             <div>
-              <span className="text-[10px] font-bold text-stone-400 uppercase block mb-1">Delivery details</span>
-              <p className="font-bold text-stone-850">{order.deliveryType}</p>
-              <p className="text-stone-500 mt-0.5">
+              <span className="text-[10px] font-bold text-stone-600 uppercase block mb-1">Delivery details</span>
+              <p className="font-bold text-stone-800">{order.deliveryType}</p>
+              <p className="text-stone-600 mt-0.5">
                 {order.shippingAddress ? `${order.shippingAddress.addressLine1}, ${order.shippingAddress.city}` : 'Pickup'}
               </p>
             </div>
 
             <div>
-              <span className="text-[10px] font-bold text-stone-400 uppercase block mb-1">Expected Delivery</span>
-              <p className="font-extrabold text-stone-850 text-sm">
+              <span className="text-[10px] font-bold text-stone-600 uppercase block mb-1">Expected Delivery</span>
+              <p className="font-extrabold text-stone-800 text-sm">
                 {order.expectedDeliveryDate
                   ? new Date(order.expectedDeliveryDate).toLocaleDateString([], {
                       weekday: 'short',
@@ -260,28 +260,28 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
 
           {/* Measurements Snapshot panel */}
           <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4">
-            <h2 className="text-sm font-bold text-stone-850 font-serif border-b border-stone-100 pb-2">
+            <h2 className="text-sm font-bold text-stone-800 font-serif border-b border-stone-100 pb-2">
               Sizing Sheet Snapshot (At Confirmation)
             </h2>
             {order.measurementSnapshot && Object.keys(order.measurementSnapshot).length > 0 ? (
-              <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 text-xs text-stone-700">
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 text-xs text-stone-800">
                 {Object.entries(order.measurementSnapshot).map(([key, val]) => {
                   if (typeof val !== 'number' || val === null) return null;
                   return (
                     <div key={key} className="bg-stone-50 p-2.5 rounded-xl border border-stone-150 text-center">
-                      <span className="text-[9px] uppercase font-bold text-stone-400 block mb-0.5">{key}</span>
-                      <span className="font-extrabold text-stone-800 text-sm">{val}"</span>
+                      <span className="text-[9px] uppercase font-bold text-stone-600 block mb-0.5">{key}</span>
+                      <span className="font-extrabold text-stone-900 text-sm">{val}"</span>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <p className="text-xs text-stone-500 text-center py-4">No measurements captured in order snapshot.</p>
+              <p className="text-xs text-stone-600 text-center py-4">No measurements captured in order snapshot.</p>
             )}
           </div>
 
           {/* Fabric Details */}
-          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4 text-xs text-stone-700">
+          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4 text-xs text-stone-800">
             <h2 className="text-sm font-bold text-stone-850 font-serif border-b border-stone-100 pb-2">
               Fabric Specifications
             </h2>
@@ -305,7 +305,7 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
           </div>
 
           {/* Chronological Timeline History */}
-          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-6 text-xs text-stone-700">
+          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-6 text-xs text-stone-800">
             <h2 className="text-sm font-bold text-stone-850 font-serif border-b border-stone-100 pb-2">
               Stitching Activity Log
             </h2>
@@ -314,12 +314,12 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                 <div key={evt.id} className="relative">
                   <span className="absolute -left-8.5 top-0.5 w-3 h-3 rounded-full bg-rose-500 border-2 border-white" />
                   <div className="flex justify-between items-center">
-                    <span className="font-bold text-stone-850 uppercase">{evt.status.replace(/_/g, ' ')}</span>
-                    <span className="text-[10px] text-stone-400">
+                    <span className="font-bold text-stone-800 uppercase">{evt.status.replace(/_/g, ' ')}</span>
+                    <span className="text-[10px] text-stone-600">
                       {new Date(evt.createdAt).toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-stone-500 mt-1">{evt.notes || 'No activity log description'}</p>
+                  <p className="text-stone-600 mt-1">{evt.notes || 'No activity log description'}</p>
                 </div>
               ))}
             </div>
@@ -331,13 +331,13 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
           
           {/* Status transition forms */}
           <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4">
-            <h2 className="text-sm font-bold text-stone-850 font-serif">Transition Stitching Stage</h2>
+            <h2 className="text-sm font-bold text-stone-800 font-serif">Transition Stitching Stage</h2>
             <form onSubmit={handleStatusUpdate} className="space-y-4">
               <div>
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
                 >
                   {workflowStatuses.map((st) => (
                     <option key={st} value={st}>
@@ -353,7 +353,7 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                   onChange={(e) => setStatusNotes(e.target.value)}
                   rows={2}
                   placeholder="Notes for timeline events logs..."
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                 />
               </div>
 
@@ -389,27 +389,27 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
           {/* Payment ledger forms */}
           {order.remainingAmount > 0 && (
             <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4">
-              <h2 className="text-sm font-bold text-stone-850 font-serif">Record Manual Payment</h2>
+              <h2 className="text-sm font-bold text-stone-800 font-serif">Record Manual Payment</h2>
               <form onSubmit={handlePaymentSubmit} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-stone-600 mb-1 font-semibold">Payment Amount (₹)</label>
+                  <label className="block text-stone-800 mb-1 font-semibold">Payment Amount (₹)</label>
                   <input
                     type="number"
                     max={order.remainingAmount}
                     value={payAmount}
                     onChange={(e) => setPayAmount(e.target.value)}
                     placeholder="e.g. 2000"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-stone-600 mb-1 font-semibold">Payment Method</label>
+                  <label className="block text-stone-800 mb-1 font-semibold">Payment Method</label>
                   <select
                     value={payMethod}
                     onChange={(e) => setPayMethod(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
                   >
                     <option value="UPI">UPI</option>
                     <option value="CASH">Cash</option>
@@ -419,24 +419,24 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                 </div>
 
                 <div>
-                  <label className="block text-stone-600 mb-1 font-semibold">Transaction ID / Ref (Optional)</label>
+                  <label className="block text-stone-800 mb-1 font-semibold">Transaction ID / Ref (Optional)</label>
                   <input
                     type="text"
                     value={payRef}
                     onChange={(e) => setPayRef(e.target.value)}
                     placeholder="e.g. UPI Ref Number"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-stone-600 mb-1 font-semibold">Notes (Optional)</label>
+                  <label className="block text-stone-800 mb-1 font-semibold">Notes (Optional)</label>
                   <input
                     type="text"
                     value={payNotes}
                     onChange={(e) => setPayNotes(e.target.value)}
                     placeholder="Advance or balance payment"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                   />
                 </div>
 
@@ -452,22 +452,22 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
           )}
 
           {/* Payment ledger history */}
-          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4 text-xs text-stone-700">
-            <h2 className="text-sm font-bold text-stone-850 font-serif border-b border-stone-100 pb-2">
+          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4 text-xs text-stone-800">
+            <h2 className="text-sm font-bold text-stone-800 font-serif border-b border-stone-100 pb-2">
               Payment Transaction Ledger
             </h2>
             {order.transactions.length === 0 ? (
-              <p className="text-xs text-stone-500 text-center py-4">No payments recorded for this order.</p>
+              <p className="text-xs text-stone-600 text-center py-4">No payments recorded for this order.</p>
             ) : (
               <div className="space-y-3">
                 {order.transactions.map((tx) => (
                   <div key={tx.id} className="p-3 bg-stone-50 rounded-2xl border border-stone-150 flex justify-between items-center">
                     <div>
                       <p className="font-bold text-stone-800">₹{tx.amount.toLocaleString()}</p>
-                      <p className="text-[10px] text-stone-400">
+                      <p className="text-[10px] text-stone-600">
                         Method: {tx.paymentMethod} | {new Date(tx.paidAt).toLocaleDateString()}
                       </p>
-                      {tx.notes && <p className="text-[10px] text-stone-500 italic mt-0.5">{tx.notes}</p>}
+                      {tx.notes && <p className="text-[10px] text-stone-600 italic mt-0.5">{tx.notes}</p>}
                     </div>
                     {tx.transactionReference && (
                       <span className="text-[9px] px-2 py-0.5 bg-stone-200 rounded font-semibold text-stone-600 font-mono">

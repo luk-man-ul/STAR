@@ -149,24 +149,24 @@ export default function AddressesPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-stone-850">My Profile</h1>
-          <p className="text-stone-650 text-sm mt-1">Manage your customer profile and personal info</p>
+          <h1 className="text-2xl font-bold text-stone-900">My Profile</h1>
+          <p className="text-stone-700 text-sm mt-1">Manage your customer profile and personal info</p>
         </div>
         <div className="flex gap-4 border-b border-stone-200 pb-2">
-          <Link href="/profile" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+          <Link href="/profile" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
             General Info
           </Link>
           <Link href="/profile/addresses" className="text-sm font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
             Saved Addresses
           </Link>
-          <Link href="/profile/measurements" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+          <Link href="/profile/measurements" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
             Measurements
           </Link>
         </div>
         <div className="max-w-md py-16 text-center flex flex-col items-center justify-center space-y-4 mx-auto">
           <span className="text-5xl">📶</span>
-          <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Addresses</h2>
-          <p className="text-sm text-stone-650 max-w-sm">
+          <h2 className="text-xl font-bold text-stone-900 font-serif">Failed to Load Addresses</h2>
+          <p className="text-sm text-stone-700 max-w-sm">
             We encountered an issue loading your saved addresses from our servers. Please check your connection.
           </p>
           <button
@@ -183,8 +183,8 @@ export default function AddressesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-stone-800">My Profile</h1>
-        <p className="text-stone-600 text-sm mt-1">Manage your customer profile and personal info</p>
+        <h1 className="text-2xl font-bold text-stone-900">My Profile</h1>
+        <p className="text-stone-700 text-sm mt-1">Manage your customer profile and personal info</p>
       </div>
 
       {error && (
@@ -213,54 +213,54 @@ export default function AddressesPage() {
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-stone-700 mb-1">Address Line 1</label>
+              <label className="block text-sm font-semibold text-stone-800 mb-1">Address Line 1</label>
               <input
                 type="text"
                 {...register('addressLine1')}
                 placeholder="Flat/House No, Building"
-                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
               />
               {errors.addressLine1 && <p className="text-xs text-rose-500 mt-1">{errors.addressLine1.message}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-stone-700 mb-1">Address Line 2 (Optional)</label>
+              <label className="block text-sm font-semibold text-stone-800 mb-1">Address Line 2 (Optional)</label>
               <input
                 type="text"
                 {...register('addressLine2')}
                 placeholder="Locality, Area, Street"
-                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-stone-700 mb-1">City</label>
+                <label className="block text-sm font-semibold text-stone-800 mb-1">City</label>
                 <input
                   type="text"
                   {...register('city')}
-                  className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                  className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
                 />
                 {errors.city && <p className="text-xs text-rose-500 mt-1">{errors.city.message}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-stone-700 mb-1">State</label>
+                <label className="block text-sm font-semibold text-stone-800 mb-1">State</label>
                 <input
                   type="text"
                   {...register('state')}
-                  className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                  className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
                 />
                 {errors.state && <p className="text-xs text-rose-500 mt-1">{errors.state.message}</p>}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-stone-700 mb-1">Postal Code</label>
+              <label className="block text-sm font-semibold text-stone-800 mb-1">Postal Code</label>
               <input
                 type="text"
                 {...register('postalCode')}
-                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.postalCode && <p className="text-xs text-rose-500 mt-1">{errors.postalCode.message}</p>}
             </div>
@@ -272,7 +272,7 @@ export default function AddressesPage() {
                 {...register('isDefault')}
                 className="w-4 h-4 text-rose-600 focus:ring-rose-500 border-stone-300 rounded"
               />
-              <label htmlFor="isDefault" className="text-sm font-medium text-stone-700 select-none">
+              <label htmlFor="isDefault" className="text-sm font-medium text-stone-800 select-none">
                 Set as default shipping address
               </label>
             </div>
@@ -288,7 +288,7 @@ export default function AddressesPage() {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="flex-1 h-12 border border-stone-300 text-stone-600 rounded-full font-semibold text-sm transition-all hover:bg-stone-50"
+                className="flex-1 h-12 border border-stone-300 text-stone-700 rounded-full font-semibold text-sm transition-all hover:bg-stone-50"
               >
                 Cancel
               </button>

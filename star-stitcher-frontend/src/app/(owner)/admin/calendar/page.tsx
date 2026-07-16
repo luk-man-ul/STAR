@@ -91,14 +91,14 @@ export default function AdminCalendarPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-stone-850 font-serif">Boutique Appointments Calendar</h1>
-        <p className="text-xs text-stone-500 mt-1">
+        <h1 className="text-2xl font-bold text-stone-900 font-serif">Boutique Appointments Calendar</h1>
+        <p className="text-xs text-stone-600 mt-1">
           Monitor sizing consultation slots (Working hours: Mon - Sat, 10:00 AM - 8:30 PM)
         </p>
       </div>
 
       {loading && Object.keys(appointments).length === 0 ? (
-        <div className="text-center py-12 text-xs text-stone-500">Loading appointments planner...</div>
+        <div className="text-center py-12 text-xs text-stone-600">Loading appointments planner...</div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Monthly grid calendar (Left 8 columns) */}
@@ -110,20 +110,20 @@ export default function AdminCalendarPage() {
               <div className="flex gap-2">
                 <button
                   onClick={handlePrevMonth}
-                  className="w-9 h-9 border border-stone-300 rounded-full flex items-center justify-center hover:bg-stone-50 transition-colors text-sm"
+                  className="w-9 h-9 border border-stone-300 rounded-full flex items-center justify-center hover:bg-stone-50 transition-colors text-sm text-stone-700"
                 >
                   ←
                 </button>
                 <button
                   onClick={handleNextMonth}
-                  className="w-9 h-9 border border-stone-300 rounded-full flex items-center justify-center hover:bg-stone-50 transition-colors text-sm"
+                  className="w-9 h-9 border border-stone-300 rounded-full flex items-center justify-center hover:bg-stone-50 transition-colors text-sm text-stone-700"
                 >
                   →
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold text-stone-500 uppercase tracking-wider">
+            <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold text-stone-600 uppercase tracking-wider">
               <div>Sun</div>
               <div>Mon</div>
               <div>Tue</div>
@@ -152,7 +152,7 @@ export default function AdminCalendarPage() {
                       isSelected
                         ? 'border-rose-500 ring-1 ring-rose-500 bg-rose-50/20'
                         : isSunday
-                        ? 'bg-rose-50/10 border-stone-150 text-stone-400 cursor-not-allowed'
+                        ? 'bg-rose-50/10 border-stone-150 text-stone-600 cursor-not-allowed'
                         : 'border-stone-200 bg-white hover:border-rose-300'
                     }`}
                     disabled={isSunday}
@@ -162,7 +162,7 @@ export default function AdminCalendarPage() {
                       <span className="w-2 h-2 rounded-full bg-rose-500 block self-end" />
                     )}
                     {isSunday && (
-                      <span className="text-[8px] font-bold text-stone-400 block self-end">CLOSED</span>
+                      <span className="text-[8px] font-bold text-stone-600 block self-end">CLOSED</span>
                     )}
                   </button>
                 );
@@ -173,10 +173,10 @@ export default function AdminCalendarPage() {
           {/* Time Slots Drawer (Right 4 columns) */}
           <div className="lg:col-span-4 bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-6">
             <div>
-              <h2 className="text-base font-bold text-stone-850 font-serif">Time Slots Planner</h2>
-              <p className="text-[11px] text-stone-500">
+              <h2 className="text-base font-bold text-stone-800 font-serif">Time Slots Planner</h2>
+              <p className="text-[11px] text-stone-600">
                 Schedules for:{' '}
-                <span className="font-bold text-stone-800">
+                <span className="font-bold text-stone-850">
                   {new Date(selectedDateStr).toLocaleDateString([], {
                     weekday: 'short',
                     month: 'short',
@@ -198,11 +198,11 @@ export default function AdminCalendarPage() {
                         : 'border-stone-200 bg-stone-50/30'
                     }`}
                   >
-                    <span className="font-bold text-stone-700">{ts}</span>
+                    <span className="font-bold text-stone-800">{ts}</span>
                     {booking ? (
                       <div className="text-right">
-                        <p className="font-bold text-stone-850">{booking.customerName}</p>
-                        <p className="text-[10px] text-stone-500">
+                        <p className="font-bold text-stone-800">{booking.customerName}</p>
+                        <p className="text-[10px] text-stone-600">
                           {booking.designName} | {booking.shortId}
                         </p>
                       </div>

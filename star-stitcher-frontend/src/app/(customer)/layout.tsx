@@ -97,7 +97,7 @@ export default function CustomerLayout({
                   className={`transition-colors py-2 border-b-2 ${
                     isActive
                       ? 'text-rose-600 border-rose-600'
-                      : 'text-stone-650 border-transparent hover:text-stone-850 hover:border-stone-300'
+                      : 'text-stone-600 border-transparent hover:text-stone-900 hover:border-stone-300'
                   }`}
                 >
                   {link.name}
@@ -107,7 +107,7 @@ export default function CustomerLayout({
             
             <button
               onClick={handleLogout}
-              className="text-stone-650 hover:text-rose-600 font-semibold transition-colors flex items-center gap-1.5 ml-4 text-sm"
+              className="text-stone-600 hover:text-rose-600 font-semibold transition-colors flex items-center gap-1.5 ml-4 text-sm"
             >
               <span>🚪</span>
               <span>Logout</span>
@@ -116,7 +116,7 @@ export default function CustomerLayout({
 
           {/* User profile brief for mobile header */}
           <div className="md:hidden flex items-center gap-2">
-            <span className="text-xs text-stone-650 font-semibold">
+            <span className="text-xs text-stone-600 font-semibold">
               {user?.name}
             </span>
             <div className="w-7 h-7 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-xs">
@@ -134,7 +134,7 @@ export default function CustomerLayout({
 
       {/* Mobile bottom nav */}
       <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-stone-200 bg-white/95 py-2 md:hidden shadow-lg">
-        <div className="flex justify-around items-center text-[10px] font-bold text-stone-650">
+        <div className="flex justify-around items-center text-[10px] font-bold text-stone-600">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/dashboard' && pathname.startsWith(link.href));
             return (
@@ -142,7 +142,7 @@ export default function CustomerLayout({
                 key={link.href}
                 href={link.href}
                 className={`flex flex-col items-center py-1 px-3 space-y-1 transition-all ${
-                  isActive ? 'text-rose-600 font-black' : 'text-stone-550 hover:text-rose-500'
+                  isActive ? 'text-rose-600 font-black' : 'text-stone-600 hover:text-rose-500'
                 }`}
               >
                 <span className="text-base">{link.icon}</span>
@@ -152,7 +152,7 @@ export default function CustomerLayout({
           })}
           <button
             onClick={handleLogout}
-            className="flex flex-col items-center py-1 px-3 space-y-1 text-stone-550 hover:text-rose-600"
+            className="flex flex-col items-center py-1 px-3 space-y-1 text-stone-600 hover:text-rose-600"
           >
             <span className="text-base">🚪</span>
             <span>Logout</span>

@@ -82,8 +82,8 @@ export default function OwnerLayout({
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-stone-100 p-6 text-center space-y-4">
         <span className="text-4xl">🚫</span>
-        <h1 className="text-xl font-bold text-stone-850">Access Denied</h1>
-        <p className="text-sm text-stone-650 max-w-sm">
+        <h1 className="text-xl font-bold text-stone-900">Access Denied</h1>
+        <p className="text-sm text-stone-700 max-w-sm">
           You do not have the required permissions to view the Star Stitcher Admin dashboard.
         </p>
         <button
@@ -116,7 +116,7 @@ export default function OwnerLayout({
             <span className="text-lg font-extrabold text-rose-600 tracking-wider font-serif">
               STAR STITCHER
             </span>
-            <span className="ml-1.5 px-2 py-0.5 bg-rose-100 text-rose-750 text-[9px] font-bold rounded-full uppercase tracking-wider">
+            <span className="ml-1.5 px-2 py-0.5 bg-rose-100 text-rose-700 text-[9px] font-bold rounded-full uppercase tracking-wider">
               CMS
             </span>
           </div>
@@ -130,7 +130,7 @@ export default function OwnerLayout({
                   className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${
                     isActive
                       ? 'bg-rose-50 text-rose-600'
-                      : 'text-stone-600 hover:bg-stone-50 hover:text-stone-850'
+                      : 'text-stone-600 hover:bg-stone-50 hover:text-stone-900'
                   }`}
                 >
                   <span>{link.icon}</span>
@@ -139,7 +139,7 @@ export default function OwnerLayout({
               );
             })}
           </nav>
-          <div className="px-4 pt-4 border-t border-stone-150">
+          <div className="px-4 pt-4 border-t border-stone-200">
             <button
               onClick={handleLogout}
               className="flex w-full items-center gap-3 px-4 py-3 text-stone-600 hover:text-rose-600 hover:bg-rose-50 rounded-2xl text-sm font-semibold transition-all"
@@ -157,13 +157,13 @@ export default function OwnerLayout({
           <div className="flex items-center md:hidden gap-3">
             <span className="text-base font-bold text-rose-600 font-serif">STAR STITCHER CMS</span>
           </div>
-          <div className="hidden md:block text-xs font-semibold text-stone-500">
-            Welcome back, <span className="text-stone-800 font-bold">{user.name}</span> (Boutique Owner)
+          <div className="hidden md:block text-xs font-semibold text-stone-600">
+            Welcome back, <span className="text-stone-850 font-bold">{user.name}</span> (Boutique Owner)
           </div>
           <div className="flex items-center gap-3 text-xs">
             <Link
               href="/"
-              className="px-3.5 py-1.5 border border-stone-300 hover:border-stone-400 text-stone-600 rounded-full font-semibold transition-colors"
+              className="px-3.5 py-1.5 border border-stone-300 hover:border-stone-400 text-stone-700 rounded-full font-semibold transition-colors"
             >
               View Main Site
             </Link>

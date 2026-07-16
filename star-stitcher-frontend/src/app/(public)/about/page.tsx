@@ -17,7 +17,7 @@ export default function AboutPage() {
     <div className="py-16 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-4">
-        <h1 className="text-4xl font-extrabold text-stone-850 font-serif">About Star Stitcher</h1>
+        <h1 className="text-4xl font-extrabold text-stone-900 font-serif">About Star Stitcher</h1>
         <p className="text-stone-600 text-sm">
           A dedicated tailoring boutique serving Malleshwaram ladies with bespoke stitching since 2012.
         </p>
@@ -33,7 +33,7 @@ export default function AboutPage() {
           <p className="text-stone-600 text-sm leading-relaxed">
             Over the last decade, we have grown from a single master tailor in a small shop to a dedicated team of 15+ experienced tailors in Malleshwaram. We combine age-old hand-stitching embroidery skills with a modern ordering flow, allowing you to track your orders in real-time.
           </p>
-          <p className="text-stone-650 text-sm font-semibold italic text-rose-600">
+          <p className="text-stone-700 text-sm font-semibold italic text-rose-600">
             &ldquo;A dress should not just fit; it should feel like it was crafted to be a part of you.&rdquo; - Radhika, Founder
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function AboutPage() {
           <div className="bg-white border border-stone-200 rounded-3xl overflow-hidden shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-500 uppercase">
+                <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
                   <th className="px-6 py-3">Day</th>
                   <th className="px-6 py-3">Opening Hours</th>
                 </tr>
@@ -80,7 +80,7 @@ export default function AboutPage() {
             <div>
               <p className="font-bold text-stone-800">Star Stitcher Boutique</p>
               <p className="text-sm text-stone-600">12, Rose Villa, Malleshwaram, Bangalore, Karnataka - 560003</p>
-              <p className="text-xs text-stone-500 mt-1">Landmark: Opposite Rose Garden Metro Pillar</p>
+              <p className="text-xs text-stone-600 mt-1">Landmark: Opposite Rose Garden Metro Pillar</p>
             </div>
 
             {/* Maps Placeholder Card */}
@@ -89,7 +89,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-[radial-gradient(var(--tw-gradient-stops))] from-rose-50 via-stone-100 to-stone-50 opacity-40" />
               <span className="text-3xl relative z-10">📍</span>
               <p className="font-bold text-xs text-stone-800 relative z-10 uppercase tracking-wider">Google Maps View</p>
-              <p className="text-xs text-stone-500 relative z-10 max-w-xs">
+              <p className="text-xs text-stone-600 relative z-10 max-w-xs">
                 Map view loading placeholder. Star Stitcher is located in Malleshwaram with parking facilities.
               </p>
               <a

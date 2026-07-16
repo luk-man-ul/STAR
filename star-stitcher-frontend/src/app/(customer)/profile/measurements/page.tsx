@@ -136,14 +136,14 @@ export default function MeasurementsPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-stone-850">My Profile</h1>
-          <p className="text-stone-655 text-sm mt-1">Manage your customer profile and personal info</p>
+          <h1 className="text-2xl font-bold text-stone-900">My Profile</h1>
+          <p className="text-stone-700 text-sm mt-1">Manage your customer profile and personal info</p>
         </div>
         <div className="flex gap-4 border-b border-stone-200 pb-2">
-          <Link href="/profile" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+          <Link href="/profile" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
             General Info
           </Link>
-          <Link href="/profile/addresses" className="text-sm font-medium text-stone-650 hover:text-rose-600 pb-2">
+          <Link href="/profile/addresses" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
             Saved Addresses
           </Link>
           <Link href="/profile/measurements" className="text-sm font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
@@ -152,8 +152,8 @@ export default function MeasurementsPage() {
         </div>
         <div className="max-w-md py-16 text-center flex flex-col items-center justify-center space-y-4 mx-auto">
           <span className="text-5xl">📶</span>
-          <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Measurements</h2>
-          <p className="text-sm text-stone-650 max-w-sm">
+          <h2 className="text-xl font-bold text-stone-900 font-serif">Failed to Load Measurements</h2>
+          <p className="text-sm text-stone-700 max-w-sm">
             We encountered an issue loading your sizing measurements from our servers. Please check your connection.
           </p>
           <button
@@ -170,8 +170,8 @@ export default function MeasurementsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-stone-800">My Profile</h1>
-        <p className="text-stone-600 text-sm mt-1">Manage your customer profile and personal info</p>
+        <h1 className="text-2xl font-bold text-stone-900">My Profile</h1>
+        <p className="text-stone-700 text-sm mt-1">Manage your customer profile and personal info</p>
       </div>
 
       {error && (
@@ -202,15 +202,15 @@ export default function MeasurementsPage() {
       {metadata && (
         <div className="p-5 bg-stone-50 rounded-3xl border border-stone-200 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div>
-            <p className="text-[10px] text-stone-500 font-bold uppercase">Sizing Version</p>
+            <p className="text-[10px] text-stone-600 font-bold uppercase">Sizing Version</p>
             <p className="text-lg font-bold text-stone-800">v{metadata.version}</p>
           </div>
           <div>
-            <p className="text-[10px] text-stone-500 font-bold uppercase">Source Type</p>
+            <p className="text-[10px] text-stone-600 font-bold uppercase">Source Type</p>
             <p className="text-sm font-bold text-stone-800">{metadata.measurementSource}</p>
           </div>
           <div>
-            <p className="text-[10px] text-stone-500 font-bold uppercase">Shop Verification</p>
+            <p className="text-[10px] text-stone-600 font-bold uppercase">Shop Verification</p>
             <span
               className={`inline-block mt-1 px-2.5 py-0.5 text-[10px] font-bold rounded-full ${
                 metadata.verifiedByShop
@@ -223,7 +223,7 @@ export default function MeasurementsPage() {
           </div>
           {metadata.verifiedAt && (
             <div>
-              <p className="text-[10px] text-stone-500 font-bold uppercase">Verified At</p>
+              <p className="text-[10px] text-stone-600 font-bold uppercase">Verified At</p>
               <p className="text-xs font-semibold text-stone-600">
                 {new Date(metadata.verifiedAt).toLocaleDateString()}
               </p>
@@ -239,89 +239,89 @@ export default function MeasurementsPage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Bust</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Bust</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('bust')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.bust && <p className="text-[10px] text-rose-500 mt-1">{errors.bust.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Under Bust</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Under Bust</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('underBust')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.underBust && <p className="text-[10px] text-rose-500 mt-1">{errors.underBust.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Shoulder</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Shoulder</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('shoulder')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.shoulder && <p className="text-[10px] text-rose-500 mt-1">{errors.shoulder.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Armhole</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Armhole</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('armHole')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.armHole && <p className="text-[10px] text-rose-500 mt-1">{errors.armHole.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Sleeve Length</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Sleeve Length</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('sleeveLength')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.sleeveLength && <p className="text-[10px] text-rose-500 mt-1">{errors.sleeveLength.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Sleeve Round</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Sleeve Round</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('sleeveRound')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.sleeveRound && <p className="text-[10px] text-rose-500 mt-1">{errors.sleeveRound.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Front Neck Depth</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Front Neck Depth</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('frontNeckDepth')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.frontNeckDepth && <p className="text-[10px] text-rose-500 mt-1">{errors.frontNeckDepth.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Back Neck Depth</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Back Neck Depth</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('backNeckDepth')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.backNeckDepth && <p className="text-[10px] text-rose-500 mt-1">{errors.backNeckDepth.message}</p>}
             </div>
@@ -334,45 +334,45 @@ export default function MeasurementsPage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Waist</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Waist</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('waist')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.waist && <p className="text-[10px] text-rose-500 mt-1">{errors.waist.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Hip</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Hip</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('hip')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.hip && <p className="text-[10px] text-rose-500 mt-1">{errors.hip.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Top Length</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Top Length</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('totalLength')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.totalLength && <p className="text-[10px] text-rose-500 mt-1">{errors.totalLength.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">Bottom Round</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Bottom Round</label>
               <input
                 type="number"
                 step="0.1"
                 {...register('bottomRound')}
-                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.bottomRound && <p className="text-[10px] text-rose-500 mt-1">{errors.bottomRound.message}</p>}
             </div>
@@ -388,7 +388,7 @@ export default function MeasurementsPage() {
               {...register('notes')}
               rows={3}
               placeholder="e.g. want high neck collar or looser sleeve cuffs..."
-              className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+              className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
             />
           </div>
         </div>

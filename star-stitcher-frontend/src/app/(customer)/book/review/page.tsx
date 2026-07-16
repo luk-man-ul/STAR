@@ -48,8 +48,8 @@ export default function BookReviewPage() {
   return (
     <div className="max-w-md mx-auto space-y-8 py-4">
       <div>
-        <h1 className="text-2xl font-bold text-stone-850 font-serif">Review Booking</h1>
-        <p className="text-stone-500 text-sm mt-1">Please review your scheduling choices before submission</p>
+        <h1 className="text-2xl font-bold text-stone-900 font-serif">Review Booking</h1>
+        <p className="text-stone-600 text-sm mt-1">Please review your scheduling choices before submission</p>
       </div>
 
       {error && (
@@ -61,35 +61,35 @@ export default function BookReviewPage() {
       <div className="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 space-y-6">
         <div className="space-y-4">
           <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
-            <span className="text-xs text-stone-400 uppercase font-bold tracking-wider">Garment Style</span>
+            <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Garment Style</span>
             <span className="text-sm font-bold text-stone-800">{draft.designName}</span>
           </div>
 
           <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
-            <span className="text-xs text-stone-400 uppercase font-bold tracking-wider">Stitching Price</span>
+            <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Stitching Price</span>
             <span className="text-sm font-extrabold text-rose-600">₹{draft.designPrice?.toLocaleString()}</span>
           </div>
 
           <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
-            <span className="text-xs text-stone-400 uppercase font-bold tracking-wider">Sizing Method</span>
+            <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Sizing Method</span>
             <span className="text-sm font-bold text-stone-800">{draft.measurementMethod}</span>
           </div>
 
           <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
-            <span className="text-xs text-stone-400 uppercase font-bold tracking-wider">Delivery Mode</span>
+            <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Delivery Mode</span>
             <span className="text-sm font-bold text-stone-800">{draft.deliveryMethod}</span>
           </div>
 
           {draft.addressText && (
             <div className="border-b border-stone-150 pb-3 flex justify-between items-start gap-4">
-              <span className="text-xs text-stone-400 uppercase font-bold tracking-wider whitespace-nowrap">Shipping Destination</span>
+              <span className="text-xs text-stone-600 uppercase font-bold tracking-wider whitespace-nowrap">Shipping Destination</span>
               <span className="text-sm font-semibold text-stone-600 text-right">{draft.addressText}</span>
             </div>
           )}
 
           <div className="border-b border-stone-150 pb-3 flex justify-between items-start gap-4">
-            <span className="text-xs text-stone-400 uppercase font-bold tracking-wider whitespace-nowrap">Appointment Date</span>
-            <span className="text-sm font-extrabold text-stone-850 text-right">
+            <span className="text-xs text-stone-600 uppercase font-bold tracking-wider whitespace-nowrap">Appointment Date</span>
+            <span className="text-sm font-extrabold text-stone-900 text-right">
               {new Date(draft.appointmentDate).toLocaleString([], {
                 weekday: 'short',
                 month: 'short',
@@ -102,7 +102,7 @@ export default function BookReviewPage() {
 
           {draft.specialInstructions && (
             <div className="space-y-1">
-              <span className="text-[10px] text-stone-400 uppercase font-bold tracking-wider block">Special Instructions</span>
+              <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider block">Special Instructions</span>
               <p className="text-xs text-stone-600 leading-relaxed bg-stone-50 p-3 rounded-xl border border-stone-150">
                 {draft.specialInstructions}
               </p>
@@ -120,7 +120,7 @@ export default function BookReviewPage() {
           </button>
           <button
             onClick={() => router.back()}
-            className="flex-1 h-12 border border-stone-300 text-stone-600 hover:text-stone-850 rounded-full font-bold text-sm transition-colors hover:bg-stone-50"
+            className="flex-1 h-12 border border-stone-300 text-stone-700 hover:text-stone-900 rounded-full font-bold text-sm transition-colors hover:bg-stone-50"
           >
             Back
           </button>

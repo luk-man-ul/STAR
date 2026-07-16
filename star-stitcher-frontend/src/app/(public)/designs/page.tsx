@@ -97,8 +97,8 @@ export default function DesignsPage() {
     return (
       <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center space-y-4">
         <span className="text-5xl">📶</span>
-        <h2 className="text-2xl font-bold text-stone-850 font-serif">Connection Error</h2>
-        <p className="text-sm text-stone-650 max-w-sm">
+        <h2 className="text-2xl font-bold text-stone-900 font-serif">Connection Error</h2>
+        <p className="text-sm text-stone-700 max-w-sm">
           We encountered an issue loading our design catalog. Please verify your connection and try again.
         </p>
         <button
@@ -115,8 +115,8 @@ export default function DesignsPage() {
     return (
       <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center space-y-4">
         <span className="text-5xl">🧵</span>
-        <h2 className="text-2xl font-bold text-stone-850 font-serif">No designs available yet.</h2>
-        <p className="text-sm text-stone-655 max-w-sm">
+        <h2 className="text-2xl font-bold text-stone-900 font-serif">No designs available yet.</h2>
+        <p className="text-sm text-stone-700 max-w-sm">
           Our tailoring lookbook is currently empty. Please check back later.
         </p>
         <button
@@ -133,8 +133,8 @@ export default function DesignsPage() {
     <div className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-4">
-        <h1 className="text-4xl font-extrabold text-stone-850 font-serif">Design Lookbook</h1>
-        <p className="text-stone-650 text-sm">
+        <h1 className="text-4xl font-extrabold text-stone-900 font-serif">Design Lookbook</h1>
+        <p className="text-stone-700 text-sm">
           Explore catalog patterns. Save your favorites, select codes during booking, or request custom fabric styles.
         </p>
       </div>
@@ -162,7 +162,7 @@ export default function DesignsPage() {
               className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
                 selectedCategory === cat
                   ? 'bg-rose-600 text-white shadow-sm'
-                  : 'bg-stone-150 text-stone-750 hover:bg-stone-200'
+                  : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
               }`}
             >
               {cat}
@@ -191,7 +191,7 @@ export default function DesignsPage() {
           ))}
         </div>
       ) : filteredDesigns.length === 0 ? (
-        <div className="p-16 text-center border border-dashed border-stone-300 rounded-3xl text-sm text-stone-655 bg-white">
+        <div className="p-16 text-center border border-dashed border-stone-300 rounded-3xl text-sm text-stone-600 bg-white">
           No lookbook models found matching your search.
         </div>
       ) : (
@@ -237,23 +237,23 @@ export default function DesignsPage() {
                       <span className="text-[10px] text-rose-600 font-bold uppercase tracking-wider">
                         {design.category}
                       </span>
-                      <h3 className="font-bold text-stone-850 text-base mt-0.5">{design.name}</h3>
-                      <p className="text-[11px] text-stone-650">Style Code: {design.code}</p>
+                      <h3 className="font-bold text-stone-800 text-base mt-0.5">{design.name}</h3>
+                      <p className="text-[11px] text-stone-600">Style Code: {design.code}</p>
                     </div>
 
-                    <p className="text-xs text-stone-650 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-stone-700 line-clamp-2 leading-relaxed">
                       {design.description}
                     </p>
                   </div>
 
                   <div className="flex justify-between items-center border-t border-stone-100 pt-3 mt-2 text-xs">
                     <div>
-                      <span className="text-[10px] text-stone-500 font-bold uppercase">Stitching Price</span>
-                      <p className="font-extrabold text-stone-850 text-sm">{design.price}</p>
+                      <span className="text-[10px] text-stone-600 font-bold uppercase">Stitching Price</span>
+                      <p className="font-extrabold text-stone-800 text-sm">{design.price}</p>
                     </div>
                     <div className="text-right">
-                      <span className="text-[10px] text-stone-500 font-bold uppercase">Stitch Duration</span>
-                      <p className="font-semibold text-stone-705">{design.days} Days</p>
+                      <span className="text-[10px] text-stone-600 font-bold uppercase">Stitch Duration</span>
+                      <p className="font-semibold text-stone-700">{design.days} Days</p>
                     </div>
                   </div>
                 </div>
@@ -269,7 +269,7 @@ export default function DesignsPage() {
           <div className="bg-white max-w-lg w-full rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150">
             <button
               onClick={() => setSelectedDesign(null)}
-              className="absolute top-4 right-4 text-stone-650 hover:text-stone-850 text-xl font-bold font-sans z-10"
+              className="absolute top-4 right-4 text-stone-600 hover:text-stone-900 text-xl font-bold font-sans z-10"
               aria-label="Close details"
             >
               ✕
@@ -293,19 +293,19 @@ export default function DesignsPage() {
               <span className="px-2.5 py-0.5 bg-rose-100 text-rose-700 rounded-full font-bold text-[9px] uppercase tracking-wider">
                 {selectedDesign.category}
               </span>
-              <h2 className="text-2xl font-bold text-stone-850 font-serif">{selectedDesign.name}</h2>
-              <p className="text-xs text-stone-650">Style Reference Code: {selectedDesign.code}</p>
+              <h2 className="text-2xl font-bold text-stone-900 font-serif">{selectedDesign.name}</h2>
+              <p className="text-xs text-stone-600">Style Reference Code: {selectedDesign.code}</p>
             </div>
 
-            <p className="text-sm text-stone-650 leading-relaxed">{selectedDesign.description}</p>
+            <p className="text-sm text-stone-700 leading-relaxed">{selectedDesign.description}</p>
 
             <div className="grid grid-cols-2 gap-4 border-t border-stone-100 pt-4 text-sm">
               <div>
-                <p className="text-[10px] text-stone-500 font-bold uppercase">Estimated Tailoring Price</p>
-                <p className="text-lg font-bold text-rose-650">{selectedDesign.price}</p>
+                <p className="text-[10px] text-stone-600 font-bold uppercase">Estimated Tailoring Price</p>
+                <p className="text-lg font-bold text-rose-700">{selectedDesign.price}</p>
               </div>
               <div>
-                <p className="text-[10px] text-stone-500 font-bold uppercase">Tailoring Duration</p>
+                <p className="text-[10px] text-stone-600 font-bold uppercase">Tailoring Duration</p>
                 <p className="text-sm font-semibold text-stone-800 mt-1">{selectedDesign.days} Business Days</p>
               </div>
             </div>

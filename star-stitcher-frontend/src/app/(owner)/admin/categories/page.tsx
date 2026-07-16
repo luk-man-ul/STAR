@@ -120,8 +120,8 @@ export default function AdminCategoriesPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-stone-850 font-serif">Garment Categories</h1>
-          <p className="text-xs text-stone-500 mt-1">Manage the tailoring catalog category categories</p>
+          <h1 className="text-2xl font-bold text-stone-900 font-serif">Garment Categories</h1>
+          <p className="text-xs text-stone-600 mt-1">Manage the tailoring catalog category categories</p>
         </div>
         <button
           onClick={handleAddNewClick}
@@ -145,27 +145,27 @@ export default function AdminCategoriesPage() {
             placeholder="Search categories by name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50"
+            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-stone-50"
           />
-          <span className="absolute left-3 top-3.5 text-stone-400 text-xs">🔍</span>
+          <span className="absolute left-3 top-3.5 text-stone-600 text-xs">🔍</span>
         </div>
-        <div className="text-xs text-stone-500">
+        <div className="text-xs text-stone-600 font-semibold">
           Showing {filteredCategories.length} categories
         </div>
       </div>
 
       {/* Main Table grid */}
       {loading && categories.length === 0 ? (
-        <div className="text-center py-12 text-xs text-stone-500">Loading categories...</div>
+        <div className="text-center py-12 text-xs text-stone-600">Loading categories...</div>
       ) : filteredCategories.length === 0 ? (
-        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-500 shadow-sm">
+        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-600 shadow-sm">
           No categories found. Click the button above to add your first category.
         </div>
       ) : (
         <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-500 uppercase">
+              <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
                 <th className="px-6 py-3.5">Name</th>
                 <th className="px-6 py-3.5">Description</th>
                 <th className="px-6 py-3.5 text-center">Status</th>
@@ -176,7 +176,7 @@ export default function AdminCategoriesPage() {
               {filteredCategories.map((cat) => (
                 <tr key={cat.id} className="hover:bg-stone-50/50">
                   <td className="px-6 py-4 font-bold text-stone-850">{cat.name}</td>
-                  <td className="px-6 py-4 max-w-xs truncate text-stone-500">
+                  <td className="px-6 py-4 max-w-xs truncate text-stone-600">
                     {cat.description || 'No description provided'}
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -201,7 +201,7 @@ export default function AdminCategoriesPage() {
                     {cat.isActive && (
                       <button
                         onClick={() => handleArchive(cat.id)}
-                        className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-full font-semibold transition-colors"
+                        className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-650 rounded-full font-semibold transition-colors"
                       >
                         Archive
                       </button>
@@ -220,34 +220,34 @@ export default function AdminCategoriesPage() {
           <div className="bg-white max-w-md w-full rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-stone-500 hover:text-stone-850 text-xl font-bold"
+              className="absolute top-4 right-4 text-stone-600 hover:text-stone-900 text-xl font-bold"
             >
               ✕
             </button>
 
-            <h2 className="text-xl font-bold text-stone-850 font-serif">
+            <h2 className="text-xl font-bold text-stone-900 font-serif">
               {editingCategory ? 'Edit Category' : 'Create New Category'}
             </h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Category Name</label>
+                <label className="block text-xs font-semibold text-stone-800 mb-1">Category Name</label>
                 <input
                   type="text"
                   {...register('name')}
                   placeholder="e.g. Blouse, Kurti, Lehenga"
-                  className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                 />
                 {errors.name && <p className="text-[10px] text-rose-500 mt-1">{errors.name.message}</p>}
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Description (Optional)</label>
+                <label className="block text-xs font-semibold text-stone-800 mb-1">Description (Optional)</label>
                 <textarea
                   {...register('description')}
                   rows={3}
                   placeholder="Provide sizing or styling guidelines"
-                  className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                 />
               </div>
 
@@ -258,7 +258,7 @@ export default function AdminCategoriesPage() {
                   {...register('isActive')}
                   className="w-4 h-4 text-rose-600 focus:ring-rose-500 border-stone-300 rounded"
                 />
-                <label htmlFor="isActive" className="text-xs font-medium text-stone-700 select-none">
+                <label htmlFor="isActive" className="text-xs font-semibold text-stone-800 select-none">
                   Mark as active in lookbook lookbook
                 </label>
               </div>
@@ -274,7 +274,7 @@ export default function AdminCategoriesPage() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 h-11 border border-stone-300 text-stone-600 rounded-full font-semibold text-xs transition-colors hover:bg-stone-50"
+                  className="flex-1 h-11 border border-stone-300 text-stone-700 rounded-full font-semibold text-xs transition-colors hover:bg-stone-50"
                 >
                   Cancel
                 </button>

@@ -70,8 +70,8 @@ export default function AdminDashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-stone-850 font-serif">Boutique Executive Summary</h1>
-        <p className="text-xs text-stone-500 mt-1">Stitching lines performance snapshot and scheduling queues overview</p>
+        <h1 className="text-2xl font-bold text-stone-900 font-serif">Boutique Executive Summary</h1>
+        <p className="text-xs text-stone-600 mt-1">Stitching lines performance snapshot and scheduling queues overview</p>
       </div>
 
       {/* KPI Grid */}
@@ -89,14 +89,14 @@ export default function AdminDashboardPage() {
               </span>
             </div>
             <div className="mt-2">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-stone-400 block">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-stone-600 block">
                 {kpi.title}
               </span>
-              <span className="text-xl font-extrabold text-stone-850 mt-1 block">
+              <span className="text-xl font-extrabold text-stone-900 mt-1 block">
                 {kpi.value}
               </span>
               {'sub' in kpi && (
-                <span className="text-[9px] font-medium text-stone-400 block mt-0.5">{kpi.sub}</span>
+                <span className="text-[9px] font-medium text-stone-600 block mt-0.5">{kpi.sub}</span>
               )}
             </div>
           </Link>
@@ -105,9 +105,9 @@ export default function AdminDashboardPage() {
 
       {/* Today's Appointments Queue */}
       <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-6">
-        <h2 className="text-lg font-bold text-stone-850 font-serif">Today's Appointment Schedule</h2>
+        <h2 className="text-lg font-bold text-stone-800 font-serif">Today's Appointment Schedule</h2>
         {summary.todaysAppointments.length === 0 ? (
-          <div className="py-8 text-center text-xs text-stone-500">
+          <div className="py-8 text-center text-xs text-stone-600">
             No sizing consultations scheduled for today.
           </div>
         ) : (
@@ -122,14 +122,14 @@ export default function AdminDashboardPage() {
                     })}
                   </div>
                   <div>
-                    <p className="font-bold text-stone-850">{ap.booking.customer.name}</p>
-                    <p className="text-[10px] text-stone-400">Phone: {ap.booking.customer.phone}</p>
+                    <p className="font-bold text-stone-800">{ap.booking.customer.name}</p>
+                    <p className="text-[10px] text-stone-600">Phone: {ap.booking.customer.phone}</p>
                   </div>
                 </div>
 
                 <div className="text-right">
                   <p className="font-semibold text-stone-600">{ap.booking.design.name}</p>
-                  <p className="text-[10px] text-stone-400">Ref: {ap.booking.shortId}</p>
+                  <p className="text-[10px] text-stone-600">Ref: {ap.booking.shortId}</p>
                 </div>
               </div>
             ))}

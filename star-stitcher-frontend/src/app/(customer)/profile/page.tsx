@@ -115,8 +115,8 @@ export default function ProfilePage() {
     return (
       <div className="max-w-md py-16 text-center flex flex-col items-center justify-center space-y-4">
         <span className="text-5xl">📶</span>
-        <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Profile</h2>
-        <p className="text-sm text-stone-650 max-w-sm">
+        <h2 className="text-xl font-bold text-stone-900 font-serif">Failed to Load Profile</h2>
+        <p className="text-sm text-stone-700 max-w-sm">
           We encountered an issue loading your profile details from our servers. Please verify your connection.
         </p>
         <button
@@ -132,8 +132,8 @@ export default function ProfilePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-stone-800">My Profile</h1>
-        <p className="text-stone-600 text-sm mt-1">Manage your customer profile and personal info</p>
+        <h1 className="text-2xl font-bold text-stone-900">My Profile</h1>
+        <p className="text-stone-700 text-sm mt-1">Manage your customer profile and personal info</p>
       </div>
 
       {error && (
@@ -163,21 +163,21 @@ export default function ProfilePage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md">
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Full Name</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Full Name</label>
           <input
             type="text"
             {...register('name')}
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
           />
           {errors.name && <p className="text-xs text-rose-500 mt-1">{errors.name.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Phone Number</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Phone Number</label>
           <input
             type="tel"
             {...register('phone')}
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
           />
           {errors.phone && <p className="text-xs text-rose-500 mt-1">{errors.phone.message}</p>}
         </div>
@@ -194,7 +194,7 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={handleLogout}
-            className="h-12 px-6 border border-stone-300 text-stone-600 hover:text-rose-600 rounded-full font-semibold transition-all text-sm"
+            className="h-12 px-6 border border-stone-300 text-stone-700 hover:text-rose-600 rounded-full font-semibold transition-all text-sm"
           >
             Sign Out
           </button>

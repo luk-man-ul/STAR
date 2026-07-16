@@ -279,8 +279,8 @@ export default function AdminSettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold text-stone-850 font-serif">Shop Settings</h1>
-        <p className="text-xs text-stone-500 mt-1">Configure business operating frameworks, holidays, logos and links</p>
+        <h1 className="text-2xl font-bold text-stone-900 font-serif">Shop Settings</h1>
+        <p className="text-xs text-stone-600 mt-1">Configure business operating frameworks, holidays, logos and links</p>
       </div>
 
       {error && (
@@ -296,7 +296,7 @@ export default function AdminSettingsPage() {
       )}
 
       {/* Tabs navigation */}
-      <div className="flex border-b border-stone-250 gap-6 text-xs font-bold text-stone-400">
+      <div className="flex border-b border-stone-300 gap-6 text-xs font-bold text-stone-600">
         {[
           { id: 'general', name: 'General & Logo' },
           { id: 'contact', name: 'Contact & Socials' },
@@ -313,7 +313,7 @@ export default function AdminSettingsPage() {
             className={`pb-3 border-b-2 transition-colors ${
               activeTab === tab.id
                 ? 'border-rose-500 text-rose-600'
-                : 'border-transparent hover:text-stone-700'
+                : 'border-transparent hover:text-stone-900'
             }`}
           >
             {tab.name}
@@ -324,7 +324,7 @@ export default function AdminSettingsPage() {
       {/* Tab 1: General */}
       {activeTab === 'general' && (
         <form onSubmit={saveGeneralSettings} className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-stone-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-stone-800">
             <div className="space-y-4">
               <div>
                 <label className="block font-semibold mb-1">Shop Brand Name</label>
@@ -333,7 +333,7 @@ export default function AdminSettingsPage() {
                   name="shopName"
                   value={settings.shopName}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white focus:ring-rose-500"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white focus:ring-rose-500"
                   required
                 />
               </div>
@@ -344,7 +344,7 @@ export default function AdminSettingsPage() {
                   name="status"
                   value={settings.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 >
                   <option value="OPEN">Open (Bookings Enabled)</option>
                   <option value="CLOSED">Closed (Bookings Disabled)</option>
@@ -358,7 +358,7 @@ export default function AdminSettingsPage() {
                   value={settings.aboutShop || ''}
                   onChange={handleInputChange}
                   rows={3}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 />
               </div>
             </div>
@@ -388,7 +388,7 @@ export default function AdminSettingsPage() {
                     >
                       Choose Brand File
                     </label>
-                    <p className="text-[10px] text-stone-400 mt-1">Accepts PNG/JPEG/WEBP under 2MB</p>
+                    <p className="text-[10px] text-stone-600 mt-1">Accepts PNG/JPEG/WEBP under 2MB</p>
                   </div>
                 </div>
               </div>
@@ -400,7 +400,7 @@ export default function AdminSettingsPage() {
                   name="heroHeading"
                   value={settings.heroHeading}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 />
               </div>
 
@@ -411,7 +411,7 @@ export default function AdminSettingsPage() {
                   name="heroSubheading"
                   value={settings.heroSubheading}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 />
               </div>
             </div>
@@ -432,7 +432,7 @@ export default function AdminSettingsPage() {
       {/* Tab 2: Contact */}
       {activeTab === 'contact' && (
         <form onSubmit={saveContactSettings} className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-stone-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-stone-800">
             <div className="space-y-4">
               <div>
                 <label className="block font-semibold mb-1">Phone Number</label>
@@ -441,7 +441,7 @@ export default function AdminSettingsPage() {
                   name="phone"
                   value={settings.phone}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                   required
                 />
               </div>
@@ -453,7 +453,7 @@ export default function AdminSettingsPage() {
                   name="whatsapp"
                   value={settings.whatsapp}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                   required
                 />
               </div>
@@ -465,7 +465,7 @@ export default function AdminSettingsPage() {
                   name="email"
                   value={settings.email}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                   required
                 />
               </div>
@@ -477,7 +477,7 @@ export default function AdminSettingsPage() {
                   value={settings.address}
                   onChange={handleInputChange}
                   rows={2}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                   required
                 />
               </div>
@@ -491,7 +491,7 @@ export default function AdminSettingsPage() {
                   name="googleMapsLink"
                   value={settings.googleMapsLink || ''}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 />
               </div>
 
@@ -502,7 +502,7 @@ export default function AdminSettingsPage() {
                   name="instagramUrl"
                   value={settings.instagramUrl || ''}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 />
               </div>
 
@@ -513,7 +513,7 @@ export default function AdminSettingsPage() {
                   name="facebookUrl"
                   value={settings.facebookUrl || ''}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 />
               </div>
 
@@ -524,7 +524,7 @@ export default function AdminSettingsPage() {
                   name="websiteUrl"
                   value={settings.websiteUrl || ''}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 />
               </div>
             </div>
@@ -545,7 +545,7 @@ export default function AdminSettingsPage() {
       {/* Tab 3: Business */}
       {activeTab === 'business' && (
         <form onSubmit={saveBusinessSettings} className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-stone-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-stone-800">
             <div className="space-y-4">
               <div>
                 <label className="block font-semibold mb-1">Appointment Slot Interval</label>
@@ -553,7 +553,7 @@ export default function AdminSettingsPage() {
                   name="appointmentDuration"
                   value={settings.appointmentDuration}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                 >
                   <option value={15}>15 Minutes</option>
                   <option value={30}>30 Minutes</option>
@@ -570,7 +570,7 @@ export default function AdminSettingsPage() {
                   value={settings.maxAppointmentsPerSlot}
                   onChange={handleInputChange}
                   min={1}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                   required
                 />
               </div>
@@ -583,7 +583,7 @@ export default function AdminSettingsPage() {
                   value={settings.deliveryCharges}
                   onChange={handleInputChange}
                   min={0}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                   required
                 />
               </div>
@@ -635,8 +635,8 @@ export default function AdminSettingsPage() {
         <div className="space-y-6">
           {/* Operating Hours list */}
           <div className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-bold text-stone-850 font-serif">Daily Operating Hours</h2>
-            <div className="space-y-3 text-xs text-stone-700">
+            <h2 className="text-base font-bold text-stone-800 font-serif">Daily Operating Hours</h2>
+            <div className="space-y-3 text-xs text-stone-800">
               {settings.businessHours.map((bh, idx) => (
                 <div key={idx} className="flex flex-wrap items-center justify-between gap-4 p-3 bg-stone-50 rounded-2xl border border-stone-150">
                   <div className="w-28 flex items-center gap-2">
@@ -656,7 +656,7 @@ export default function AdminSettingsPage() {
                         value={bh.openTime}
                         onChange={(e) => handleHourChange(idx, 'openTime', e.target.value)}
                         placeholder="10:00"
-                        className="w-18 text-center px-2 py-1 rounded border border-stone-300 bg-white font-mono text-xs"
+                        className="w-18 text-center px-2 py-1 rounded border border-stone-300 bg-white font-mono text-xs text-stone-900"
                       />
                       <span>to</span>
                       <input
@@ -664,11 +664,11 @@ export default function AdminSettingsPage() {
                         value={bh.closeTime}
                         onChange={(e) => handleHourChange(idx, 'closeTime', e.target.value)}
                         placeholder="18:30"
-                        className="w-18 text-center px-2 py-1 rounded border border-stone-300 bg-white font-mono text-xs"
+                        className="w-18 text-center px-2 py-1 rounded border border-stone-300 bg-white font-mono text-xs text-stone-900"
                       />
                     </div>
                   ) : (
-                    <span className="text-stone-400 font-semibold italic">Store Closed</span>
+                    <span className="text-stone-600 font-semibold italic">Store Closed</span>
                   )}
                 </div>
               ))}
@@ -689,15 +689,15 @@ export default function AdminSettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Add Holiday Form */}
             <div className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-              <h2 className="text-base font-bold text-stone-850 font-serif">Add Holiday Closure</h2>
-              <form onSubmit={handleAddHoliday} className="space-y-4 text-xs text-stone-700">
+              <h2 className="text-base font-bold text-stone-800 font-serif">Add Holiday Closure</h2>
+              <form onSubmit={handleAddHoliday} className="space-y-4 text-xs text-stone-800">
                 <div>
                   <label className="block font-semibold mb-1">Holiday Date</label>
                   <input
                     type="date"
                     value={holidayDate}
                     onChange={(e) => setHolidayDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white"
                     required
                   />
                 </div>
@@ -709,7 +709,7 @@ export default function AdminSettingsPage() {
                     value={holidayName}
                     onChange={(e) => setHolidayName(e.target.value)}
                     placeholder="e.g. Independence Day"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                     required
                   />
                 </div>
@@ -721,7 +721,7 @@ export default function AdminSettingsPage() {
                     value={holidayDesc}
                     onChange={(e) => setHolidayDesc(e.target.value)}
                     placeholder="Boutique closed for national holiday"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                   />
                 </div>
 
@@ -737,16 +737,16 @@ export default function AdminSettingsPage() {
 
             {/* Holiday list */}
             <div className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-              <h2 className="text-base font-bold text-stone-850 font-serif">Registered Closures</h2>
+              <h2 className="text-base font-bold text-stone-800 font-serif">Registered Closures</h2>
               {settings.holidays.length === 0 ? (
-                <p className="text-xs text-stone-500 py-6 text-center">No holiday dates configured.</p>
+                <p className="text-xs text-stone-600 py-6 text-center">No holiday dates configured.</p>
               ) : (
-                <div className="space-y-3 text-xs text-stone-700 max-h-[300px] overflow-y-auto pr-1">
+                <div className="space-y-3 text-xs text-stone-800 max-h-[300px] overflow-y-auto pr-1">
                   {settings.holidays.map((h) => (
                     <div key={h.id} className="p-3 bg-stone-50 rounded-2xl border border-stone-150 flex justify-between items-center gap-4">
                       <div>
-                        <p className="font-bold text-stone-850">{h.name}</p>
-                        <p className="text-[10px] text-stone-400 font-mono">
+                        <p className="font-bold text-stone-800">{h.name}</p>
+                        <p className="text-[10px] text-stone-600 font-mono">
                           {new Date(h.holidayDate).toLocaleDateString()}
                         </p>
                       </div>

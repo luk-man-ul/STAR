@@ -92,8 +92,8 @@ export default function BookPage() {
     return (
       <div className="max-w-md mx-auto text-center py-16 px-6 bg-white border border-stone-200 rounded-3xl shadow-sm space-y-6">
         <span className="text-5xl block">😴</span>
-        <h1 className="text-2xl font-bold text-stone-850 font-serif">Currently Closed</h1>
-        <p className="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
+        <h1 className="text-2xl font-bold text-stone-900 font-serif">Currently Closed</h1>
+        <p className="text-sm text-stone-600 max-w-xs mx-auto leading-relaxed">
           Star Stitcher is currently closed and not accepting online bookings. You can reach out directly via WhatsApp for any custom queries or consultations.
         </p>
         <a
@@ -172,8 +172,8 @@ export default function BookPage() {
     return (
       <div className="max-w-md mx-auto py-16 text-center flex flex-col items-center justify-center space-y-4">
         <span className="text-5xl">📶</span>
-        <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Catalog</h2>
-        <p className="text-sm text-stone-650 max-w-sm">
+        <h2 className="text-xl font-bold text-stone-900 font-serif">Failed to Load Catalog</h2>
+        <p className="text-sm text-stone-700 max-w-sm">
           We encountered an issue loading tailoring styles and catalog resources. Please check your connection.
         </p>
         <button
@@ -189,8 +189,8 @@ export default function BookPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-8 py-4">
       <div>
-        <h1 className="text-2xl font-bold text-stone-850 font-serif">Create Tailoring Booking</h1>
-        <p className="text-stone-500 text-sm mt-1">Stitch your designer outfit with perfect custom fits</p>
+        <h1 className="text-2xl font-bold text-stone-900 font-serif">Create Tailoring Booking</h1>
+        <p className="text-stone-600 text-sm mt-1">Stitch your designer outfit with perfect custom fits</p>
       </div>
 
       {error && (
@@ -205,7 +205,7 @@ export default function BookPage() {
           <label className="block text-sm font-bold text-stone-800">1. Select Garment Style</label>
           <select
             {...register('designId')}
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
           >
             <option value="">Select Catalog Design</option>
             {designs.map((d) => (
@@ -222,7 +222,7 @@ export default function BookPage() {
           <div className="space-y-2">
             <label className="block text-sm font-bold text-stone-800">2. Sizing Verification</label>
             <div className="flex gap-4">
-              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
+              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none text-stone-800 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
                 <input
                   type="radio"
                   value="ONLINE"
@@ -231,7 +231,7 @@ export default function BookPage() {
                 />
                 Submit Online Sizes
               </label>
-              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
+              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none text-stone-800 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
                 <input
                   type="radio"
                   value="SHOP"
@@ -246,7 +246,7 @@ export default function BookPage() {
           <div className="space-y-2">
             <label className="block text-sm font-bold text-stone-800">3. Delivery Type</label>
             <div className="flex gap-4">
-              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
+              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none text-stone-800 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
                 <input
                   type="radio"
                   value="PICKUP"
@@ -255,7 +255,7 @@ export default function BookPage() {
                 />
                 Self-Pickup
               </label>
-              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
+              <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none text-stone-800 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
                 <input
                   type="radio"
                   value="DELIVERY"
@@ -271,15 +271,15 @@ export default function BookPage() {
         {/* Saved Addresses Sub-Form */}
         {selectedDelivery === 'DELIVERY' && (
           <div className="space-y-2 pt-2 transition-all">
-            <label className="block text-xs font-bold text-stone-750">Select Shipping Destination</label>
+            <label className="block text-xs font-bold text-stone-800">Select Shipping Destination</label>
             {addresses.length === 0 ? (
-              <div className="p-4 border border-dashed border-stone-300 rounded-2xl text-xs text-stone-500 bg-stone-50 text-center">
+              <div className="p-4 border border-dashed border-stone-300 rounded-2xl text-xs text-stone-600 bg-stone-50 text-center">
                 No addresses saved. Please configure addresses under profile before scheduling delivery.
               </div>
             ) : (
               <select
                 {...register('addressId')}
-                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               >
                 <option value="">Select Saved Address</option>
                 {addresses.map((a) => (
@@ -297,21 +297,21 @@ export default function BookPage() {
           <label className="block text-sm font-bold text-stone-800">4. Select Sizing Slot</label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-stone-600 mb-1">Appointment Date</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Appointment Date</label>
               <input
                 type="date"
                 min={new Date().toISOString().split('T')[0]}
                 {...register('appointmentDate')}
-                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
               />
               {errors.appointmentDate && <p className="text-xs text-rose-500 mt-1">{errors.appointmentDate.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-stone-600 mb-1">Select Time Slot</label>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">Select Time Slot</label>
               <select
                 {...register('appointmentTime')}
-                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
               >
                 <option value="">Choose Time</option>
                 {timeSlots.map((ts) => (
@@ -332,7 +332,7 @@ export default function BookPage() {
             {...register('specialInstructions')}
             rows={3}
             placeholder="e.g. want specific sleeve styles, back hook layouts..."
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
         </div>
 

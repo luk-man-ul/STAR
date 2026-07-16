@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-stone-800">Reset Password</h1>
+        <h1 className="text-2xl font-bold text-stone-900">Reset Password</h1>
         <p className="text-sm text-stone-600 mt-1">We will send a password reset link to your email</p>
       </div>
 
@@ -61,12 +61,12 @@ export default function ForgotPasswordPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Email Address</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Email Address</label>
           <input
             type="email"
             {...register('email')}
             placeholder="email@example.com"
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
           {errors.email && <p className="text-xs text-rose-500 mt-1">{errors.email.message}</p>}
         </div>

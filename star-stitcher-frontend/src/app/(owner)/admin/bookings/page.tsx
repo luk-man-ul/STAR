@@ -191,8 +191,8 @@ export default function AdminBookingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-stone-850 font-serif">Customer Bookings Queue</h1>
-        <p className="text-xs text-stone-500 mt-1">Review sizing consultation request workflows and approve orders</p>
+        <h1 className="text-2xl font-bold text-stone-900 font-serif">Customer Bookings Queue</h1>
+        <p className="text-xs text-stone-600 mt-1">Review sizing consultation request workflows and approve orders</p>
       </div>
 
       {error && (
@@ -209,16 +209,16 @@ export default function AdminBookingsPage() {
             placeholder="Search by customer name or ref ID..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50"
+            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-stone-50 placeholder:text-stone-500"
           />
-          <span className="absolute left-3 top-3.5 text-stone-400 text-xs">🔍</span>
+          <span className="absolute left-3 top-3.5 text-stone-600 text-xs">🔍</span>
         </div>
 
         <div>
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50"
+            className="w-full px-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-stone-50"
           >
             <option value="ALL">All Statuses</option>
             <option value="PENDING">Pending Approval</option>
@@ -228,16 +228,16 @@ export default function AdminBookingsPage() {
           </select>
         </div>
 
-        <div className="text-right text-xs text-stone-500 font-semibold">
+        <div className="text-right text-xs text-stone-600 font-semibold">
           Total Bookings: {filteredBookings.length}
         </div>
       </div>
 
       {/* Main listings */}
       {loading && bookings.length === 0 ? (
-        <div className="text-center py-12 text-xs text-stone-500">Loading bookings list...</div>
+        <div className="text-center py-12 text-xs text-stone-600">Loading bookings list...</div>
       ) : filteredBookings.length === 0 ? (
-        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-500 shadow-sm">
+        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-600 shadow-sm">
           No bookings match your current filter settings.
         </div>
       ) : (
@@ -247,14 +247,14 @@ export default function AdminBookingsPage() {
               <div className="flex flex-wrap justify-between items-center gap-2 border-b border-stone-100 pb-3">
                 <div className="flex items-center gap-3">
                   <div>
-                    <span className="text-[10px] text-stone-400 font-bold uppercase">Reference ID</span>
-                    <p className="font-bold text-stone-850 text-sm">{booking.shortId}</p>
+                    <span className="text-[10px] text-stone-600 font-bold uppercase">Reference ID</span>
+                    <p className="font-bold text-stone-800 text-sm">{booking.shortId}</p>
                   </div>
                   <span className={`px-2.5 py-0.5 font-bold text-[9px] uppercase tracking-wider rounded-full ${getStatusBadge(booking.status)}`}>
                     {booking.status}
                   </span>
                 </div>
-                <div className="text-xs text-stone-500 font-medium">
+                <div className="text-xs text-stone-600 font-medium">
                   Booked: {new Date(booking.createdAt).toLocaleDateString()}
                 </div>
               </div>
@@ -262,19 +262,19 @@ export default function AdminBookingsPage() {
               {/* Grid content info */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-xs">
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block mb-1">Customer Profile</span>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block mb-1">Customer Profile</span>
                   <p className="font-bold text-stone-850">{booking.customer.name}</p>
-                  <p className="text-stone-500">{booking.customer.phone}</p>
+                  <p className="text-stone-600">{booking.customer.phone}</p>
                 </div>
 
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block mb-1">Lookbook Choice</span>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block mb-1">Lookbook Choice</span>
                   <p className="font-bold text-stone-800">{booking.design.name}</p>
                   <p className="text-rose-600 font-bold">₹{booking.design.price.toLocaleString()}</p>
                 </div>
 
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block mb-1">Sizing Appointment</span>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block mb-1">Sizing Appointment</span>
                   <p className="font-bold text-stone-850">
                     {booking.appointment
                       ? new Date(booking.appointment.appointmentDate).toLocaleString([], {
@@ -293,9 +293,9 @@ export default function AdminBookingsPage() {
                 </div>
 
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block mb-1">Logistics / Sizing</span>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block mb-1">Logistics / Sizing</span>
                   <p className="font-semibold text-stone-700">Measurements: {booking.measurementMethod}</p>
-                  <p className="text-stone-500">Delivery: {booking.deliveryMethod}</p>
+                  <p className="text-stone-600">Delivery: {booking.deliveryMethod}</p>
                 </div>
               </div>
 
@@ -346,7 +346,7 @@ export default function AdminBookingsPage() {
                 {booking.status !== 'CONVERTED' && booking.status !== 'REJECTED' && (
                   <button
                     onClick={() => handleRescheduleClick(booking)}
-                    className="px-4 py-2 border border-stone-300 hover:bg-stone-50 text-stone-600 rounded-full text-xs font-semibold transition-colors"
+                    className="px-4 py-2 border border-stone-300 hover:bg-stone-50 text-stone-700 rounded-full text-xs font-semibold transition-colors"
                   >
                     Reschedule
                   </button>
@@ -366,36 +366,36 @@ export default function AdminBookingsPage() {
                 setShowRescheduleModal(false);
                 setReschedulingBooking(null);
               }}
-              className="absolute top-4 right-4 text-stone-500 hover:text-stone-850 text-xl font-bold"
+              className="absolute top-4 right-4 text-stone-600 hover:text-stone-900 text-xl font-bold"
             >
               ✕
             </button>
 
-            <h2 className="text-xl font-bold text-stone-850 font-serif">Reschedule Sizing Appointment</h2>
-            <p className="text-xs text-stone-500">
+            <h2 className="text-xl font-bold text-stone-900 font-serif">Reschedule Sizing Appointment</h2>
+            <p className="text-xs text-stone-600">
               Rescheduling booking reference: <strong>{reschedulingBooking.shortId}</strong>
             </p>
 
             <form onSubmit={handleRescheduleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">New Date</label>
+                  <label className="block text-xs font-semibold text-stone-800 mb-1">New Date</label>
                   <input
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
                     value={rescheduleDate}
                     onChange={(e) => setRescheduleDate(e.target.value)}
-                    className="w-full px-4 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-4 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">New Time Slot</label>
+                  <label className="block text-xs font-semibold text-stone-800 mb-1">New Time Slot</label>
                   <select
                     value={rescheduleTime}
                     onChange={(e) => setRescheduleTime(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
                     required
                   >
                     <option value="">Choose Time</option>
@@ -422,7 +422,7 @@ export default function AdminBookingsPage() {
                     setShowRescheduleModal(false);
                     setReschedulingBooking(null);
                   }}
-                  className="flex-1 h-11 border border-stone-300 text-stone-600 rounded-full font-semibold text-xs transition-colors hover:bg-stone-50"
+                  className="flex-1 h-11 border border-stone-300 text-stone-700 rounded-full font-semibold text-xs transition-colors hover:bg-stone-50"
                 >
                   Cancel
                 </button>

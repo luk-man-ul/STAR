@@ -101,8 +101,8 @@ export default function CustomerBookingsPage() {
     return (
       <div className="max-w-4xl mx-auto py-16 text-center flex flex-col items-center justify-center space-y-4">
         <span className="text-5xl">📶</span>
-        <h2 className="text-xl font-bold text-stone-850 font-serif">Failed to Load Bookings</h2>
-        <p className="text-sm text-stone-650 max-w-sm">
+        <h2 className="text-xl font-bold text-stone-900 font-serif">Failed to Load Bookings</h2>
+        <p className="text-sm text-stone-700 max-w-sm">
           We encountered an issue retrieving your booking history from our servers. Please check your internet connection.
         </p>
         <button
@@ -119,8 +119,8 @@ export default function CustomerBookingsPage() {
     <div className="space-y-6 max-w-4xl mx-auto py-4">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-stone-850 font-serif">My Bookings</h1>
-          <p className="text-xs text-stone-650 mt-1">Track request states, approvals, and appointments schedules</p>
+          <h1 className="text-2xl font-bold text-stone-900 font-serif">My Bookings</h1>
+          <p className="text-xs text-stone-600 mt-1">Track request states, approvals, and appointments schedules</p>
         </div>
         <Link
           href="/book"
@@ -131,13 +131,13 @@ export default function CustomerBookingsPage() {
       </div>
 
       {error && (
-        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-650 rounded-2xl text-xs text-center">
+        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-655 rounded-2xl text-xs text-center">
           {error}
         </div>
       )}
 
       {bookings.length === 0 ? (
-        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-500 shadow-sm">
+        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-600 shadow-sm">
           No bookings submitted yet. Click the button above to schedule your first tailoring booking.
         </div>
       ) : (
@@ -146,8 +146,8 @@ export default function CustomerBookingsPage() {
             <div key={booking.id} className="bg-white border border-stone-200 rounded-3xl p-5 shadow-sm space-y-4">
               <div className="flex flex-wrap justify-between items-center gap-2 border-b border-stone-100 pb-3">
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase">Booking ID</span>
-                  <p className="font-bold text-stone-850 text-sm">{booking.shortId}</p>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase">Booking ID</span>
+                  <p className="font-bold text-stone-800 text-sm">{booking.shortId}</p>
                 </div>
                 <div className="flex gap-2">
                   <span className={`px-3 py-1 font-bold text-[9px] uppercase tracking-wider rounded-full border ${getStatusBadge(booking.status)}`}>
@@ -158,18 +158,18 @@ export default function CustomerBookingsPage() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block">Garment Style</span>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block">Garment Style</span>
                   <span className="font-bold text-stone-800">{booking.design.name}</span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block">Sizing Method</span>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block">Sizing Method</span>
                   <span className="font-semibold text-stone-700">{booking.measurementMethod}</span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block">Appointment Slot</span>
-                  <span className="font-bold text-stone-850">
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block">Appointment Slot</span>
+                  <span className="font-bold text-stone-800">
                     {booking.appointment
                       ? new Date(booking.appointment.appointmentDate).toLocaleDateString([], {
                           month: 'short',
@@ -182,7 +182,7 @@ export default function CustomerBookingsPage() {
                 </div>
 
                 <div>
-                  <span className="text-[10px] text-stone-400 font-bold uppercase block">Booked Date</span>
+                  <span className="text-[10px] text-stone-600 font-bold uppercase block">Booked Date</span>
                   <span className="font-semibold text-stone-600">
                     {new Date(booking.createdAt).toLocaleDateString()}
                   </span>

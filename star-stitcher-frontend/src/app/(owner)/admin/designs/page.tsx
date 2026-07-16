@@ -230,8 +230,8 @@ export default function AdminDesignsPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-stone-850 font-serif">Designs Lookbook</h1>
-          <p className="text-xs text-stone-500 mt-1">Manage public lookbook catalog styles and price configurations</p>
+          <h1 className="text-2xl font-bold text-stone-900 font-serif">Designs Lookbook</h1>
+          <p className="text-xs text-stone-600 mt-1">Manage public lookbook catalog styles and price configurations</p>
         </div>
         <button
           onClick={handleAddNewClick}
@@ -259,9 +259,9 @@ export default function AdminDesignsPage() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50"
+            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-stone-50 placeholder:text-stone-500"
           />
-          <span className="absolute left-3 top-3.5 text-stone-400 text-xs">🔍</span>
+          <span className="absolute left-3 top-3.5 text-stone-600 text-xs">🔍</span>
         </div>
 
         {/* Category Selector */}
@@ -272,7 +272,7 @@ export default function AdminDesignsPage() {
               setSelectedCategory(e.target.value);
               setPage(1);
             }}
-            className="w-full px-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50"
+            className="w-full px-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-stone-50"
           >
             <option value="">All Categories</option>
             {categories.map((cat) => (
@@ -283,16 +283,16 @@ export default function AdminDesignsPage() {
           </select>
         </div>
 
-        <div className="text-right text-xs text-stone-500 font-medium">
+        <div className="text-right text-xs text-stone-600 font-medium">
           {meta ? `Total: ${meta.total} items` : ''}
         </div>
       </div>
 
       {/* Main Grid table */}
       {loading && designs.length === 0 ? (
-        <div className="text-center py-12 text-xs text-stone-500">Loading lookbook catalog...</div>
+        <div className="text-center py-12 text-xs text-stone-600">Loading lookbook catalog...</div>
       ) : designs.length === 0 ? (
-        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-500 shadow-sm">
+        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-600 shadow-sm">
           No design catalog items found. Click the button above to add one.
         </div>
       ) : (
@@ -300,7 +300,7 @@ export default function AdminDesignsPage() {
           <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-500 uppercase">
+                <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
                   <th className="px-6 py-3.5">Style</th>
                   <th className="px-6 py-3.5">Category</th>
                   <th className="px-6 py-3.5">Price</th>
@@ -322,15 +322,15 @@ export default function AdminDesignsPage() {
                           )}
                         </div>
                         <div>
-                          <p className="font-bold text-stone-850">{design.name}</p>
-                          <p className="text-[10px] text-stone-400">Code: {design.code} | {design.estimatedDays} Days</p>
+                          <p className="font-bold text-stone-800">{design.name}</p>
+                          <p className="text-[10px] text-stone-600">Code: {design.code} | {design.estimatedDays} Days</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 font-semibold text-stone-600">
                       {design.category?.name || 'Unassigned'}
                     </td>
-                    <td className="px-6 py-4 font-extrabold text-stone-850">
+                    <td className="px-6 py-4 font-extrabold text-stone-800">
                       ₹{design.price.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 text-center">
@@ -370,7 +370,7 @@ export default function AdminDesignsPage() {
                       {design.isActive && (
                         <button
                           onClick={() => handleArchive(design.id)}
-                          className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-full font-semibold transition-colors"
+                          className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-650 rounded-full font-semibold transition-colors"
                         >
                           Archive
                         </button>
@@ -385,21 +385,21 @@ export default function AdminDesignsPage() {
           {/* Pagination Controls */}
           {meta && meta.totalPages > 1 && (
             <div className="flex items-center justify-between px-2 text-xs">
-              <span className="text-stone-500">
+              <span className="text-stone-600">
                 Page {meta.page} of {meta.totalPages}
               </span>
               <div className="flex gap-2">
                 <button
                   disabled={page <= 1}
                   onClick={() => setPage((p) => p - 1)}
-                  className="px-4 h-9 border border-stone-300 text-stone-600 hover:text-stone-850 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
+                  className="px-4 h-9 border border-stone-300 text-stone-700 hover:text-stone-900 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
                 >
                   Previous
                 </button>
                 <button
                   disabled={page >= meta.totalPages}
                   onClick={() => setPage((p) => p + 1)}
-                  className="px-4 h-9 border border-stone-300 text-stone-600 hover:text-stone-850 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
+                  className="px-4 h-9 border border-stone-300 text-stone-700 hover:text-stone-900 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
                 >
                   Next
                 </button>
@@ -415,22 +415,22 @@ export default function AdminDesignsPage() {
           <div className="bg-white max-w-lg w-full rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150 overflow-y-auto max-h-[90vh]">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-stone-500 hover:text-stone-850 text-xl font-bold"
+              className="absolute top-4 right-4 text-stone-600 hover:text-stone-900 text-xl font-bold"
             >
               ✕
             </button>
 
-            <h2 className="text-xl font-bold text-stone-850 font-serif">
+            <h2 className="text-xl font-bold text-stone-900 font-serif">
               {editingDesign ? 'Edit Lookbook Design' : 'Create Lookbook Design'}
             </h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">Garment Category</label>
+                  <label className="block text-xs font-semibold text-stone-800 mb-1">Garment Category</label>
                   <select
                     {...register('categoryId')}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
                   >
                     <option value="">Select Category</option>
                     {categories.map((cat) => (
@@ -443,65 +443,65 @@ export default function AdminDesignsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">Style Code (Unique)</label>
+                  <label className="block text-xs font-semibold text-stone-800 mb-1">Style Code (Unique)</label>
                   <input
                     type="text"
                     {...register('code')}
                     placeholder="e.g. BL-002"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                   />
                   {formErrors.code && <p className="text-[10px] text-rose-500 mt-1">{formErrors.code.message}</p>}
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Design Name</label>
+                <label className="block text-xs font-semibold text-stone-800 mb-1">Design Name</label>
                 <input
                   type="text"
                   {...register('name')}
                   placeholder="e.g. Heavy Zari Saree Blouse"
-                  className="w-full px-3 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                  className="w-full px-3 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                 />
                 {formErrors.name && <p className="text-[10px] text-rose-500 mt-1">{formErrors.name.message}</p>}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">Stitching Price (₹)</label>
+                  <label className="block text-xs font-semibold text-stone-800 mb-1">Stitching Price (₹)</label>
                   <input
                     type="number"
                     {...register('price')}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
                   />
                   {formErrors.price && <p className="text-[10px] text-rose-500 mt-1">{formErrors.price.message}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">Stitch Time (Days)</label>
+                  <label className="block text-xs font-semibold text-stone-800 mb-1">Stitch Time (Days)</label>
                   <input
                     type="number"
                     {...register('estimatedDays')}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
                   />
                   {formErrors.estimatedDays && <p className="text-[10px] text-rose-500 mt-1">{formErrors.estimatedDays.message}</p>}
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Description</label>
+                <label className="block text-xs font-semibold text-stone-800 mb-1">Description</label>
                 <textarea
                   {...register('description')}
                   rows={2}
                   placeholder="Enter embroidery details, design specifics, or fabric lengths required"
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-white"
                 />
               </div>
 
               {/* Design Image Upload Area */}
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Catalog Image</label>
+                <label className="block text-xs font-semibold text-stone-800 mb-1">Catalog Image</label>
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 border border-stone-350 bg-stone-50 rounded-2xl flex items-center justify-center text-2xl overflow-hidden font-bold">
+                  <div className="w-16 h-16 border border-stone-300 bg-stone-50 rounded-2xl flex items-center justify-center text-2xl overflow-hidden font-bold">
                     {uploadedUrl ? (
                       <img src={uploadedUrl} alt="Preview" className="w-full h-full object-cover" />
                     ) : (
@@ -522,7 +522,7 @@ export default function AdminDesignsPage() {
                     >
                       {uploadingImage ? 'Uploading Image...' : 'Choose Catalog File'}
                     </label>
-                    <p className="text-[10px] text-stone-400 mt-1">Image uploads directly to Supabase storage bucket</p>
+                    <p className="text-[10px] text-stone-600 mt-1">Image uploads directly to Supabase storage bucket</p>
                   </div>
                 </div>
               </div>
@@ -535,7 +535,7 @@ export default function AdminDesignsPage() {
                     {...register('featured')}
                     className="w-4 h-4 text-rose-600 focus:ring-rose-500 border-stone-300 rounded"
                   />
-                  <label htmlFor="featured" className="text-xs font-semibold text-stone-750 select-none">
+                  <label htmlFor="featured" className="text-xs font-semibold text-stone-800 select-none">
                     Feature on public homepage
                   </label>
                 </div>
@@ -547,7 +547,7 @@ export default function AdminDesignsPage() {
                     {...register('isActive')}
                     className="w-4 h-4 text-rose-600 focus:ring-rose-500 border-stone-300 rounded"
                   />
-                  <label htmlFor="isActive" className="text-xs font-semibold text-stone-755 select-none">
+                  <label htmlFor="isActive" className="text-xs font-semibold text-stone-800 select-none">
                     Mark as active in lookup list
                   </label>
                 </div>
@@ -564,7 +564,7 @@ export default function AdminDesignsPage() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 h-11 border border-stone-300 text-stone-600 rounded-full font-semibold text-xs transition-colors hover:bg-stone-50"
+                  className="flex-1 h-11 border border-stone-300 text-stone-700 rounded-full font-semibold text-xs transition-colors hover:bg-stone-50"
                 >
                   Cancel
                 </button>

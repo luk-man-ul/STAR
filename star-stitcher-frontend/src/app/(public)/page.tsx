@@ -75,17 +75,17 @@ export default function HomePage() {
       {/* Featured Categories */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-2">
-          <h2 className="text-3xl font-extrabold text-stone-850 font-serif">Featured Custom Categories</h2>
-          <p className="text-sm text-stone-500 max-w-md mx-auto">Explore custom stitching styles designed to give you an exquisite and perfect fit.</p>
+          <h2 className="text-3xl font-extrabold text-stone-800 font-serif">Featured Custom Categories</h2>
+          <p className="text-sm text-stone-600 max-w-md mx-auto">Explore custom stitching styles designed to give you an exquisite and perfect fit.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((cat, idx) => (
             <div key={idx} className="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm hover:shadow-md transition-all group hover:-translate-y-1">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform origin-left">{cat.image}</div>
-              <h3 className="text-lg font-bold text-stone-850">{cat.name}</h3>
+              <h3 className="text-lg font-bold text-stone-800">{cat.name}</h3>
               <p className="text-[10px] font-bold uppercase tracking-wider text-rose-500 mt-1">{cat.count}</p>
-              <p className="text-xs text-stone-500 mt-3 leading-relaxed">{cat.desc}</p>
+              <p className="text-xs text-stone-600 mt-3 leading-relaxed">{cat.desc}</p>
             </div>
           ))}
         </div>
@@ -96,10 +96,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <span className="text-xs font-bold uppercase tracking-wider text-rose-600">Why Choose Us</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-850 font-serif leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-800 font-serif leading-tight">
               Tailoring crafted exclusively matching your design
             </h2>
-            <p className="text-sm text-stone-650 leading-relaxed">
+            <p className="text-sm text-stone-700 leading-relaxed">
               We specialize in custom patterns, designer linings, and precise fits for women. No more repeat visits for adjustments.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
@@ -110,15 +110,15 @@ export default function HomePage() {
                 { title: 'Track Stitching Stages', desc: 'Get SMS, WhatsApp, and live web workflow updates.' },
               ].map((item, idx) => (
                 <div key={idx} className="space-y-2">
-                  <h4 className="font-bold text-stone-850 text-sm flex items-center gap-2">
+                  <h4 className="font-bold text-stone-800 text-sm flex items-center gap-2">
                     <span className="text-rose-500">✔</span> {item.title}
                   </h4>
-                  <p className="text-xs text-stone-500 leading-relaxed">{item.desc}</p>
+                  <p className="text-xs text-stone-600 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="bg-stone-200 aspect-[4/3] rounded-3xl flex items-center justify-center text-stone-400 text-6xl border border-stone-300 font-serif">
+          <div className="bg-stone-200 aspect-[4/3] rounded-3xl flex items-center justify-center text-stone-600 text-6xl border border-stone-300 font-serif">
             📍 Kasaragod
           </div>
         </div>
@@ -127,16 +127,16 @@ export default function HomePage() {
       {/* How it Works */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-2">
-          <h2 className="text-3xl font-extrabold text-stone-850 font-serif">Tailoring Process</h2>
-          <p className="text-sm text-stone-500 max-w-md mx-auto">Get custom fits in four easy steps from the comfort of your home.</p>
+          <h2 className="text-3xl font-extrabold text-stone-800 font-serif">Tailoring Process</h2>
+          <p className="text-sm text-stone-600 max-w-md mx-auto">Get custom fits in four easy steps from the comfort of your home.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {workflowSteps.map((step, idx) => (
             <div key={idx} className="relative space-y-4">
-              <span className="text-5xl font-black text-stone-200 block font-mono">{step.num}</span>
+              <span className="text-5xl font-black text-stone-400 block font-mono">{step.num}</span>
               <h3 className="text-base font-bold text-stone-800">{step.title}</h3>
-              <p className="text-xs text-stone-500 leading-relaxed">{step.desc}</p>
+              <p className="text-xs text-stone-600 leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -146,16 +146,16 @@ export default function HomePage() {
       <section className="bg-rose-50/50 py-20 border-y border-rose-100/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-2">
-            <h2 className="text-3xl font-extrabold text-stone-850 font-serif">Happy Customers</h2>
-            <p className="text-sm text-stone-500">Read what local women say about their custom fits from Star Stitcher.</p>
+            <h2 className="text-3xl font-extrabold text-stone-800 font-serif">Happy Customers</h2>
+            <p className="text-sm text-stone-600">Read what local women say about their custom fits from Star Stitcher.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((test, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-3xl border border-rose-100 shadow-sm text-stone-650 text-sm leading-relaxed relative">
+              <div key={idx} className="bg-white p-8 rounded-3xl border border-rose-100 shadow-sm text-stone-700 text-sm leading-relaxed relative">
                 &ldquo;{test.quote}&rdquo;
                 <div className="mt-4 not-italic font-bold text-stone-800 text-xs flex justify-between">
                   <span>- {test.name}</span>
-                  <span className="text-stone-500 font-medium">{test.city}</span>
+                  <span className="text-stone-600 font-medium">{test.city}</span>
                 </div>
               </div>
             ))}
@@ -168,7 +168,7 @@ export default function HomePage() {
         <div className="bg-emerald-50 rounded-3xl p-8 border border-emerald-200 text-center space-y-6">
           <span className="text-3xl">💬</span>
           <h2 className="text-2xl font-bold text-stone-800 font-serif">Need Sizing Help or custom queries?</h2>
-          <p className="text-sm text-stone-650 max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm text-stone-700 max-w-xl mx-auto leading-relaxed">
             Our boutique fashion consultants are active on WhatsApp. Send us your design sketches, custom requirements, or book home pick-ups instantly.
           </p>
           <div>

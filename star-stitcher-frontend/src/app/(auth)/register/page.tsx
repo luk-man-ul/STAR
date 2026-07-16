@@ -50,19 +50,19 @@ export default function RegisterPage() {
       <div className="space-y-6 py-4">
         {/* Success Icon & Title */}
         <div className="text-center space-y-3">
-          <div className="mx-auto w-12 h-12 bg-green-100 text-green-650 rounded-full flex items-center justify-center text-2xl font-extrabold shadow-sm">
+          <div className="mx-auto w-12 h-12 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-2xl font-extrabold shadow-sm">
             ✓
           </div>
-          <h2 className="text-xl font-bold text-stone-850">
+          <h2 className="text-xl font-bold text-stone-900">
             ✅ Registration Successful!
           </h2>
         </div>
 
         {/* Body Text */}
-        <div className="text-stone-750 text-sm space-y-3 text-center leading-relaxed">
+        <div className="text-stone-700 text-sm space-y-3 text-center leading-relaxed">
           <p>Your Star Stitcher account has been created successfully.</p>
           <p>A verification email has been sent to your registered email address.</p>
-          <p className="font-semibold text-stone-800">
+          <p className="font-semibold text-stone-700">
             Please open your inbox and click the verification link before attempting to sign in.
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function RegisterPage() {
                 reset();
                 setSuccess(false);
               }}
-              className="text-xs text-stone-650 hover:text-rose-600 font-semibold transition-colors"
+              className="text-xs text-stone-600 hover:text-rose-600 font-semibold transition-colors"
             >
               ← Back to Register
             </button>
@@ -107,7 +107,7 @@ export default function RegisterPage() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-stone-800">Create Account</h1>
+        <h1 className="text-2xl font-bold text-stone-900">Create Account</h1>
         <p className="text-sm text-stone-600 mt-1">Register to save measurements and book appointments</p>
       </div>
 
@@ -119,45 +119,45 @@ export default function RegisterPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Full Name</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Full Name</label>
           <input
             type="text"
             {...register('name')}
             placeholder="Jane Doe"
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
           {errors.name && <p className="text-xs text-rose-500 mt-1">{errors.name.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Email</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Email</label>
           <input
             type="email"
             {...register('email')}
             placeholder="email@example.com"
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
           {errors.email && <p className="text-xs text-rose-500 mt-1">{errors.email.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Phone Number</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Phone Number</label>
           <input
             type="tel"
             {...register('phone')}
             placeholder="+91 98765 43210"
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
           {errors.phone && <p className="text-xs text-rose-500 mt-1">{errors.phone.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Password</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Password</label>
           <input
             type="password"
             {...register('password')}
             placeholder="••••••••"
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
           {errors.password && <p className="text-xs text-rose-500 mt-1">{errors.password.message}</p>}
         </div>

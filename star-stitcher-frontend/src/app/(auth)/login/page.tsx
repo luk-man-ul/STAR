@@ -52,7 +52,7 @@ export default function LoginPage() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-stone-800">Sign In</h1>
+        <h1 className="text-2xl font-bold text-stone-900">Sign In</h1>
         <p className="text-sm text-stone-600 mt-1">Access your customer profile & order history</p>
       </div>
 
@@ -64,23 +64,23 @@ export default function LoginPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Email</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Email</label>
           <input
             type="email"
             {...register('email')}
             placeholder="email@example.com"
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
           {errors.email && <p className="text-xs text-rose-500 mt-1">{errors.email.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-1">Password</label>
+          <label className="block text-sm font-semibold text-stone-800 mb-1">Password</label>
           <input
             type="password"
             {...register('password')}
             placeholder="••••••••"
-            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm bg-white"
+            className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
           />
           {errors.password && <p className="text-xs text-rose-500 mt-1">{errors.password.message}</p>}
         </div>

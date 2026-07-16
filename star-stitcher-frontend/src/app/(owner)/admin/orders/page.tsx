@@ -124,8 +124,8 @@ export default function AdminOrdersPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-stone-850 font-serif">Tailoring Orders</h1>
-          <p className="text-xs text-stone-500 mt-1">Manage workshop tailoring, statuses, and payment records</p>
+          <h1 className="text-2xl font-bold text-stone-900 font-serif">Tailoring Orders</h1>
+          <p className="text-xs text-stone-600 mt-1">Manage workshop tailoring, statuses, and payment records</p>
         </div>
       </div>
 
@@ -146,9 +146,9 @@ export default function AdminOrdersPage() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50"
+            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 placeholder:text-stone-500 bg-stone-50"
           />
-          <span className="absolute left-3 top-3.5 text-stone-400 text-xs">🔍</span>
+          <span className="absolute left-3 top-3.5 text-stone-600 text-xs">🔍</span>
         </div>
 
         <div>
@@ -158,7 +158,7 @@ export default function AdminOrdersPage() {
               setStatusFilter(e.target.value);
               setPage(1);
             }}
-            className="w-full px-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50 text-stone-700 font-semibold"
+            className="w-full px-4 py-2.5 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs bg-stone-50 text-stone-900 font-semibold"
           >
             <option value="">All Stitching Stages</option>
             {workflowStatuses.map((st) => (
@@ -169,16 +169,16 @@ export default function AdminOrdersPage() {
           </select>
         </div>
 
-        <div className="text-right text-xs text-stone-500 font-medium">
+        <div className="text-right text-xs text-stone-600 font-medium">
           {meta ? `Total: ${meta.total} orders` : ''}
         </div>
       </div>
 
       {/* Orders list grid */}
       {loading && orders.length === 0 ? (
-        <div className="text-center py-12 text-xs text-stone-500">Loading orders...</div>
+        <div className="text-center py-12 text-xs text-stone-600">Loading orders...</div>
       ) : orders.length === 0 ? (
-        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-500 shadow-sm">
+        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-600 shadow-sm">
           No orders found matching the filter options.
         </div>
       ) : (
@@ -186,7 +186,7 @@ export default function AdminOrdersPage() {
           <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-500 uppercase">
+                <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
                   <th className="px-6 py-3.5">Order Number</th>
                   <th className="px-6 py-3.5">Customer</th>
                   <th className="px-6 py-3.5">Design Style</th>
@@ -200,10 +200,10 @@ export default function AdminOrdersPage() {
               <tbody className="divide-y divide-stone-150 text-xs text-stone-700">
                 {orders.map((order) => (
                   <tr key={order.id} className="hover:bg-stone-50/50">
-                    <td className="px-6 py-4 font-bold text-stone-850">{order.shortId}</td>
+                    <td className="px-6 py-4 font-bold text-stone-800">{order.shortId}</td>
                     <td className="px-6 py-4">
                       <div className="font-semibold text-stone-800">{order.customer.name}</div>
-                      <div className="text-[10px] text-stone-400">{order.customer.phone}</div>
+                      <div className="text-[10px] text-stone-600">{order.customer.phone}</div>
                     </td>
                     <td className="px-6 py-4 font-semibold text-stone-600">{order.design.name}</td>
                     <td className="px-6 py-4">
@@ -241,21 +241,21 @@ export default function AdminOrdersPage() {
           {/* Pagination */}
           {meta && meta.totalPages > 1 && (
             <div className="flex items-center justify-between px-2 text-xs">
-              <span className="text-stone-500">
+              <span className="text-stone-600">
                 Page {meta.page} of {meta.totalPages}
               </span>
               <div className="flex gap-2">
                 <button
                   disabled={page <= 1}
                   onClick={() => setPage((p) => p - 1)}
-                  className="px-4 h-9 border border-stone-300 text-stone-600 hover:text-stone-850 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
+                  className="px-4 h-9 border border-stone-300 text-stone-700 hover:text-stone-900 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
                 >
                   Previous
                 </button>
                 <button
                   disabled={page >= meta.totalPages}
                   onClick={() => setPage((p) => p + 1)}
-                  className="px-4 h-9 border border-stone-300 text-stone-600 hover:text-stone-850 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
+                  className="px-4 h-9 border border-stone-300 text-stone-700 hover:text-stone-900 rounded-full font-semibold disabled:opacity-40 transition-opacity bg-white"
                 >
                   Next
                 </button>

@@ -119,10 +119,10 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
       {/* Header */}
       <div className="flex flex-wrap justify-between items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-stone-850 font-serif">Customer Profile: {customer.name}</h1>
-          <p className="text-xs text-stone-500 mt-1">
+          <h1 className="text-2xl font-bold text-stone-900 font-serif">Customer Profile: {customer.name}</h1>
+          <p className="text-xs text-stone-600 mt-1">
             Registered:{' '}
-            <span className="font-semibold text-stone-700">
+            <span className="font-semibold text-stone-800">
               {new Date(customer.createdAt).toLocaleDateString()}
             </span>
           </p>
@@ -148,9 +148,9 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
       {/* Profile Overview and Balance */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Profile Card */}
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm text-xs text-stone-700 space-y-2">
-          <span className="text-[10px] font-bold text-stone-400 uppercase block">Account Directory</span>
-          <p className="text-base font-bold text-stone-850">{customer.name}</p>
+        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm text-xs text-stone-800 space-y-2">
+          <span className="text-[10px] font-bold text-stone-600 uppercase block">Account Directory</span>
+          <p className="text-base font-bold text-stone-800">{customer.name}</p>
           <p>
             <strong>Phone:</strong> {customer.phone}
           </p>
@@ -171,12 +171,12 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* Saved Addresses */}
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm text-xs text-stone-700 space-y-4">
-          <span className="text-[10px] font-bold text-stone-400 uppercase block border-b border-stone-100 pb-1">
+        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm text-xs text-stone-800 space-y-4">
+          <span className="text-[10px] font-bold text-stone-600 uppercase block border-b border-stone-100 pb-1">
             Shipping Destinations
           </span>
           {customer.addresses.length === 0 ? (
-            <p className="text-stone-400">No addresses saved.</p>
+            <p className="text-stone-600 font-medium">No addresses saved.</p>
           ) : (
             <div className="space-y-2">
               {customer.addresses.map((addr) => (
@@ -184,7 +184,7 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
                   <p className="font-semibold text-stone-800">
                     {addr.addressLine1} {addr.isDefault && <span className="text-[9px] text-rose-500 font-bold ml-1">(Default)</span>}
                   </p>
-                  <p className="text-[10px] text-stone-500">{addr.city} {addr.postalCode}</p>
+                  <p className="text-[10px] text-stone-600">{addr.city} {addr.postalCode}</p>
                 </div>
               ))}
             </div>
@@ -197,17 +197,17 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
         
         {/* Left: Measurements Sizing sheet (5 Columns) */}
         <div className="lg:col-span-5 bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-6">
-          <h2 className="text-base font-bold text-stone-850 font-serif border-b border-stone-100 pb-2">
+          <h2 className="text-base font-bold text-stone-800 font-serif border-b border-stone-100 pb-2">
             Tailor Sizing Sheet
           </h2>
           {customer.measurements ? (
-            <div className="space-y-4 text-xs text-stone-700">
+            <div className="space-y-4 text-xs text-stone-800">
               <div className="grid grid-cols-2 gap-4">
                 {Object.entries(customer.measurements).map(([key, val]) => {
                   if (typeof val !== 'number' || val === null) return null;
                   return (
                     <div key={key} className="flex justify-between border-b border-stone-100 pb-1.5">
-                      <span className="text-stone-400 font-semibold uppercase text-[10px]">{key.replace(/([A-Z])/g, ' $1')}</span>
+                      <span className="text-stone-600 font-semibold uppercase text-[10px]">{key.replace(/([A-Z])/g, ' $1')}</span>
                       <span className="font-bold text-stone-800">{val}"</span>
                     </div>
                   );
@@ -220,7 +220,7 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
               )}
             </div>
           ) : (
-            <p className="text-xs text-stone-500 text-center py-4">No measurements config file defined.</p>
+            <p className="text-xs text-stone-600 text-center py-4">No measurements config file defined.</p>
           )}
         </div>
 
@@ -229,16 +229,16 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
           
           {/* Active / Previous Orders table */}
           <div className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-bold text-stone-850 font-serif border-b border-stone-100 pb-2">
+            <h2 className="text-base font-bold text-stone-800 font-serif border-b border-stone-100 pb-2">
               Stitching Orders History
             </h2>
             {orders.length === 0 ? (
-              <p className="text-xs text-stone-500 text-center py-4">No orders logged.</p>
+              <p className="text-xs text-stone-600 text-center py-4">No orders logged.</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-stone-200 text-[10px] font-bold text-stone-400 uppercase tracking-wider">
+                    <tr className="border-b border-stone-200 text-[10px] font-bold text-stone-600 uppercase tracking-wider">
                       <th className="py-2">Order ID</th>
                       <th className="py-2">Style</th>
                       <th className="py-2">Status</th>
@@ -246,17 +246,17 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
                       <th className="py-2 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-stone-100 text-stone-700">
+                  <tbody className="divide-y divide-stone-100 text-stone-800">
                     {orders.map((ord) => (
                       <tr key={ord.id} className="hover:bg-stone-50/50">
-                        <td className="py-3 font-bold text-stone-850">{ord.shortId}</td>
+                        <td className="py-3 font-bold text-stone-800">{ord.shortId}</td>
                         <td className="py-3 font-semibold text-stone-600">{ord.design.name}</td>
                         <td className="py-3">
                           <span className="px-2 py-0.5 bg-stone-100 text-stone-700 rounded font-bold text-[8px] uppercase">
                             {ord.status}
                           </span>
                         </td>
-                        <td className="py-3 text-right font-bold text-stone-850">
+                        <td className="py-3 text-right font-bold text-stone-800">
                           ₹{ord.remainingAmount.toLocaleString()}
                         </td>
                         <td className="py-3 text-right">
@@ -274,16 +274,16 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
 
           {/* Bookings Queue history */}
           <div className="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-bold text-stone-850 font-serif border-b border-stone-100 pb-2">
+            <h2 className="text-base font-bold text-stone-800 font-serif border-b border-stone-100 pb-2">
               Bookings History
             </h2>
             {bookings.length === 0 ? (
-              <p className="text-xs text-stone-500 text-center py-4">No bookings scheduled.</p>
+              <p className="text-xs text-stone-600 text-center py-4">No bookings scheduled.</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-stone-200 text-[10px] font-bold text-stone-400 uppercase tracking-wider">
+                    <tr className="border-b border-stone-200 text-[10px] font-bold text-stone-600 uppercase tracking-wider">
                       <th className="py-2">Booking ID</th>
                       <th className="py-2">Style</th>
                       <th className="py-2">Sizing Date</th>
@@ -291,12 +291,12 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
                       <th className="py-2 text-right">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-stone-100 text-stone-700">
+                  <tbody className="divide-y divide-stone-100 text-stone-850">
                     {bookings.map((bk) => (
                       <tr key={bk.id}>
-                        <td className="py-3 font-bold text-stone-850">{bk.shortId}</td>
+                        <td className="py-3 font-bold text-stone-800">{bk.shortId}</td>
                         <td className="py-3 font-semibold text-stone-600">{bk.design.name}</td>
-                        <td className="py-3 font-semibold text-stone-500">
+                        <td className="py-3 font-semibold text-stone-600">
                           {bk.appointment
                             ? new Date(bk.appointment.appointmentDate).toLocaleDateString()
                             : 'N/A'}

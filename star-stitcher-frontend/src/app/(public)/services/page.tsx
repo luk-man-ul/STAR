@@ -59,7 +59,7 @@ export default function ServicesPage() {
     <div className="py-16 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-4">
-        <h1 className="text-4xl font-extrabold text-stone-850 font-serif">Tailoring Services</h1>
+        <h1 className="text-4xl font-extrabold text-stone-900 font-serif">Tailoring Services</h1>
         <p className="text-stone-600 text-sm">
           Browse our tailored ladies garments. Prices listed represent baseline stitching rates, which can be modified during order validation.
         </p>
@@ -73,7 +73,7 @@ export default function ServicesPage() {
               <div className="flex justify-between items-start">
                 <span className="text-4xl">{service.image}</span>
                 <div className="text-right">
-                  <p className="text-[10px] text-stone-400 font-bold uppercase">Stitching Starts At</p>
+                  <p className="text-[10px] text-stone-600 font-bold uppercase">Stitching Starts At</p>
                   <p className="text-lg font-bold text-rose-600">{service.price}</p>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export default function ServicesPage() {
       </div>
 
       {/* Pricing Notice */}
-      <div className="p-6 bg-stone-100 border border-stone-200 rounded-3xl text-center text-xs text-stone-650 max-w-2xl mx-auto leading-relaxed">
+      <div className="p-6 bg-stone-100 border border-stone-200 rounded-3xl text-center text-xs text-stone-700 max-w-2xl mx-auto leading-relaxed">
         <strong>💡 Please Note:</strong> Stitching price rates do not include fabric costs unless requested. Sizing measurements taken online, at home, or in-store will be saved to your profile for future orders.
       </div>
     </div>
