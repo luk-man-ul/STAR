@@ -26,7 +26,7 @@ export default function CustomerLayout({
 
       if (!user) {
         try {
-          const response = await apiClient.get('/users/me');
+          const response = await apiClient.get('/auth/me');
           setAuth(response.data);
           setChecking(false);
         } catch (err) {

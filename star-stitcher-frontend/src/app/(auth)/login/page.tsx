@@ -41,7 +41,11 @@ export default function LoginPage() {
       localStorage.setItem('refresh_token', session.refresh_token);
       
       setAuth(user);
-      router.push('/dashboard');
+      if (user.role === 'ADMIN') {
+        router.replace('/admin/dashboard');
+      } else {
+        router.replace('/dashboard');
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Invalid email or password. Please try again.');
     } finally {

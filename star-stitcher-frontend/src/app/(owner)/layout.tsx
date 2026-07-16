@@ -26,7 +26,7 @@ export default function OwnerLayout({
 
       if (!user) {
         try {
-          const response = await apiClient.get('/users/me');
+          const response = await apiClient.get('/auth/me');
           const fetchedUser = response.data;
           setAuth(fetchedUser);
           if (fetchedUser.role !== 'ADMIN') {
