@@ -4,12 +4,12 @@ import React from 'react';
 
 export default function AboutPage() {
   const workingHours = [
-    { day: 'Monday', hours: '10:00 AM - 8:30 PM' },
-    { day: 'Tuesday', hours: '10:00 AM - 8:30 PM' },
-    { day: 'Wednesday', hours: '10:00 AM - 8:30 PM' },
-    { day: 'Thursday', hours: '10:00 AM - 8:30 PM' },
-    { day: 'Friday', hours: '10:00 AM - 8:30 PM' },
-    { day: 'Saturday', hours: '10:00 AM - 8:30 PM' },
+    { day: 'Monday', hours: '10:00 AM - 7:30 PM' },
+    { day: 'Tuesday', hours: '10:00 AM - 7:30 PM' },
+    { day: 'Wednesday', hours: '10:00 AM - 7:30 PM' },
+    { day: 'Thursday', hours: '10:00 AM - 7:30 PM' },
+    { day: 'Friday', hours: '10:00 AM - 7:30 PM' },
+    { day: 'Saturday', hours: '10:00 AM - 7:30 PM' },
     { day: 'Sunday', hours: 'Closed' },
   ];
 
@@ -90,7 +90,7 @@ export default function AboutPage() {
               <span className="text-3xl relative z-10">📍</span>
               <p className="font-bold text-xs text-stone-800 relative z-10 uppercase tracking-wider">Google Maps View</p>
               <p className="text-xs text-stone-600 relative z-10 max-w-xs">
-                Map view loading placeholder. Star Stitcher is located in Kasaragod, Old Bus stand, Opposite Saya Shoes.
+                Star Stitcher is located in Kasaragod, Old Bus stand, Opposite Saya Shoes.
               </p>
               <a
                 href="https://maps.app.goo.gl/DpxBA9DTLaFv2iKn9"

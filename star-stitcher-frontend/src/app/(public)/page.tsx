@@ -32,8 +32,8 @@ export default function HomePage() {
   ];
 
   const testimonials = [
-    { name: 'Priya P.', city: 'Kasaragod', quote: 'The heavy zari blouse they stitched for my wedding saree fits like a glove! Highly recommended.' },
-    { name: 'Ananya R.', city: 'Kasaragod', quote: 'Star Stitcher saves me so much hassle. I just entered my measurements online and they delivered it in 4 days.' },
+    { name: 'Zainab .', city: 'Kasaragod', quote: 'The heavy zari blouse they stitched for my wedding saree fits like a glove! Highly recommended.' },
+    { name: 'Ananya .', city: 'Kasaragod', quote: 'Star Stitcher is the best stitching studio in kasaragod. Their stitching makes the dress elegent and comfortable. ' },
   ];
 
   const heroHeading = settings?.heroHeading || 'Bespoke Custom Stitching for the Modern Woman';

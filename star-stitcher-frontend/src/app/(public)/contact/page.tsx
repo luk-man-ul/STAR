@@ -75,7 +75,7 @@ export default function ContactPage() {
               <div>
                 <p className="font-bold text-stone-800">🕒 Boutique Hours</p>
                 <p className="mt-1">
-                  Monday - Saturday: 10:00 AM - 6:30 PM<br />
+                  Monday - Saturday: 10:00 AM - 7:30 PM<br />
                   Sunday: Closed
                 </p>
               </div>
@@ -115,7 +115,7 @@ export default function ContactPage() {
                 <input
                   type="text"
                   {...register('name')}
-                  placeholder="Jane Doe"
+                  placeholder="Enter Your Name"
                   className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
                 />
                 {errors.name && <p className="text-xs text-rose-500 mt-1">{errors.name.message}</p>}
