@@ -49,6 +49,14 @@ export default function BookPage() {
     '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'
   ];
 
+  const getLocalTodayString = () => {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const {
     register,
     handleSubmit,
@@ -111,6 +119,12 @@ export default function BookPage() {
   const onSubmit = (data: BookFormInput) => {
     setError(null);
     
+    // Prevent scheduling appointments in the past
+    if (data.appointmentDate < getLocalTodayString()) {
+      setError('Appointments cannot be scheduled in the past.');
+      return;
+    }
+
     // Validate appointment Date rules
     const dateObj = new Date(data.appointmentDate);
     const day = dateObj.getDay();
@@ -300,7 +314,7 @@ export default function BookPage() {
               <label className="block text-xs font-semibold text-stone-800 mb-1">Appointment Date</label>
               <input
                 type="date"
-                min={new Date().toISOString().split('T')[0]}
+                min={getLocalTodayString()}
                 {...register('appointmentDate')}
                 className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
               />
