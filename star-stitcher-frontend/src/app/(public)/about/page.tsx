@@ -19,7 +19,7 @@ export default function AboutPage() {
       <div className="text-center max-w-2xl mx-auto space-y-4">
         <h1 className="text-4xl font-extrabold text-stone-900 font-serif">About Star Stitcher</h1>
         <p className="text-stone-600 text-sm">
-          A dedicated tailoring boutique serving Malleshwaram ladies with bespoke stitching since 2012.
+          A dedicated tailoring boutique serving kasaragod ladies with bespoke stitching since 2006.
         </p>
       </div>
 
@@ -28,19 +28,19 @@ export default function AboutPage() {
         <div className="space-y-6">
           <h2 className="text-2xl font-bold text-stone-800 font-serif">Our Story</h2>
           <p className="text-stone-600 text-sm leading-relaxed">
-            Star Stitcher was founded by Radhika Sharma in 2012 with a simple vision: to eliminate the stress from women’s custom dress tailoring. We noticed how difficult it was for ladies to get perfect fits, clear pricing structures, and reliable delivery updates.
+            Star Stitcher was founded by Sulaiman Pallam in 2006 with a simple vision: to eliminate the stress from women’s custom dress tailoring. We noticed how difficult it was for ladies to get perfect fits, clear pricing structures, and reliable delivery updates.
           </p>
           <p className="text-stone-600 text-sm leading-relaxed">
-            Over the last decade, we have grown from a single master tailor in a small shop to a dedicated team of 15+ experienced tailors in Malleshwaram. We combine age-old hand-stitching embroidery skills with a modern ordering flow, allowing you to track your orders in real-time.
+            Over the last decades, we have grown from a single master tailor in a small shop to a dedicated team of 5+ experienced Staffs in Kasaragod. We combine age-old hand-stitching embroidery skills with a modern ordering flow, allowing you to track your orders in real-time.
           </p>
           <p className="text-stone-700 text-sm font-semibold italic text-rose-600">
-            &ldquo;A dress should not just fit; it should feel like it was crafted to be a part of you.&rdquo; - Radhika, Founder
+            &ldquo;A dress should not just fit; it should feel like it was crafted to be a part of you.&rdquo; - Sulaiman PA, Founder
           </p>
         </div>
         <div className="bg-rose-50 p-8 rounded-3xl border border-rose-100 space-y-6 flex flex-col justify-center items-center text-center">
           <span className="text-5xl">🪡</span>
           <div className="space-y-2">
-            <h3 className="font-bold text-lg text-stone-800">12+ Years of Excellence</h3>
+            <h3 className="font-bold text-lg text-stone-800">20+ Years of Excellence</h3>
             <p className="text-sm text-stone-600 max-w-sm">
               We verify and record every sizing profile with 14 measurement dimensions to ensure a flawless fit guarantee.
             </p>
@@ -79,8 +79,8 @@ export default function AboutPage() {
           <div className="bg-white p-6 rounded-3xl border border-stone-200 space-y-4 shadow-sm">
             <div>
               <p className="font-bold text-stone-800">Star Stitcher Boutique</p>
-              <p className="text-sm text-stone-600">12, Rose Villa, Malleshwaram, Bangalore, Karnataka - 560003</p>
-              <p className="text-xs text-stone-600 mt-1">Landmark: Opposite Rose Garden Metro Pillar</p>
+              <p className="text-sm text-stone-600"> KPR Rao Road, Old Bus Stand, Kasaragod, Kerala - 671121</p>
+              <p className="text-xs text-stone-600 mt-1">Landmark: Opposite Mehboob Theatre</p>
             </div>
 
             {/* Maps Placeholder Card */}
@@ -90,10 +90,10 @@ export default function AboutPage() {
               <span className="text-3xl relative z-10">📍</span>
               <p className="font-bold text-xs text-stone-800 relative z-10 uppercase tracking-wider">Google Maps View</p>
               <p className="text-xs text-stone-600 relative z-10 max-w-xs">
-                Map view loading placeholder. Star Stitcher is located in Malleshwaram with parking facilities.
+                Map view loading placeholder. Star Stitcher is located in Kasaragod, Old Bus stand, Opposite Saya Shoes.
               </p>
               <a
-                href="https://maps.google.com"
+                href="https://maps.app.goo.gl/DpxBA9DTLaFv2iKn9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative z-10 px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-xs font-semibold transition-colors"

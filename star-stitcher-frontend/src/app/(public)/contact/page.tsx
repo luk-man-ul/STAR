@@ -57,25 +57,25 @@ export default function ContactPage() {
               <div>
                 <p className="font-bold text-stone-800">📍 Address</p>
                 <p className="mt-1 leading-relaxed">
-                  12, Rose Villa, Malleshwaram,<br />
-                  Bangalore, Karnataka - 560003
+                  Opposite Saya Shoes,  KPR Rao Road, Old Bus stand,<br />
+                  Kasaragod, Kerala - 671121
                 </p>
               </div>
 
               <div>
                 <p className="font-bold text-stone-800">📞 Telephone</p>
-                <p className="mt-1">+91 98765 43210</p>
+                <p className="mt-1">+91 9895634218</p>
               </div>
 
               <div>
                 <p className="font-bold text-stone-800">✉️ Email Address</p>
-                <p className="mt-1">hello@starstitcher.com</p>
+                <p className="mt-1">StarStitcherLadiesCentre@gmail.com</p>
               </div>
 
               <div>
                 <p className="font-bold text-stone-800">🕒 Boutique Hours</p>
                 <p className="mt-1">
-                  Monday - Saturday: 10:00 AM - 8:30 PM<br />
+                  Monday - Saturday: 10:00 AM - 6:30 PM<br />
                   Sunday: Closed
                 </p>
               </div>
@@ -85,7 +85,7 @@ export default function ContactPage() {
           <div className="pt-6 border-t border-stone-150 space-y-4">
             <h3 className="text-sm font-bold text-stone-800 uppercase tracking-wider">Direct Chat</h3>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.me/919895634218"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-center gap-3 px-6 h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-semibold transition-all active:scale-98 text-sm"
