@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useAuthStore } from '@/store/use-auth-store';
+import { useSession } from '@/hooks/use-auth';
 import { useSettingsStore } from '@/store/use-settings-store';
 
 export default function PublicLayout({
@@ -13,7 +13,7 @@ export default function PublicLayout({
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { user } = useAuthStore();
+  const { user } = useSession();
   const { settings, fetchSettings } = useSettingsStore();
 
   useEffect(() => {

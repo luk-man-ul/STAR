@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/use-auth-store';
+import { useSession } from '@/hooks/use-auth';
 import apiClient from '@/lib/api-client';
 
 export default function OwnerLayout({
@@ -13,46 +13,16 @@ export default function OwnerLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, setAuth, clearAuth } = useAuthStore();
-  const [checking, setChecking] = useState(true);
+  const { user, isRestoring, clearAuth } = useSession();
 
   useEffect(() => {
-    async function verifyAuth() {
+    if (!isRestoring) {
       const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
       if (!token) {
         router.push('/login');
-        return;
-      }
-
-      if (!user) {
-        try {
-          const response = await apiClient.get('/auth/me');
-          const fetchedUser = response.data;
-          setAuth(fetchedUser);
-          if (fetchedUser.role !== 'ADMIN') {
-            setChecking(false);
-          } else {
-            setChecking(false);
-          }
-        } catch (err) {
-          if (typeof window !== 'undefined') {
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('refresh_token');
-          }
-          clearAuth();
-          router.push('/login');
-        }
-      } else {
-        if (user.role !== 'ADMIN') {
-          // Access Denied
-          setChecking(false);
-        } else {
-          setChecking(false);
-        }
       }
     }
-    verifyAuth();
-  }, [user, router, setAuth, clearAuth]);
+  }, [isRestoring, router]);
 
   const handleLogout = async () => {
     try {
@@ -67,7 +37,7 @@ export default function OwnerLayout({
     }
   };
 
-  if (checking) {
+  if (isRestoring) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-stone-100 text-sm text-stone-600">
         <div className="flex flex-col items-center space-y-4">

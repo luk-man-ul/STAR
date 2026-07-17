@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/use-auth-store';
+import { useSession } from '@/hooks/use-auth';
 import apiClient from '@/lib/api-client';
 
 export default function CustomerLayout({
@@ -13,36 +13,16 @@ export default function CustomerLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, setAuth, clearAuth } = useAuthStore();
-  const [checking, setChecking] = useState(true);
+  const { user, isRestoring, clearAuth } = useSession();
 
   useEffect(() => {
-    async function verifyAuth() {
+    if (!isRestoring) {
       const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
       if (!token) {
         router.push('/login');
-        return;
-      }
-
-      if (!user) {
-        try {
-          const response = await apiClient.get('/auth/me');
-          setAuth(response.data);
-          setChecking(false);
-        } catch (err) {
-          if (typeof window !== 'undefined') {
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('refresh_token');
-          }
-          clearAuth();
-          router.push('/login');
-        }
-      } else {
-        setChecking(false);
       }
     }
-    verifyAuth();
-  }, [user, router, setAuth, clearAuth]);
+  }, [isRestoring, router]);
 
   const handleLogout = async () => {
     try {
@@ -59,7 +39,7 @@ export default function CustomerLayout({
     }
   };
 
-  if (checking) {
+  if (isRestoring) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-stone-50 text-sm text-stone-600">
         <div className="flex flex-col items-center space-y-4">
@@ -74,6 +54,7 @@ export default function CustomerLayout({
     { name: 'Dashboard', href: '/dashboard', icon: '🏠' },
     { name: 'Book Appointment', href: '/book', icon: '📅' },
     { name: 'My Bookings', href: '/customer/bookings', icon: '👗' },
+    { name: 'Website', href: '/', icon: '🌐' },
     { name: 'Profile', href: '/profile', icon: '👤' },
   ];
 
@@ -89,7 +70,9 @@ export default function CustomerLayout({
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-semibold">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href || (link.href !== '/dashboard' && pathname.startsWith(link.href));
+              const isActive = link.href === '/'
+                ? pathname === '/'
+                : pathname === link.href || (link.href !== '/dashboard' && pathname.startsWith(link.href));
               return (
                 <Link
                   key={link.href}
@@ -136,7 +119,9 @@ export default function CustomerLayout({
       <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-stone-200 bg-white/95 py-2 md:hidden shadow-lg">
         <div className="flex justify-around items-center text-[10px] font-bold text-stone-600">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href !== '/dashboard' && pathname.startsWith(link.href));
+            const isActive = link.href === '/'
+              ? pathname === '/'
+              : pathname === link.href || (link.href !== '/dashboard' && pathname.startsWith(link.href));
             return (
               <Link
                 key={link.href}
@@ -162,3 +147,4 @@ export default function CustomerLayout({
     </div>
   );
 }
+
