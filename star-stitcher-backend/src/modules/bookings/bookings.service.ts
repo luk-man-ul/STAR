@@ -306,6 +306,7 @@ export class BookingsService {
     return this.prismaService.$transaction(async (tx) => {
       const orderShortId = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
       
+      const defaultMeasurement = booking.customer.measurements.find((m) => m.isDefault) || booking.customer.measurements[0];
       const order = await tx.order.create({
         data: {
           shortId: orderShortId,
@@ -320,7 +321,7 @@ export class BookingsService {
           paymentStatus: PaymentStatus.UNPAID,
           paidAmount: 0.0,
           remainingAmount: booking.design.price,
-          measurementSnapshot: (booking.customer.measurements as any) || {},
+          measurementSnapshot: (defaultMeasurement as any) || {},
         },
       });
 

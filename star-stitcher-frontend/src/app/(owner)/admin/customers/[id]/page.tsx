@@ -14,6 +14,9 @@ interface Address {
 }
 
 interface Measurement {
+  id: string;
+  profileName: string;
+  isDefault: boolean;
   bust?: number;
   underBust?: number;
   waist?: number;
@@ -58,7 +61,7 @@ interface CustomerProfile {
   email: string;
   createdAt: string;
   addresses: Address[];
-  measurements?: Measurement | null;
+  measurements?: Measurement[] | null;
 }
 
 export default function AdminCustomerDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -70,6 +73,7 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadAllData() {
@@ -82,6 +86,10 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
         ]);
 
         setCustomer(profileRes.data);
+        if (profileRes.data?.measurements && Array.isArray(profileRes.data.measurements)) {
+          const def = profileRes.data.measurements.find((m: any) => m.isDefault) || profileRes.data.measurements[0];
+          setSelectedProfileId(def?.id || null);
+        }
         setOrders(ordersRes.data);
         setBookings(bookingsRes.data);
       } catch (err) {
@@ -200,28 +208,57 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
           <h2 className="text-base font-bold text-stone-800 font-serif border-b border-stone-100 pb-2">
             Tailor Sizing Sheet
           </h2>
-          {customer.measurements ? (
-            <div className="space-y-4 text-xs text-stone-800">
-              <div className="grid grid-cols-2 gap-4">
-                {Object.entries(customer.measurements).map(([key, val]) => {
-                  if (typeof val !== 'number' || val === null) return null;
-                  return (
-                    <div key={key} className="flex justify-between border-b border-stone-100 pb-1.5">
-                      <span className="text-stone-600 font-semibold uppercase text-[10px]">{key.replace(/([A-Z])/g, ' $1')}</span>
-                      <span className="font-bold text-stone-800">{val}"</span>
-                    </div>
-                  );
-                })}
-              </div>
-              {customer.measurements.notes && (
-                <div className="bg-stone-50 p-3 rounded-2xl border border-stone-150">
-                  <strong>Notes:</strong> {customer.measurements.notes}
-                </div>
-              )}
+          {customer.measurements && customer.measurements.length > 0 && (
+            <div className="mb-4">
+              <label className="block text-[10px] font-bold text-stone-600 uppercase mb-1">
+                Select Sizing Profile
+              </label>
+              <select
+                value={selectedProfileId || ''}
+                onChange={(e) => setSelectedProfileId(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl border border-stone-250 focus:outline-none focus:ring-2 focus:ring-rose-500 text-xs text-stone-900 bg-white"
+              >
+                {customer.measurements.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.profileName} {m.isDefault ? '(Default)' : ''}
+                  </option>
+                ))}
+              </select>
             </div>
-          ) : (
-            <p className="text-xs text-stone-600 text-center py-4">No measurements config file defined.</p>
           )}
+
+          {(() => {
+            const activeProfile = Array.isArray(customer.measurements)
+              ? customer.measurements.find((m) => m.id === selectedProfileId) || customer.measurements[0]
+              : null;
+
+            if (activeProfile) {
+              return (
+                <div className="space-y-4 text-xs text-stone-800">
+                  <div className="grid grid-cols-2 gap-4">
+                    {Object.entries(activeProfile).map(([key, val]) => {
+                      if (typeof val !== 'number' || val === null) return null;
+                      return (
+                        <div key={key} className="flex justify-between border-b border-stone-100 pb-1.5">
+                          <span className="text-stone-600 font-semibold uppercase text-[10px]">{key.replace(/([A-Z])/g, ' $1')}</span>
+                          <span className="font-bold text-stone-800">{val}"</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {activeProfile.notes && (
+                    <div className="bg-stone-50 p-3 rounded-2xl border border-stone-150">
+                      <strong>Notes:</strong> {activeProfile.notes}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <p className="text-xs text-stone-600 text-center py-4">No measurements profile defined.</p>
+            );
+          })()}
         </div>
 
         {/* Right: Bookings & Orders History (7 Columns) */}

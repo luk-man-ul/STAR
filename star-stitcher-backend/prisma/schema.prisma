@@ -96,7 +96,7 @@ model User {
   updatedAt        DateTime          @updatedAt
   
   addresses        Address[]
-  measurements     Measurement?
+  measurements     Measurement[]
   orders           Order[]
   bookings         Booking[]
   notificationLogs NotificationLog[]
@@ -160,7 +160,9 @@ model Design {
 
 model Measurement {
   id                String            @id @default(uuid())
-  userId            String            @unique
+  userId            String
+  profileName       String            @default("My Measurements")
+  isDefault         Boolean           @default(false)
   measurementSource MeasurementSource @default(ONLINE)
   verifiedByShop    Boolean           @default(false)
   verifiedAt        DateTime?
@@ -189,6 +191,7 @@ model Measurement {
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("measurements")
+  @@index([userId])
 }
 
 model Booking {

@@ -64,8 +64,9 @@ export class CustomersService {
 
   async getMeasurements(id: string) {
     await this.getOne(id);
-    return this.prismaService.measurement.findUnique({
+    return this.prismaService.measurement.findMany({
       where: { userId: id },
+      orderBy: [{ isDefault: 'desc' }, { updatedAt: 'desc' }],
     });
   }
 }

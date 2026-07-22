@@ -89,7 +89,9 @@ export default function CustomerDashboard() {
       ]);
 
       setBookings(bookingsRes.data || []);
-      setMeasurements(measurementsRes.data || null);
+      const profiles = measurementsRes.data;
+      const defaultProfile = Array.isArray(profiles) ? (profiles.find((p: any) => p.isDefault) || profiles[0] || null) : (profiles || null);
+      setMeasurements(defaultProfile);
       setAddresses(addressesRes.data || []);
       
       const rawDesigns = designsRes.data?.data || [];

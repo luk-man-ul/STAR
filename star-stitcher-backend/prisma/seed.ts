@@ -103,6 +103,8 @@ async function main() {
       neck: 13.0,
       sleeveLength: 12.0,
       totalLength: 38.0,
+      isDefault: true,
+      profileName: 'My Measurements',
     },
   });
 
@@ -121,6 +123,8 @@ async function main() {
       neck: 14.0,
       sleeveLength: 18.0,
       totalLength: 54.0,
+      isDefault: true,
+      profileName: 'My Measurements',
     },
   });
 
