@@ -137,9 +137,9 @@ export default function AdminCategoriesPage() {
         </div>
       )}
 
-      {/* Filter and Search Box */}
-      <div className="bg-white p-4 rounded-3xl border border-stone-200 flex justify-between items-center shadow-sm">
-        <div className="w-80 relative">
+      {/* Toolbar Filters */}
+      <div className="bg-white p-4 rounded-3xl border border-stone-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 shadow-sm">
+        <div className="w-full sm:w-80 relative">
           <input
             type="text"
             placeholder="Search categories by name..."
@@ -162,62 +162,89 @@ export default function AdminCategoriesPage() {
           No categories found. Click the button above to add your first category.
         </div>
       ) : (
-        <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
-                <th className="px-6 py-3.5">Name</th>
-                <th className="px-6 py-3.5">Description</th>
-                <th className="px-6 py-3.5 text-center">Status</th>
-                <th className="px-6 py-3.5 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-stone-150 text-xs text-stone-700">
-              {filteredCategories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-stone-50/50">
-                  <td className="px-6 py-4 font-bold text-stone-850">{cat.name}</td>
-                  <td className="px-6 py-4 max-w-xs truncate text-stone-600">
-                    {cat.description || 'No description provided'}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <button
-                      onClick={() => handleToggleActive(cat)}
-                      className={`px-3 py-1 font-bold text-[9px] uppercase tracking-wider rounded-full transition-colors ${
-                        cat.isActive
-                          ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                          : 'bg-stone-200 text-stone-600 hover:bg-stone-300'
-                      }`}
-                    >
-                      {cat.isActive ? 'Active' : 'Inactive'}
-                    </button>
-                  </td>
-                  <td className="px-6 py-4 text-right space-x-2">
-                    <button
-                      onClick={() => handleEditClick(cat)}
-                      className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-colors"
-                    >
-                      Edit
-                    </button>
-                    {cat.isActive && (
-                      <button
-                        onClick={() => handleArchive(cat.id)}
-                        className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-650 rounded-full font-semibold transition-colors"
-                      >
-                        Archive
-                      </button>
-                    )}
-                  </td>
+        <div className="space-y-4">
+          {/* Desktop Table View */}
+          <div className="hidden md:block bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
+                  <th className="px-6 py-3.5">Name</th>
+                  <th className="px-6 py-3.5">Description</th>
+                  <th className="px-6 py-3.5 text-center">Status</th>
+                  <th className="px-6 py-3.5 text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-stone-150 text-xs text-stone-700">
+                {filteredCategories.map((cat) => (
+                  <tr key={cat.id} className="hover:bg-stone-50/50">
+                    <td className="px-6 py-4 font-bold text-stone-850">{cat.name}</td>
+                    <td className="px-6 py-4 max-w-xs truncate text-stone-600">
+                      {cat.description || 'No description provided'}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <button
+                        onClick={() => handleToggleActive(cat)}
+                        className={`px-3 py-1 font-bold text-[9px] uppercase tracking-wider rounded-full transition-colors cursor-pointer ${
+                          cat.isActive
+                            ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                            : 'bg-stone-200 text-stone-600 hover:bg-stone-300'
+                        }`}
+                      >
+                        {cat.isActive ? 'Active' : 'Inactive'}
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 text-right space-x-2">
+                      <button
+                        onClick={() => handleEditClick(cat)}
+                        className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-colors cursor-pointer"
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Cards View */}
+          <div className="md:hidden space-y-3">
+            {filteredCategories.map((cat) => (
+              <div key={cat.id} className="bg-white border border-stone-200 rounded-3xl p-5 shadow-sm space-y-3">
+                <div className="flex justify-between items-start border-b border-stone-100 pb-2">
+                  <div>
+                    <h3 className="font-bold text-stone-900 text-sm">{cat.name}</h3>
+                    <p className="text-xs text-stone-600 mt-0.5">{cat.description || 'No description provided'}</p>
+                  </div>
+                  <button
+                    onClick={() => handleToggleActive(cat)}
+                    className={`px-2.5 py-0.5 font-bold text-[9px] uppercase tracking-wider rounded-full transition-colors shrink-0 cursor-pointer ${
+                      cat.isActive
+                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                        : 'bg-stone-200 text-stone-600 hover:bg-stone-300'
+                    }`}
+                  >
+                    {cat.isActive ? 'Active' : 'Inactive'}
+                  </button>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <button
+                    onClick={() => handleEditClick(cat)}
+                    className="px-4 h-8 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-full font-bold text-xs transition-colors cursor-pointer"
+                  >
+                    Edit Category
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
       {/* Edit/Add Category Modal Dialog */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white max-w-md w-full rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150">
+        <div className="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white max-w-md w-full max-h-[85vh] overflow-y-auto rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150 my-auto">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 text-stone-600 hover:text-stone-900 text-xl font-bold"

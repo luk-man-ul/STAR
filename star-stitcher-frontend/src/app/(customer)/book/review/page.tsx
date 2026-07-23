@@ -89,45 +89,45 @@ export default function BookReviewPage() {
       )}
 
       {draft && (
-        <div className="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 space-y-6">
+        <div className="bg-white rounded-3xl border border-stone-200 shadow-sm p-5 sm:p-6 space-y-6">
           <div className="space-y-4">
-            <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
+            <div className="border-b border-stone-150 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-4">
               <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Garment Style</span>
               <span className="text-sm font-bold text-stone-800">{draft.designName}</span>
             </div>
 
-            <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
+            <div className="border-b border-stone-150 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-4">
               <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Stitching Price</span>
               <span className="text-sm font-extrabold text-rose-600">₹{draft.designPrice?.toLocaleString()}</span>
             </div>
 
-            <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
+            <div className="border-b border-stone-150 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-4">
               <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Sizing Method</span>
               <span className="text-sm font-bold text-stone-800">{draft.measurementMethod}</span>
             </div>
 
             {draft.measurementMethod === 'ONLINE' && draft.measurementProfileName && (
-              <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
+              <div className="border-b border-stone-150 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-4">
                 <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Measurement Profile</span>
                 <span className="text-sm font-bold text-rose-700">{draft.measurementProfileName}</span>
               </div>
             )}
 
-            <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
+            <div className="border-b border-stone-150 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-4">
               <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Delivery Mode</span>
               <span className="text-sm font-bold text-stone-800">{draft.deliveryMethod}</span>
             </div>
 
             {draft.addressText && (
-              <div className="border-b border-stone-150 pb-3 flex justify-between items-start gap-4">
-                <span className="text-xs text-stone-600 uppercase font-bold tracking-wider whitespace-nowrap">Shipping Destination</span>
-                <span className="text-sm font-semibold text-stone-600 text-right">{draft.addressText}</span>
+              <div className="border-b border-stone-150 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-start gap-1 sm:gap-4">
+                <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Shipping Destination</span>
+                <span className="text-sm font-semibold text-stone-600 text-left sm:text-right">{draft.addressText}</span>
               </div>
             )}
 
-            <div className="border-b border-stone-150 pb-3 flex justify-between items-start gap-4">
-              <span className="text-xs text-stone-600 uppercase font-bold tracking-wider whitespace-nowrap">Appointment Date</span>
-              <span className="text-sm font-extrabold text-stone-900 text-right">
+            <div className="border-b border-stone-150 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-start gap-1 sm:gap-4">
+              <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Appointment Date</span>
+              <span className="text-sm font-extrabold text-stone-900 text-left sm:text-right">
                 {new Date(draft.appointmentDate).toLocaleString([], {
                   weekday: 'short',
                   month: 'short',
@@ -148,7 +148,7 @@ export default function BookReviewPage() {
             )}
           </div>
 
-          <div className="flex gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <button
               onClick={handleConfirm}
               disabled={loading}

@@ -270,7 +270,7 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                   return (
                     <div key={key} className="bg-stone-50 p-2.5 rounded-xl border border-stone-150 text-center">
                       <span className="text-[9px] uppercase font-bold text-stone-600 block mb-0.5">{key}</span>
-                      <span className="font-extrabold text-stone-900 text-sm">{val}"</span>
+                      <span className="font-extrabold text-stone-900 text-sm">{val} in</span>
                     </div>
                   );
                 })}

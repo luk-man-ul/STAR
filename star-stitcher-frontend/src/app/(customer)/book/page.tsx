@@ -303,7 +303,7 @@ export default function BookPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
           <div className="space-y-2">
             <label className="block text-sm font-bold text-stone-800">2. Sizing Verification</label>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none text-stone-800 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
                 <input
                   type="radio"
@@ -327,7 +327,7 @@ export default function BookPage() {
 
           <div className="space-y-2">
             <label className="block text-sm font-bold text-stone-800">3. Delivery Type</label>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <label className="flex-1 flex items-center justify-center gap-2 border border-stone-300 rounded-2xl py-3 px-4 text-xs font-semibold cursor-pointer select-none text-stone-800 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50">
                 <input
                   type="radio"

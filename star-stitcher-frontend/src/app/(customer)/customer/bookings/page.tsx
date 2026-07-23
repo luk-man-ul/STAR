@@ -124,28 +124,38 @@ export default function CustomerBookingsPage() {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto py-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
           <h1 className="text-2xl font-bold text-stone-900 font-serif">My Bookings</h1>
           <p className="text-xs text-stone-600 mt-1">Track request states, approvals, and appointments schedules</p>
         </div>
         <Link
           href="/book"
-          className="px-5 h-11 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all flex items-center justify-center"
+          className="px-5 h-10 sm:h-11 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all flex items-center justify-center shrink-0"
         >
           Book Appointment
         </Link>
       </div>
 
       {error && (
-        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-655 rounded-2xl text-xs text-center">
+        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-600 rounded-2xl text-xs text-center font-medium">
           {error}
         </div>
       )}
 
       {bookings.length === 0 ? (
-        <div className="bg-white p-12 text-center border border-stone-200 rounded-3xl text-xs text-stone-600 shadow-sm">
-          No bookings submitted yet. Click the button above to schedule your first tailoring booking.
+        <div className="bg-white p-8 sm:p-12 text-center border border-stone-200 rounded-3xl text-stone-600 shadow-sm space-y-3">
+          <span className="text-4xl block select-none">📋</span>
+          <p className="text-sm font-bold text-stone-800">No bookings submitted yet</p>
+          <p className="text-xs text-stone-600 max-w-sm mx-auto">
+            Schedule your custom tailoring fitting appointment to get started with Star Stitcher.
+          </p>
+          <Link
+            href="/book"
+            className="inline-flex h-10 px-5 bg-rose-600 hover:bg-rose-700 text-white items-center justify-center rounded-full text-xs font-semibold shadow-sm transition-all mt-2"
+          >
+            Create First Booking
+          </Link>
         </div>
       ) : (
         <div className="space-y-4">

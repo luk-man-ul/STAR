@@ -183,7 +183,8 @@ export default function AdminOrdersPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
+          {/* Desktop Table View */}
+          <div className="hidden md:block bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
@@ -236,6 +237,57 @@ export default function AdminOrdersPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Cards View */}
+          <div className="md:hidden space-y-4">
+            {orders.map((order) => (
+              <div key={order.id} className="bg-white border border-stone-200 rounded-3xl p-5 shadow-sm space-y-3">
+                <div className="flex justify-between items-center border-b border-stone-100 pb-3">
+                  <div>
+                    <span className="text-[9px] font-bold text-stone-600 uppercase block">Order #</span>
+                    <span className="font-bold text-stone-900 text-sm">{order.shortId}</span>
+                  </div>
+                  <span className={`px-2.5 py-0.5 rounded-full font-bold text-[9px] uppercase tracking-wider ${getStatusBadge(order.status)}`}>
+                    {order.status.replace(/_/g, ' ')}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <span className="text-[9px] font-semibold text-stone-600 uppercase block">Customer</span>
+                    <span className="font-bold text-stone-800 block">{order.customer.name}</span>
+                    <span className="text-[10px] text-stone-600 block">{order.customer.phone}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-semibold text-stone-600 uppercase block">Style</span>
+                    <span className="font-semibold text-stone-700 block">{order.design.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-semibold text-stone-600 uppercase block">Payment</span>
+                    <span className={`inline-block px-2 py-0.5 rounded text-[8px] font-extrabold uppercase mt-0.5 ${getPaymentStatusBadge(order.paymentStatus)}`}>
+                      {order.paymentStatus}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-semibold text-stone-600 uppercase block">Balance Due</span>
+                    <span className="font-bold text-stone-900 block mt-0.5">₹{order.remainingAmount.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex justify-between items-center border-t border-stone-100">
+                  <span className="text-[10px] text-stone-600 font-medium">
+                    Due: {order.expectedDeliveryDate ? new Date(order.expectedDeliveryDate).toLocaleDateString() : 'N/A'}
+                  </span>
+                  <Link
+                    href={`/admin/orders/${order.id}`}
+                    className="px-4 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-full font-bold text-xs transition-colors"
+                  >
+                    Manage Order →
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Pagination */}

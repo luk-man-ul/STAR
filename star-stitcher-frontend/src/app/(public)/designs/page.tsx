@@ -265,8 +265,8 @@ export default function DesignsPage() {
 
       {/* Design Details Modal Drawer */}
       {selectedDesign && (
-        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white max-w-lg w-full rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150">
+        <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white max-w-lg w-full max-h-[85vh] overflow-y-auto rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150 my-auto">
             <button
               onClick={() => setSelectedDesign(null)}
               className="absolute top-4 right-4 text-stone-600 hover:text-stone-900 text-xl font-bold font-sans z-10"

@@ -194,21 +194,21 @@ export default function AddressesPage() {
       )}
 
       {/* Navigation Sub-Links */}
-      <div className="flex gap-4 border-b border-stone-200 pb-2">
-        <Link href="/profile" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
+      <div className="flex flex-wrap sm:flex-nowrap gap-3 sm:gap-6 border-b border-stone-200 pb-2 text-xs sm:text-sm">
+        <Link href="/profile" className="font-medium text-stone-600 hover:text-rose-600 pb-2">
           General Info
         </Link>
-        <Link href="/profile/addresses" className="text-sm font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
+        <Link href="/profile/addresses" className="font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
           Saved Addresses
         </Link>
-        <Link href="/profile/measurements" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
+        <Link href="/profile/measurements" className="font-medium text-stone-600 hover:text-rose-600 pb-2">
           Measurements
         </Link>
       </div>
 
       {showForm ? (
-        <div className="bg-white p-6 rounded-3xl border border-stone-200 max-w-md space-y-4">
-          <h2 className="text-lg font-bold text-stone-800">
+        <div className="bg-white p-5 sm:p-6 rounded-3xl border border-stone-200 max-w-md space-y-4 shadow-sm">
+          <h2 className="text-lg font-bold text-stone-800 font-serif">
             {editingAddress ? 'Edit Address' : 'Add New Address'}
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -218,7 +218,7 @@ export default function AddressesPage() {
                 type="text"
                 {...register('addressLine1')}
                 placeholder="Flat/House No, Building"
-                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
+                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
               {errors.addressLine1 && <p className="text-xs text-rose-500 mt-1">{errors.addressLine1.message}</p>}
             </div>
@@ -228,12 +228,12 @@ export default function AddressesPage() {
               <input
                 type="text"
                 {...register('addressLine2')}
-                placeholder="Locality, Area, Street"
-                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 placeholder:text-stone-500 bg-white"
+                placeholder="Street, Area, Landmark"
+                className="w-full px-4 py-3 rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm text-stone-900 bg-white"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-sm font-semibold text-stone-800 mb-1">City</label>
                 <input
@@ -265,30 +265,30 @@ export default function AddressesPage() {
               {errors.postalCode && <p className="text-xs text-rose-500 mt-1">{errors.postalCode.message}</p>}
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pt-1">
               <input
                 type="checkbox"
                 id="isDefault"
                 {...register('isDefault')}
                 className="w-4 h-4 text-rose-600 focus:ring-rose-500 border-stone-300 rounded"
               />
-              <label htmlFor="isDefault" className="text-sm font-medium text-stone-800 select-none">
+              <label htmlFor="isDefault" className="text-xs sm:text-sm font-medium text-stone-800 select-none">
                 Set as default shipping address
               </label>
             </div>
 
-            <div className="flex gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button
                 type="submit"
                 disabled={actionLoading}
-                className="flex-1 h-12 bg-rose-600 hover:bg-rose-700 text-white rounded-full font-semibold text-sm transition-all"
+                className="flex-1 h-12 bg-rose-600 hover:bg-rose-700 text-white rounded-full font-semibold text-sm transition-all cursor-pointer"
               >
                 {actionLoading ? 'Saving...' : 'Save Address'}
               </button>
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="flex-1 h-12 border border-stone-300 text-stone-700 rounded-full font-semibold text-sm transition-all hover:bg-stone-50"
+                className="flex-1 h-12 border border-stone-300 text-stone-700 rounded-full font-semibold text-sm transition-all hover:bg-stone-50 cursor-pointer"
               >
                 Cancel
               </button>
@@ -297,60 +297,70 @@ export default function AddressesPage() {
         </div>
       ) : (
         <div className="space-y-6 max-w-xl">
-          <div className="flex justify-between items-center">
-            <h2 className="text-lg font-bold text-stone-800">Saved Addresses</h2>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <h2 className="text-lg font-bold text-stone-800 font-serif">Saved Addresses</h2>
             <button
               onClick={handleAddNewClick}
-              className="px-4 h-10 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold transition-all active:scale-95"
+              className="px-5 h-10 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold transition-all active:scale-95 shadow-sm"
             >
               + Add Address
             </button>
           </div>
 
           {addresses.length === 0 ? (
-            <div className="p-8 border border-dashed border-stone-300 text-center text-sm text-stone-600 rounded-3xl bg-white">
-              No addresses saved yet. Click the button above to add one.
+            <div className="p-8 sm:p-12 border border-dashed border-stone-300 text-center text-stone-600 rounded-3xl bg-white space-y-3 shadow-sm">
+              <span className="text-4xl block select-none">📍</span>
+              <p className="text-sm font-bold text-stone-800">No addresses saved yet</p>
+              <p className="text-xs text-stone-600 max-w-xs mx-auto">
+                Save your home or delivery destination for home fulfillment of tailored garments.
+              </p>
+              <button
+                onClick={handleAddNewClick}
+                className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-xs font-semibold transition-all mt-2"
+              >
+                Add First Address
+              </button>
             </div>
           ) : (
             <div className="space-y-4">
               {addresses.map((address) => (
                 <div
                   key={address.id}
-                  className={`p-5 rounded-3xl border bg-white ${
+                  className={`p-5 rounded-3xl border bg-white shadow-sm ${
                     address.isDefault ? 'border-rose-500 ring-1 ring-rose-500' : 'border-stone-200'
                   }`}
                 >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <p className="font-semibold text-stone-800">{address.addressLine1}</p>
-                      {address.addressLine2 && <p className="text-sm text-stone-600">{address.addressLine2}</p>}
-                      <p className="text-sm text-stone-600">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div className="space-y-1">
+                      <p className="font-semibold text-stone-800 text-sm">{address.addressLine1}</p>
+                      {address.addressLine2 && <p className="text-xs text-stone-600">{address.addressLine2}</p>}
+                      <p className="text-xs text-stone-600">
                         {address.city}, {address.state} - {address.postalCode}
                       </p>
                       {address.isDefault && (
-                        <span className="inline-block mt-2 px-3 py-1 bg-rose-100 text-rose-700 font-semibold text-[10px] rounded-full uppercase tracking-wider">
+                        <span className="inline-block mt-2 px-3 py-0.5 bg-rose-100 text-rose-700 font-bold text-[9px] rounded-full uppercase tracking-wider">
                           Default Address
                         </span>
                       )}
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2 pt-2 sm:pt-0">
                       {!address.isDefault && (
                         <button
                           onClick={() => handleSetDefault(address.id)}
-                          className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full text-xs transition-colors"
+                          className="px-3.5 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full text-xs font-medium transition-colors cursor-pointer"
                         >
                           Make Default
                         </button>
                       )}
                       <button
                         onClick={() => handleEditClick(address)}
-                        className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full text-xs transition-colors"
+                        className="px-3.5 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full text-xs font-medium transition-colors cursor-pointer"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(address.id)}
-                        className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-full text-xs transition-colors"
+                        className="px-3.5 h-8 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-full text-xs font-medium transition-colors cursor-pointer"
                       >
                         Delete
                       </button>

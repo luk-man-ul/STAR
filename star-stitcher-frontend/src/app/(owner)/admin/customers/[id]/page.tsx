@@ -241,7 +241,7 @@ export default function AdminCustomerDetailPage({ params }: { params: Promise<{ 
                       return (
                         <div key={key} className="flex justify-between border-b border-stone-100 pb-1.5">
                           <span className="text-stone-600 font-semibold uppercase text-[10px]">{key.replace(/([A-Z])/g, ' $1')}</span>
-                          <span className="font-bold text-stone-800">{val}"</span>
+                          <span className="font-bold text-stone-800">{val} in</span>
                         </div>
                       );
                     })}

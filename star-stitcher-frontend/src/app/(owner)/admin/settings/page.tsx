@@ -296,7 +296,7 @@ export default function AdminSettingsPage() {
       )}
 
       {/* Tabs navigation */}
-      <div className="flex border-b border-stone-300 gap-6 text-xs font-bold text-stone-600">
+      <div className="flex flex-wrap sm:flex-nowrap border-b border-stone-300 gap-3 sm:gap-6 text-xs font-bold text-stone-600">
         {[
           { id: 'general', name: 'General & Logo' },
           { id: 'contact', name: 'Contact & Socials' },
@@ -310,7 +310,7 @@ export default function AdminSettingsPage() {
               setError(null);
               setSuccess(null);
             }}
-            className={`pb-3 border-b-2 transition-colors ${
+            className={`pb-3 border-b-2 transition-colors cursor-pointer ${
               activeTab === tab.id
                 ? 'border-rose-500 text-rose-600'
                 : 'border-transparent hover:text-stone-900'

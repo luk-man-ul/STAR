@@ -20,6 +20,17 @@ export default function PublicLayout({
     fetchSettings();
   }, [fetchSettings]);
 
+  // Handle Escape key to close mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    if (mobileMenuOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },

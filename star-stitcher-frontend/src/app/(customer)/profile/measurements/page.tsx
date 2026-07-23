@@ -322,18 +322,18 @@ export default function MeasurementsPage() {
               </div>
             </div>
 
-            <div className="flex space-x-3">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button
                 type="submit"
                 disabled={saving}
-                className="h-11 px-8 bg-rose-600 hover:bg-rose-700 text-white rounded-full font-semibold transition-all active:scale-98 text-xs disabled:opacity-50"
+                className="flex-1 h-11 px-8 bg-rose-600 hover:bg-rose-700 text-white rounded-full font-semibold transition-all active:scale-98 text-xs disabled:opacity-50 cursor-pointer"
               >
                 {saving ? 'Saving...' : editingProfile ? 'Save Changes' : 'Create Profile'}
               </button>
               <button
                 type="button"
                 onClick={() => setIsEditing(false)}
-                className="h-11 px-6 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-all text-xs"
+                className="flex-1 h-11 px-6 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-all text-xs cursor-pointer"
               >
                 Cancel
               </button>
@@ -342,26 +342,26 @@ export default function MeasurementsPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <h2 className="text-lg font-bold text-stone-850 font-serif">Saved Sizing Profiles</h2>
             <button
               onClick={handleStartAdd}
-              className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+              className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-semibold shadow-sm transition-all cursor-pointer"
             >
               Add Profile
             </button>
           </div>
 
           {profiles.length === 0 ? (
-            <div className="py-12 border border-dashed border-stone-300 rounded-3xl text-center space-y-3">
-              <span className="text-4xl block">📏</span>
+            <div className="py-12 border border-dashed border-stone-300 rounded-3xl text-center space-y-3 bg-white p-6 shadow-sm">
+              <span className="text-4xl block select-none">📏</span>
               <p className="text-sm font-semibold text-stone-800">No measurement profiles saved</p>
               <p className="text-xs text-stone-600 max-w-sm mx-auto">
                 Create a sizing profile so we can make clothes tailored exactly to your body shape.
               </p>
               <button
                 onClick={handleStartAdd}
-                className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-xs font-semibold transition-all"
+                className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-xs font-semibold transition-all mt-2 cursor-pointer"
               >
                 Create First Profile
               </button>
@@ -371,7 +371,7 @@ export default function MeasurementsPage() {
               {profiles.map((profile) => (
                 <div
                   key={profile.id}
-                  className="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 flex flex-col md:flex-row md:items-start md:justify-between gap-6"
+                  className="bg-white rounded-3xl border border-stone-200 shadow-sm p-5 sm:p-6 flex flex-col md:flex-row md:items-start md:justify-between gap-4 sm:gap-6"
                 >
                   <div className="space-y-3 flex-1">
                     <div className="flex items-center space-x-2">
@@ -384,7 +384,7 @@ export default function MeasurementsPage() {
                     </div>
 
                     {/* Sizing preview summary */}
-                    <div className="grid grid-cols-4 gap-4 text-center max-w-md bg-stone-50 p-3 rounded-2xl border border-stone-150">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center max-w-md bg-stone-50 p-3 rounded-2xl border border-stone-150">
                       <div>
                         <span className="block text-[8px] font-bold text-stone-500 uppercase">Bust</span>
                         <span className="text-xs font-bold text-stone-800">{profile.bust ? `${profile.bust}"` : '--'}</span>
@@ -410,17 +410,17 @@ export default function MeasurementsPage() {
                     )}
                   </div>
 
-                  <div className="flex md:flex-col items-center md:items-end justify-between md:justify-start gap-2 border-t md:border-t-0 border-stone-100 pt-4 md:pt-0">
-                    <div className="flex space-x-2">
+                  <div className="flex flex-col sm:flex-row md:flex-col items-start sm:items-center md:items-end justify-between md:justify-start gap-2 border-t md:border-t-0 border-stone-100 pt-3 md:pt-0">
+                    <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => handleStartEdit(profile)}
-                        className="px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 text-[11px] font-bold rounded-full transition-all"
+                        className="px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 text-[11px] font-bold rounded-full transition-all cursor-pointer"
                       >
                         Edit Sizing
                       </button>
                       <button
                         onClick={() => handleDelete(profile.id)}
-                        className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-[11px] font-bold rounded-full transition-all"
+                        className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-[11px] font-bold rounded-full transition-all cursor-pointer"
                       >
                         Delete
                       </button>
@@ -429,7 +429,7 @@ export default function MeasurementsPage() {
                     {!profile.isDefault && (
                       <button
                         onClick={() => handleMakeDefault(profile.id)}
-                        className="text-stone-600 hover:text-stone-850 text-[10px] font-bold hover:underline"
+                        className="text-stone-600 hover:text-stone-850 text-[10px] font-bold hover:underline cursor-pointer"
                       >
                         Set as Default
                       </button>

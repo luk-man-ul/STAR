@@ -75,28 +75,28 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* KPI Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {kpis.map((kpi, idx) => (
           <Link
             key={idx}
             href={kpi.link}
-            className={`p-5 rounded-3xl border shadow-sm transition-all hover:scale-102 flex flex-col justify-between h-36 bg-white hover:shadow-md`}
+            className={`p-4 sm:p-5 rounded-3xl border shadow-sm transition-all hover:scale-102 flex flex-col justify-between h-36 bg-white hover:shadow-md`}
           >
             <div className="flex justify-between items-start">
-              <span className="text-2xl">{kpi.icon}</span>
-              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${kpi.bg}`}>
+              <span className="text-xl sm:text-2xl">{kpi.icon}</span>
+              <span className={`px-2 sm:px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase ${kpi.bg}`}>
                 Monitor
               </span>
             </div>
-            <div className="mt-2">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-stone-600 block">
+            <div className="mt-2 min-w-0">
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-600 block truncate">
                 {kpi.title}
               </span>
-              <span className="text-xl font-extrabold text-stone-900 mt-1 block">
+              <span className="text-lg sm:text-xl font-extrabold text-stone-900 mt-1 block">
                 {kpi.value}
               </span>
               {'sub' in kpi && (
-                <span className="text-[9px] font-medium text-stone-600 block mt-0.5">{kpi.sub}</span>
+                <span className="text-[9px] font-medium text-stone-600 block mt-0.5 truncate">{kpi.sub}</span>
               )}
             </div>
           </Link>
@@ -104,8 +104,8 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Today's Appointments Queue */}
-      <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm space-y-6">
-        <h2 className="text-lg font-bold text-stone-800 font-serif">Today's Appointment Schedule</h2>
+      <div className="bg-white border border-stone-200 rounded-3xl p-5 sm:p-6 shadow-sm space-y-6">
+        <h2 className="text-base sm:text-lg font-bold text-stone-800 font-serif">Today&apos;s Appointment Schedule</h2>
         {summary.todaysAppointments.length === 0 ? (
           <div className="py-8 text-center text-xs text-stone-600">
             No sizing consultations scheduled for today.
@@ -113,9 +113,9 @@ export default function AdminDashboardPage() {
         ) : (
           <div className="divide-y divide-stone-150 text-xs text-stone-700">
             {summary.todaysAppointments.map((ap) => (
-              <div key={ap.id} className="py-4 flex justify-between items-center gap-4 hover:bg-stone-50/40 rounded-xl px-2">
-                <div className="flex items-center gap-4">
-                  <div className="px-3.5 py-2 bg-stone-100 rounded-2xl font-bold text-stone-700 text-center">
+              <div key={ap.id} className="py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4 hover:bg-stone-50/40 rounded-xl px-2">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="px-3 py-1.5 sm:py-2 bg-stone-100 rounded-2xl font-bold text-stone-700 text-center shrink-0">
                     {new Date(ap.appointmentDate).toLocaleTimeString([], {
                       hour: '2-digit',
                       minute: '2-digit',
@@ -127,7 +127,7 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className="text-left sm:text-right">
                   <p className="font-semibold text-stone-600">{ap.booking.design.name}</p>
                   <p className="text-[10px] text-stone-600">Ref: {ap.booking.shortId}</p>
                 </div>

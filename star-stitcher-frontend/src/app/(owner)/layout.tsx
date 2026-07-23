@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from '@/hooks/use-auth';
@@ -14,6 +14,7 @@ export default function OwnerLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { user, isRestoring, clearAuth } = useSession();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!isRestoring) {
@@ -23,6 +24,17 @@ export default function OwnerLayout({
       }
     }
   }, [isRestoring, router]);
+
+  // Handle Escape key to close mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    if (mobileMenuOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [mobileMenuOpen]);
 
   const handleLogout = async () => {
     try {
@@ -112,7 +124,7 @@ export default function OwnerLayout({
           <div className="px-4 pt-4 border-t border-stone-200">
             <button
               onClick={handleLogout}
-              className="flex w-full items-center gap-3 px-4 py-3 text-stone-600 hover:text-rose-600 hover:bg-rose-50 rounded-2xl text-sm font-semibold transition-all"
+              className="flex w-full items-center gap-3 px-4 py-3 text-stone-600 hover:text-rose-600 hover:bg-rose-50 rounded-2xl text-sm font-semibold transition-all cursor-pointer"
             >
               <span>🚪</span>
               <span>Logout</span>
@@ -123,8 +135,21 @@ export default function OwnerLayout({
 
       {/* Main content frame */}
       <div className="md:pl-64 flex flex-col flex-1 w-0">
-        <header className="sticky top-0 z-20 bg-white border-b border-stone-200 h-16 flex items-center justify-between px-6">
+        <header className="sticky top-0 z-20 bg-white border-b border-stone-200 h-16 flex items-center justify-between px-4 sm:px-6">
           <div className="flex items-center md:hidden gap-3">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-1.5 text-stone-600 hover:text-rose-600 focus:outline-none cursor-pointer"
+              aria-label="Toggle navigation menu"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
             <span className="text-base font-bold text-rose-600 font-serif">STAR STITCHER CMS</span>
           </div>
           <div className="hidden md:block text-xs font-semibold text-stone-600">
@@ -137,14 +162,50 @@ export default function OwnerLayout({
             >
               View Main Site
             </Link>
-            <div className="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-xs">
+            <div className="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-xs shrink-0">
               {user.name.charAt(0)}
             </div>
           </div>
         </header>
 
+        {/* Mobile Navigation Drawer for Admin */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-b border-stone-200 bg-white px-4 py-4 space-y-1 shadow-lg z-30">
+            <nav className="space-y-1">
+              {sidebarLinks.map((link) => {
+                const isActive = pathname.startsWith(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                      isActive ? 'bg-rose-50 text-rose-600' : 'text-stone-700 hover:bg-stone-50'
+                    }`}
+                  >
+                    <span>{link.icon}</span>
+                    <span>{link.name}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="pt-2 border-t border-stone-100">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleLogout();
+                }}
+                className="flex w-full items-center gap-3 px-3 py-2.5 text-stone-600 hover:text-rose-600 hover:bg-rose-50 rounded-xl text-sm font-semibold transition-all cursor-pointer"
+              >
+                <span>🚪</span>
+                <span>Logout</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         <main className="flex-1 relative focus:outline-none bg-stone-50">
-          <div className="py-8 px-4 sm:px-6 lg:px-8">
+          <div className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
             {children}
           </div>
         </main>

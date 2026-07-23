@@ -297,7 +297,8 @@ export default function AdminDesignsPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
+          {/* Desktop Table View */}
+          <div className="hidden md:block bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-stone-50 border-b border-stone-200 text-xs font-bold text-stone-600 uppercase">
@@ -314,7 +315,7 @@ export default function AdminDesignsPage() {
                   <tr key={design.id} className="hover:bg-stone-50/50">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center text-xl overflow-hidden font-bold">
+                        <div className="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center text-xl overflow-hidden font-bold shrink-0">
                           {design.imageUrl ? (
                             <img src={design.imageUrl} alt={design.name} className="w-full h-full object-cover" />
                           ) : (
@@ -336,7 +337,7 @@ export default function AdminDesignsPage() {
                     <td className="px-6 py-4 text-center">
                       <button
                         onClick={() => handleToggleFeatured(design)}
-                        className={`text-lg focus:outline-none`}
+                        className={`text-lg focus:outline-none cursor-pointer`}
                         title="Toggle Featured"
                       >
                         {design.featured ? '⭐' : '☆'}
@@ -345,7 +346,7 @@ export default function AdminDesignsPage() {
                     <td className="px-6 py-4 text-center">
                       <button
                         onClick={() => handleToggleActive(design)}
-                        className={`px-3 py-1 font-bold text-[9px] uppercase tracking-wider rounded-full transition-colors ${
+                        className={`px-3 py-1 font-bold text-[9px] uppercase tracking-wider rounded-full transition-colors cursor-pointer ${
                           design.isActive
                             ? 'bg-green-100 text-green-700 hover:bg-green-200'
                             : 'bg-stone-200 text-stone-600 hover:bg-stone-300'
@@ -357,29 +358,91 @@ export default function AdminDesignsPage() {
                     <td className="px-6 py-4 text-right space-x-1.5 whitespace-nowrap">
                       <button
                         onClick={() => handleEditClick(design)}
-                        className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-colors"
+                        className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-colors cursor-pointer"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDuplicate(design.id)}
-                        className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-colors"
+                        className="px-3 h-8 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-full font-semibold transition-colors cursor-pointer"
                       >
-                        Clone
+                        Copy
                       </button>
-                      {design.isActive && (
-                        <button
-                          onClick={() => handleArchive(design.id)}
-                          className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-650 rounded-full font-semibold transition-colors"
-                        >
-                          Archive
-                        </button>
-                      )}
+                      <button
+                        onClick={() => handleArchive(design.id)}
+                        className="px-3 h-8 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-full font-semibold transition-colors cursor-pointer"
+                      >
+                        Archive
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Cards View */}
+          <div className="md:hidden space-y-4">
+            {designs.map((design) => (
+              <div key={design.id} className="bg-white border border-stone-200 rounded-3xl p-5 shadow-sm space-y-3">
+                <div className="flex justify-between items-start gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-2xl overflow-hidden font-bold shrink-0">
+                      {design.imageUrl ? (
+                        <img src={design.imageUrl} alt={design.name} className="w-full h-full object-cover" />
+                      ) : (
+                        '🎨'
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-stone-900 text-sm">{design.name}</h3>
+                      <p className="text-[10px] text-stone-600">Code: {design.code} | {design.category?.name || 'Unassigned'}</p>
+                      <p className="text-xs font-extrabold text-stone-900 mt-0.5">₹{design.price.toLocaleString()}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleToggleFeatured(design)}
+                    className="text-xl p-1 focus:outline-none cursor-pointer"
+                    title="Toggle Featured"
+                  >
+                    {design.featured ? '⭐' : '☆'}
+                  </button>
+                </div>
+
+                <div className="flex flex-wrap justify-between items-center gap-2 pt-2 border-t border-stone-100">
+                  <button
+                    onClick={() => handleToggleActive(design)}
+                    className={`px-3 py-1 font-bold text-[9px] uppercase tracking-wider rounded-full transition-colors cursor-pointer ${
+                      design.isActive
+                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                        : 'bg-stone-200 text-stone-600 hover:bg-stone-300'
+                    }`}
+                  >
+                    {design.isActive ? 'Active' : 'Inactive'}
+                  </button>
+                  <div className="flex gap-1.5">
+                    <button
+                      onClick={() => handleEditClick(design)}
+                      className="px-3 h-7 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-full font-bold text-[11px] transition-colors cursor-pointer"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDuplicate(design.id)}
+                      className="px-3 h-7 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-full font-bold text-[11px] transition-colors cursor-pointer"
+                    >
+                      Copy
+                    </button>
+                    <button
+                      onClick={() => handleArchive(design.id)}
+                      className="px-3 h-7 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-full font-bold text-[11px] transition-colors cursor-pointer"
+                    >
+                      Archive
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Pagination Controls */}

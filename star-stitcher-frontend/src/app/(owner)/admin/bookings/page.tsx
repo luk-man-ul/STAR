@@ -267,7 +267,7 @@ export default function AdminBookingsPage() {
               </div>
 
               {/* Grid content info */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-xs">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
                 <div>
                   <span className="text-[10px] text-stone-600 font-bold uppercase block mb-1">Customer Profile</span>
                   <p className="font-bold text-stone-850">{booking.customer.name}</p>
@@ -318,7 +318,7 @@ export default function AdminBookingsPage() {
               )}
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-2 pt-2 border-t border-stone-100 justify-end">
+              <div className="flex flex-wrap gap-2 pt-2 border-t border-stone-100 justify-start sm:justify-end">
                 {booking.status === 'PENDING' && (
                   <>
                     <button
@@ -371,8 +371,8 @@ export default function AdminBookingsPage() {
 
       {/* Reschedule Modal Box */}
       {showRescheduleModal && reschedulingBooking && (
-        <div className="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white max-w-md w-full rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150">
+        <div className="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white max-w-md w-full max-h-[85vh] overflow-y-auto rounded-3xl p-6 relative space-y-6 shadow-2xl border border-stone-150 my-auto">
             <button
               onClick={() => {
                 setShowRescheduleModal(false);

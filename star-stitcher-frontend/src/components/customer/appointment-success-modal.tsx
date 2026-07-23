@@ -65,7 +65,7 @@ export function AppointmentSuccessModal({
       aria-modal="true"
       aria-labelledby="success-modal-title"
     >
-      <div className="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 relative space-y-6 shadow-2xl border border-stone-200 my-8 animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white max-w-lg w-full max-h-[85vh] overflow-y-auto rounded-3xl p-6 sm:p-8 relative space-y-6 shadow-2xl border border-stone-200 my-auto animate-in fade-in zoom-in-95 duration-200">
         {/* Top Header Badge */}
         <div className="text-center space-y-2">
           <div className="w-14 h-14 rounded-full bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center text-2xl font-extrabold mx-auto shadow-sm">

@@ -149,14 +149,14 @@ export default function ProfilePage() {
       )}
 
       {/* Navigation Sub-Links */}
-      <div className="flex gap-4 border-b border-stone-200 pb-2">
-        <Link href="/profile" className="text-sm font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
+      <div className="flex flex-wrap sm:flex-nowrap gap-3 sm:gap-6 border-b border-stone-200 pb-2 text-xs sm:text-sm">
+        <Link href="/profile" className="font-semibold text-rose-600 border-b-2 border-rose-600 pb-2">
           General Info
         </Link>
-        <Link href="/profile/addresses" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
+        <Link href="/profile/addresses" className="font-medium text-stone-600 hover:text-rose-600 pb-2">
           Saved Addresses
         </Link>
-        <Link href="/profile/measurements" className="text-sm font-medium text-stone-600 hover:text-rose-600 pb-2">
+        <Link href="/profile/measurements" className="font-medium text-stone-600 hover:text-rose-600 pb-2">
           Measurements
         </Link>
       </div>
@@ -182,11 +182,11 @@ export default function ProfilePage() {
           {errors.phone && <p className="text-xs text-rose-500 mt-1">{errors.phone.message}</p>}
         </div>
 
-        <div className="flex justify-between items-center pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <button
             type="submit"
             disabled={submitting}
-            className="h-12 px-6 bg-rose-600 hover:bg-rose-700 text-white rounded-full font-semibold transition-all active:scale-98 disabled:opacity-50 text-sm"
+            className="flex-1 h-12 px-6 bg-rose-600 hover:bg-rose-700 text-white rounded-full font-semibold transition-all active:scale-98 disabled:opacity-50 text-sm cursor-pointer"
           >
             {submitting ? 'Saving...' : 'Save Changes'}
           </button>
@@ -194,7 +194,7 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={handleLogout}
-            className="h-12 px-6 border border-stone-300 text-stone-700 hover:text-rose-600 rounded-full font-semibold transition-all text-sm"
+            className="flex-1 h-12 px-6 border border-stone-300 text-stone-700 hover:text-rose-600 rounded-full font-semibold transition-all text-sm cursor-pointer"
           >
             Sign Out
           </button>

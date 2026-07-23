@@ -208,68 +208,68 @@ export default function CustomerDashboard() {
     <div className="space-y-8">
       
       {/* Welcome Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-rose-50/60 to-stone-100/60 p-6 rounded-3xl border border-stone-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-rose-50/60 to-stone-100/60 p-5 sm:p-6 rounded-3xl border border-stone-200 shadow-sm">
         <div className="space-y-1">
-          <h1 className="text-2xl font-extrabold text-stone-900 font-serif">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900 font-serif">
             Hello, {user?.name || 'Valued Customer'}!
           </h1>
-          <p className="text-xs text-stone-600 font-medium">
+          <p className="text-[11px] sm:text-xs text-stone-600 font-medium">
             {getFormattedDate()}
           </p>
-          <p className="text-sm text-stone-700 pt-1">
+          <p className="text-xs sm:text-sm text-stone-700 pt-1">
             Welcome to your Star Stitcher workspace. Track stitching updates and manage sizing profiles.
           </p>
         </div>
-        <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-xl font-bold border border-rose-200 shadow-inner select-none shrink-0">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-lg sm:text-xl font-bold border border-rose-200 shadow-inner select-none shrink-0 self-end sm:self-auto">
           {user?.name ? user.name.charAt(0).toUpperCase() : 'C'}
         </div>
       </div>
 
       {/* Overview Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Active Stitching */}
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-4">
-          <div className="text-2xl bg-indigo-50 w-11 h-11 rounded-2xl flex items-center justify-center select-none text-indigo-600">
+        <div className="bg-white p-4 sm:p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div className="text-xl sm:text-2xl bg-indigo-50 w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center select-none text-indigo-600 shrink-0">
             🪡
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Active Stitching</p>
-            <p className="text-lg font-bold text-stone-850">{activeStitching.length}</p>
+          <div className="min-w-0">
+            <p className="text-[9px] sm:text-[10px] font-bold text-stone-500 uppercase tracking-wider truncate">Active Stitching</p>
+            <p className="text-base sm:text-lg font-bold text-stone-850">{activeStitching.length}</p>
           </div>
         </div>
 
         {/* Upcoming appointments */}
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-4">
-          <div className="text-2xl bg-green-50 w-11 h-11 rounded-2xl flex items-center justify-center select-none text-green-600">
+        <div className="bg-white p-4 sm:p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div className="text-xl sm:text-2xl bg-green-50 w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center select-none text-green-600 shrink-0">
             📅
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Fittings Scheduled</p>
-            <p className="text-lg font-bold text-stone-850">{upcomingAppointments.length}</p>
+          <div className="min-w-0">
+            <p className="text-[9px] sm:text-[10px] font-bold text-stone-500 uppercase tracking-wider truncate">Fittings Scheduled</p>
+            <p className="text-base sm:text-lg font-bold text-stone-850">{upcomingAppointments.length}</p>
           </div>
         </div>
 
         {/* Measurements */}
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-4">
-          <div className="text-2xl bg-amber-50 w-11 h-11 rounded-2xl flex items-center justify-center select-none text-amber-600">
+        <div className="bg-white p-4 sm:p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div className="text-xl sm:text-2xl bg-amber-50 w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center select-none text-amber-600 shrink-0">
             📏
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Sizing Metrics</p>
-            <p className="text-lg font-bold text-stone-850">
+          <div className="min-w-0">
+            <p className="text-[9px] sm:text-[10px] font-bold text-stone-500 uppercase tracking-wider truncate">Sizing Metrics</p>
+            <p className="text-base sm:text-lg font-bold text-stone-850">
               {measurements ? `${countSetMeasurements(measurements)}/13` : '0/13'}
             </p>
           </div>
         </div>
 
         {/* Addresses */}
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-4">
-          <div className="text-2xl bg-rose-50 w-11 h-11 rounded-2xl flex items-center justify-center select-none text-rose-600">
+        <div className="bg-white p-4 sm:p-5 rounded-3xl border border-stone-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div className="text-xl sm:text-2xl bg-rose-50 w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center select-none text-rose-600 shrink-0">
             📍
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Saved Addresses</p>
-            <p className="text-lg font-bold text-stone-850">{addresses.length}</p>
+          <div className="min-w-0">
+            <p className="text-[9px] sm:text-[10px] font-bold text-stone-500 uppercase tracking-wider truncate">Saved Addresses</p>
+            <p className="text-base sm:text-lg font-bold text-stone-850">{addresses.length}</p>
           </div>
         </div>
       </div>
