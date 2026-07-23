@@ -21,6 +21,11 @@ export class CreateBookingDto {
   @IsOptional()
   addressId?: string;
 
+  @ApiProperty({ example: 'measurementId-uuid', required: false })
+  @IsString()
+  @IsOptional()
+  measurementId?: string;
+
   @ApiProperty({ example: 'Add gold buttons to sleeves', required: false })
   @IsString()
   @IsOptional()

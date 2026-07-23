@@ -189,6 +189,7 @@ model Measurement {
   updatedAt         DateTime          @updatedAt
 
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookings          Booking[]
 
   @@map("measurements")
   @@index([userId])
@@ -203,6 +204,7 @@ model Booking {
   measurementMethod   MeasurementSource @default(ONLINE)
   deliveryMethod      DeliveryType      @default(PICKUP)
   addressId           String?
+  measurementId       String?
   specialInstructions String?
   
   createdAt           DateTime          @default(now())
@@ -211,9 +213,11 @@ model Booking {
   customer            User              @relation(fields: [customerId], references: [id], onDelete: Restrict)
   design              Design            @relation(fields: [designId], references: [id], onDelete: Restrict)
   shippingAddress     Address?          @relation(fields: [addressId], references: [id], onDelete: SetNull)
+  measurement         Measurement?      @relation(fields: [measurementId], references: [id], onDelete: SetNull)
   appointment         Appointment?
 
   @@map("bookings")
+  @@index([measurementId])
 }
 
 model Appointment {

@@ -15,6 +15,12 @@ interface Design {
   code: string;
 }
 
+interface MeasurementRef {
+  id: string;
+  profileName: string;
+  isDefault: boolean;
+}
+
 interface Booking {
   id: string;
   shortId: string;
@@ -24,6 +30,7 @@ interface Booking {
   createdAt: string;
   design: Design;
   appointment?: Appointment | null;
+  measurement?: MeasurementRef | null;
 }
 
 export default function CustomerBookingsPage() {
@@ -164,7 +171,12 @@ export default function CustomerBookingsPage() {
 
                 <div>
                   <span className="text-[10px] text-stone-600 font-bold uppercase block">Sizing Method</span>
-                  <span className="font-semibold text-stone-700">{booking.measurementMethod}</span>
+                  <span className="font-semibold text-stone-700 block">{booking.measurementMethod}</span>
+                  {booking.measurementMethod === 'ONLINE' && (
+                    <span className="text-[11px] font-bold text-rose-700 block mt-0.5">
+                      {booking.measurement?.profileName || 'Default Profile'}
+                    </span>
+                  )}
                 </div>
 
                 <div>

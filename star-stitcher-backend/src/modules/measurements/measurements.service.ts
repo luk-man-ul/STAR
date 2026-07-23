@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateMeasurementDto } from './dto/create-measurement.dto';
 import { UpdateMeasurementDto } from './dto/update-measurement.dto';
-import { MeasurementSource } from '@prisma/client';
+import { MeasurementSource, BookingStatus } from '@prisma/client';
 
 @Injectable()
 export class MeasurementsService {
@@ -120,9 +120,30 @@ export class MeasurementsService {
   }
 
   async delete(userId: string, id: string) {
-    const measurement = await this.getOne(userId, id);
-
     return this.prismaService.$transaction(async (tx) => {
+      const measurement = await tx.measurement.findUnique({
+        where: { id },
+      });
+
+      if (!measurement) {
+        throw new NotFoundException('Measurement profile not found');
+      }
+
+      if (measurement.userId !== userId) {
+        throw new ForbiddenException('You do not own this measurement profile');
+      }
+
+      const activeBookingsCount = await tx.booking.count({
+        where: {
+          measurementId: id,
+          status: { in: [BookingStatus.PENDING, BookingStatus.APPROVED] },
+        },
+      });
+
+      if (activeBookingsCount > 0) {
+        throw new BadRequestException('This measurement profile is being used by an active appointment and cannot be deleted yet.');
+      }
+
       await tx.measurement.delete({
         where: { id },
       });

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import apiClient from '@/lib/api-client';
 import { useBookingStore } from '@/store/use-booking-store';
 import { useSettingsStore } from '@/store/use-settings-store';
@@ -23,9 +24,29 @@ interface Address {
   isDefault: boolean;
 }
 
+interface MeasurementProfile {
+  id: string;
+  profileName: string;
+  isDefault: boolean;
+  bust?: number;
+  underBust?: number;
+  waist?: number;
+  hip?: number;
+  shoulder?: number;
+  neck?: number;
+  armHole?: number;
+  sleeveLength?: number;
+  sleeveRound?: number;
+  frontNeckDepth?: number;
+  backNeckDepth?: number;
+  totalLength?: number;
+  bottomRound?: number;
+}
+
 const bookFormSchema = z.object({
   designId: z.string().min(1, 'Please select a catalog style'),
   measurementMethod: z.enum(['ONLINE', 'SHOP']),
+  measurementId: z.string().optional(),
   deliveryMethod: z.enum(['PICKUP', 'DELIVERY']),
   addressId: z.string().optional(),
   specialInstructions: z.string().optional(),
@@ -42,6 +63,7 @@ export default function BookPage() {
 
   const [designs, setDesigns] = useState<Design[]>([]);
   const [addresses, setAddresses] = useState<Address[]>([]);
+  const [measurementProfiles, setMeasurementProfiles] = useState<MeasurementProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -71,6 +93,8 @@ export default function BookPage() {
     },
   });
 
+  const selectedMeasurementMethod = watch('measurementMethod');
+  const selectedMeasurementId = watch('measurementId');
   const selectedDelivery = watch('deliveryMethod');
   const selectedTime = watch('appointmentTime');
 
@@ -78,13 +102,25 @@ export default function BookPage() {
     try {
       setLoading(true);
       setError(null);
-      const [designsRes, addressesRes] = await Promise.all([
+      const [designsRes, addressesRes, profilesRes] = await Promise.all([
         apiClient.get('/designs'),
         apiClient.get('/addresses').catch(() => ({ data: [] })),
+        apiClient.get('/measurements').catch(() => ({ data: [] })),
         fetchSettings(),
       ]);
       setDesigns(designsRes.data.data || []);
       setAddresses(addressesRes.data || []);
+
+      const profiles: MeasurementProfile[] = Array.isArray(profilesRes.data) ? profilesRes.data : [];
+      setMeasurementProfiles(profiles);
+
+      // Preselect default profile if ONLINE method selected
+      if (profiles.length > 0) {
+        const defaultProfile = profiles.find((p) => p.isDefault) || profiles[0];
+        if (defaultProfile) {
+          setValue('measurementId', defaultProfile.id);
+        }
+      }
     } catch (err) {
       setError('Failed to load catalog resources.');
     } finally {
@@ -95,6 +131,21 @@ export default function BookPage() {
   useEffect(() => {
     loadData();
   }, [fetchSettings]);
+
+  // Handle switching measurement method & auto-preselection
+  useEffect(() => {
+    if (selectedMeasurementMethod === 'ONLINE') {
+      if (measurementProfiles.length > 0 && !selectedMeasurementId) {
+        const defaultProfile = measurementProfiles.find((p) => p.isDefault) || measurementProfiles[0];
+        if (defaultProfile) {
+          setValue('measurementId', defaultProfile.id);
+        }
+      }
+    } else {
+      // Clear stale measurement selection when switching to SHOP
+      setValue('measurementId', undefined);
+    }
+  }, [selectedMeasurementMethod, measurementProfiles, selectedMeasurementId, setValue]);
 
   if (settings?.status === 'CLOSED') {
     return (
@@ -140,6 +191,21 @@ export default function BookPage() {
       return;
     }
 
+    // ONLINE measurement validation
+    let selectedProfile: MeasurementProfile | undefined = undefined;
+    if (data.measurementMethod === 'ONLINE') {
+      if (!data.measurementId || measurementProfiles.length === 0) {
+        setError('You don\'t have any saved measurements yet. Please add a profile or select In-Store Consultation.');
+        return;
+      }
+
+      selectedProfile = measurementProfiles.find((p) => p.id === data.measurementId);
+      if (!selectedProfile) {
+        setError('The selected measurement profile was not found. Please select a valid profile.');
+        return;
+      }
+    }
+
     const design = designs.find((d) => d.id === data.designId);
     const address = addresses.find((a) => a.id === data.addressId);
 
@@ -153,6 +219,8 @@ export default function BookPage() {
       designName: design?.name,
       designPrice: design?.price,
       measurementMethod: data.measurementMethod,
+      measurementId: data.measurementMethod === 'ONLINE' ? data.measurementId : undefined,
+      measurementProfileName: data.measurementMethod === 'ONLINE' ? selectedProfile?.profileName : undefined,
       deliveryMethod: data.deliveryMethod,
       addressId: data.addressId,
       addressText: address ? `${address.addressLine1}, ${address.city}` : undefined,
@@ -281,6 +349,90 @@ export default function BookPage() {
             </div>
           </div>
         </div>
+
+        {/* Step 2.5: Measurement Profile Picker (for ONLINE sizing) */}
+        {selectedMeasurementMethod === 'ONLINE' && (
+          <div className="space-y-3 pt-2 transition-all">
+            <label className="block text-xs font-bold text-stone-800">Whose measurements should we use?</label>
+            
+            {measurementProfiles.length === 0 ? (
+              <div className="p-5 border border-dashed border-stone-300 rounded-2xl bg-stone-50 text-center space-y-3">
+                <div className="text-stone-700 text-xs font-medium">
+                  You don&apos;t have any saved measurements yet.
+                </div>
+                <div className="flex flex-wrap justify-center gap-3">
+                  <Link
+                    href="/customer/profile/measurements"
+                    className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-bold transition-all shadow-sm"
+                  >
+                    Add Measurements
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setValue('measurementMethod', 'SHOP')}
+                    className="px-4 py-2 border border-stone-300 text-stone-700 hover:bg-white rounded-full text-xs font-semibold transition-all"
+                  >
+                    Use In-Store Consultation
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup" aria-label="Measurement Profiles">
+                {measurementProfiles.map((p) => {
+                  const isSelected = selectedMeasurementId === p.id;
+                  const filledCount = [
+                    p.bust, p.underBust, p.waist, p.hip, p.shoulder, p.neck,
+                    p.armHole, p.sleeveLength, p.sleeveRound, p.frontNeckDepth,
+                    p.backNeckDepth, p.totalLength, p.bottomRound
+                  ].filter((val) => val !== null && val !== undefined).length;
+
+                  return (
+                    <div
+                      key={p.id}
+                      role="radio"
+                      aria-checked={isSelected}
+                      tabIndex={0}
+                      onClick={() => setValue('measurementId', p.id, { shouldValidate: true })}
+                      onKeyDown={(e) => {
+                        if (e.key === ' ' || e.key === 'Enter') {
+                          e.preventDefault();
+                          setValue('measurementId', p.id, { shouldValidate: true });
+                        }
+                      }}
+                      className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-2 select-none focus:outline-none focus:ring-2 focus:ring-rose-500 ${
+                        isSelected
+                          ? 'border-rose-500 bg-rose-50/50 shadow-sm ring-1 ring-rose-500'
+                          : 'border-stone-200 bg-white hover:border-stone-300 hover:bg-stone-50/50'
+                      }`}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-stone-900 text-sm">{p.profileName}</span>
+                          {p.isDefault && (
+                            <span className="px-2 py-0.5 bg-rose-100 border border-rose-200 text-rose-700 text-[10px] font-extrabold tracking-wider rounded-full uppercase">
+                              DEFAULT
+                            </span>
+                          )}
+                        </div>
+                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                          isSelected ? 'border-rose-600 bg-rose-600' : 'border-stone-300 bg-white'
+                        }`}>
+                          {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
+                        </div>
+                      </div>
+                      <p className="text-xs text-stone-500 font-medium">
+                        {filledCount > 0 ? `${filledCount} measurements saved` : 'Standard profile'}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            {errors.measurementId && (
+              <p className="text-xs text-rose-500 mt-1">{errors.measurementId.message}</p>
+            )}
+          </div>
+        )}
 
         {/* Saved Addresses Sub-Form */}
         {selectedDelivery === 'DELIVERY' && (

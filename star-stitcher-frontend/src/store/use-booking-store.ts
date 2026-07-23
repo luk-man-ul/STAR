@@ -5,6 +5,8 @@ interface BookingDraft {
   designName?: string;
   designPrice?: number;
   measurementMethod: string;
+  measurementId?: string;
+  measurementProfileName?: string;
   deliveryMethod: string;
   addressId?: string;
   addressText?: string;

@@ -1,8 +1,8 @@
-import { Injectable, BadRequestException, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException, ConflictException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { RescheduleAppointmentDto } from './dto/reschedule-appointment.dto';
-import { BookingStatus, AppointmentStatus, OrderStatus, PaymentStatus } from '@prisma/client';
+import { BookingStatus, AppointmentStatus, OrderStatus, PaymentStatus, MeasurementSource } from '@prisma/client';
 
 @Injectable()
 export class BookingsService {
@@ -140,6 +140,31 @@ export class BookingsService {
     const shortId = `BK-${Math.floor(1000 + Math.random() * 9000)}`;
 
     return this.prismaService.$transaction(async (tx) => {
+      let targetMeasurementId: string | null = null;
+
+      if (dto.measurementMethod === MeasurementSource.ONLINE) {
+        if (!dto.measurementId) {
+          throw new BadRequestException('A measurement profile must be selected for online measurements.');
+        }
+
+        const profile = await tx.measurement.findUnique({
+          where: { id: dto.measurementId },
+        });
+
+        if (!profile) {
+          throw new NotFoundException('The selected measurement profile was not found or has been deleted. Please select another profile.');
+        }
+
+        if (profile.userId !== customerId) {
+          throw new ForbiddenException('You do not own this measurement profile.');
+        }
+
+        targetMeasurementId = profile.id;
+      } else {
+        // SHOP measurement method: explicitly persist measurementId = null
+        targetMeasurementId = null;
+      }
+
       const booking = await tx.booking.create({
         data: {
           shortId,
@@ -148,6 +173,7 @@ export class BookingsService {
           measurementMethod: dto.measurementMethod,
           deliveryMethod: dto.deliveryMethod,
           addressId: dto.addressId,
+          measurementId: targetMeasurementId,
           specialInstructions: dto.specialInstructions,
         },
       });
@@ -174,6 +200,13 @@ export class BookingsService {
         design: true,
         appointment: true,
         shippingAddress: true,
+        measurement: {
+          select: {
+            id: true,
+            profileName: true,
+            isDefault: true,
+          },
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -186,6 +219,13 @@ export class BookingsService {
         design: true,
         appointment: true,
         shippingAddress: true,
+        measurement: {
+          select: {
+            id: true,
+            profileName: true,
+            isDefault: true,
+          },
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -292,6 +332,7 @@ export class BookingsService {
         },
         design: true,
         appointment: true,
+        measurement: true,
       },
     });
 
@@ -305,8 +346,34 @@ export class BookingsService {
 
     return this.prismaService.$transaction(async (tx) => {
       const orderShortId = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+      let snapshot: any = {};
+
+      if (booking.measurementId) {
+        // Priority 1: New booking with explicit profile
+        const profile = await tx.measurement.findUnique({
+          where: { id: booking.measurementId },
+        });
+        if (profile && profile.userId === booking.customerId) {
+          snapshot = profile;
+        } else {
+          throw new BadRequestException('Associated measurement profile for this booking is missing or invalid.');
+        }
+      } else if (booking.measurementMethod === MeasurementSource.ONLINE) {
+        // Priority 2: Legacy ONLINE booking fallback rule:
+        // Use ONLY the customer's explicitly marked default measurement profile.
+        const defaultMeasurement = booking.customer.measurements.find((m) => m.isDefault);
+        if (defaultMeasurement) {
+          snapshot = defaultMeasurement;
+        } else if (booking.customer.measurements.length > 0) {
+          throw new BadRequestException('Customer has saved measurements but no default profile is set for this legacy booking.');
+        } else {
+          throw new BadRequestException('No measurement profile found for this legacy online booking.');
+        }
+      } else {
+        // Priority 3: SHOP measurement booking — snapshot empty without attaching unrelated default profile
+        snapshot = {};
+      }
       
-      const defaultMeasurement = booking.customer.measurements.find((m) => m.isDefault) || booking.customer.measurements[0];
       const order = await tx.order.create({
         data: {
           shortId: orderShortId,
@@ -321,7 +388,7 @@ export class BookingsService {
           paymentStatus: PaymentStatus.UNPAID,
           paidAmount: 0.0,
           remainingAmount: booking.design.price,
-          measurementSnapshot: (defaultMeasurement as any) || {},
+          measurementSnapshot: (snapshot as any) || {},
         },
       });
 

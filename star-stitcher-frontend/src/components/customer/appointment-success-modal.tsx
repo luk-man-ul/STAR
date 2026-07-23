@@ -7,6 +7,7 @@ export interface BookingDetails {
   designName?: string;
   designPrice?: number;
   measurementMethod: string;
+  measurementProfileName?: string;
   deliveryMethod: string;
   addressText?: string;
   specialInstructions?: string;
@@ -112,6 +113,13 @@ export function AppointmentSuccessModal({
               {booking.measurementMethod === 'ONLINE' ? 'Submit Online Sizes' : 'In-Store Consultation'}
             </span>
           </div>
+
+          {booking.measurementMethod === 'ONLINE' && booking.measurementProfileName && (
+            <div className="flex justify-between items-center py-1">
+              <span className="text-stone-500 font-medium">Measurement Profile</span>
+              <span className="font-bold text-rose-700">{booking.measurementProfileName}</span>
+            </div>
+          )}
 
           <div className="flex justify-between items-center py-1">
             <span className="text-stone-500 font-medium">Delivery Type</span>

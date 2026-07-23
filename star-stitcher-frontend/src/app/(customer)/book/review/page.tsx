@@ -28,6 +28,7 @@ export default function BookReviewPage() {
       const res = await apiClient.post('/bookings', {
         designId: draft.designId,
         measurementMethod: draft.measurementMethod,
+        measurementId: draft.measurementMethod === 'ONLINE' ? draft.measurementId : undefined,
         deliveryMethod: draft.deliveryMethod,
         addressId: draft.addressId,
         specialInstructions: draft.specialInstructions,
@@ -39,6 +40,7 @@ export default function BookReviewPage() {
         designName: draft.designName,
         designPrice: draft.designPrice,
         measurementMethod: draft.measurementMethod,
+        measurementProfileName: draft.measurementProfileName,
         deliveryMethod: draft.deliveryMethod,
         addressText: draft.addressText,
         specialInstructions: draft.specialInstructions,
@@ -103,6 +105,13 @@ export default function BookReviewPage() {
               <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Sizing Method</span>
               <span className="text-sm font-bold text-stone-800">{draft.measurementMethod}</span>
             </div>
+
+            {draft.measurementMethod === 'ONLINE' && draft.measurementProfileName && (
+              <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
+                <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Measurement Profile</span>
+                <span className="text-sm font-bold text-rose-700">{draft.measurementProfileName}</span>
+              </div>
+            )}
 
             <div className="border-b border-stone-150 pb-3 flex justify-between items-center">
               <span className="text-xs text-stone-600 uppercase font-bold tracking-wider">Delivery Mode</span>
