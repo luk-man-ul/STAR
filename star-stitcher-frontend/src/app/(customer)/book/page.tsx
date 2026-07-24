@@ -58,7 +58,7 @@ type BookFormInput = z.infer<typeof bookFormSchema>;
 
 export default function BookPage() {
   const router = useRouter();
-  const setDraft = useBookingStore((state) => state.setDraft);
+  const { draft, setDraft } = useBookingStore();
   const { settings, fetchSettings } = useSettingsStore();
 
   const [designs, setDesigns] = useState<Design[]>([]);
@@ -79,11 +79,33 @@ export default function BookPage() {
     return `${year}-${month}-${day}`;
   };
 
+  const parseIsoToDateTime = (isoString?: string) => {
+    if (!isoString) return { appointmentDate: '', appointmentTime: '' };
+    try {
+      const d = new Date(isoString);
+      if (isNaN(d.getTime())) return { appointmentDate: '', appointmentTime: '' };
+
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const appointmentDate = `${year}-${month}-${day}`;
+
+      const hours = String(d.getHours()).padStart(2, '0');
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      const appointmentTime = `${hours}:${minutes}`;
+
+      return { appointmentDate, appointmentTime };
+    } catch {
+      return { appointmentDate: '', appointmentTime: '' };
+    }
+  };
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<BookFormInput>({
     resolver: zodResolver(bookFormSchema),
@@ -96,7 +118,6 @@ export default function BookPage() {
   const selectedMeasurementMethod = watch('measurementMethod');
   const selectedMeasurementId = watch('measurementId');
   const selectedDelivery = watch('deliveryMethod');
-  const selectedTime = watch('appointmentTime');
 
   const loadData = async () => {
     try {
@@ -114,11 +135,26 @@ export default function BookPage() {
       const profiles: MeasurementProfile[] = Array.isArray(profilesRes.data) ? profilesRes.data : [];
       setMeasurementProfiles(profiles);
 
-      // Preselect default profile if ONLINE method selected
-      if (profiles.length > 0) {
-        const defaultProfile = profiles.find((p) => p.isDefault) || profiles[0];
-        if (defaultProfile) {
-          setValue('measurementId', defaultProfile.id);
+      // Restore form from draft if available
+      if (draft) {
+        const { appointmentDate, appointmentTime } = parseIsoToDateTime(draft.appointmentDate);
+        reset({
+          designId: draft.designId || '',
+          measurementMethod: (draft.measurementMethod as 'ONLINE' | 'SHOP') || 'ONLINE',
+          measurementId: draft.measurementId || '',
+          deliveryMethod: (draft.deliveryMethod as 'PICKUP' | 'DELIVERY') || 'PICKUP',
+          addressId: draft.addressId || '',
+          specialInstructions: draft.specialInstructions || '',
+          appointmentDate,
+          appointmentTime,
+        });
+      } else {
+        // Preselect default profile only if NO draft exists
+        if (profiles.length > 0) {
+          const defaultProfile = profiles.find((p) => p.isDefault) || profiles[0];
+          if (defaultProfile) {
+            setValue('measurementId', defaultProfile.id);
+          }
         }
       }
     } catch (err) {
@@ -135,7 +171,7 @@ export default function BookPage() {
   // Handle switching measurement method & auto-preselection
   useEffect(() => {
     if (selectedMeasurementMethod === 'ONLINE') {
-      if (measurementProfiles.length > 0 && !selectedMeasurementId) {
+      if (measurementProfiles.length > 0 && !selectedMeasurementId && !draft) {
         const defaultProfile = measurementProfiles.find((p) => p.isDefault) || measurementProfiles[0];
         if (defaultProfile) {
           setValue('measurementId', defaultProfile.id);
@@ -145,7 +181,7 @@ export default function BookPage() {
       // Clear stale measurement selection when switching to SHOP
       setValue('measurementId', undefined);
     }
-  }, [selectedMeasurementMethod, measurementProfiles, selectedMeasurementId, setValue]);
+  }, [selectedMeasurementMethod, measurementProfiles, selectedMeasurementId, setValue, draft]);
 
   if (settings?.status === 'CLOSED') {
     return (
